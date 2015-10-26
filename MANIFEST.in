@@ -1,0 +1,2 @@
+include README.md
+recursive-include ckanext/inventory *.html *.json *.js *.less *.css
