@@ -48,3 +48,4 @@ do::
     cd ckanext-inventory
     python setup.py develop
     pip install -r dev-requirements.txt
+
