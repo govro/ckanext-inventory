@@ -17,7 +17,7 @@ specified timeline
 
 ## Requirements
 
-This extension is written for CKAN 2.5.
+This extension is written for CKAN v2.4.2.
 
 ## Installation
 
