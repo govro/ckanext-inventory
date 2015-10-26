@@ -1,5 +1,7 @@
 # ckanext-inventory
 
+[![Build Status](https://travis-ci.org/govro/ckanext-inventory.svg?branch=master)](https://travis-ci.org/govro/ckanext-inventory)
+
 CKAN Extension for receiving dataset inventories from organizations and tracking
 their status.
 
