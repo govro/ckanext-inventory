@@ -5,7 +5,7 @@ python:
 env: PGVERSION=9.1
 install:
     - bash bin/travis-build.bash
-    - pip install coveralls
+    - pip install coveralls git+https://github.com/coagulant/coveralls-python
 script: sh bin/travis-run.sh
 after_success:
     - coveralls
