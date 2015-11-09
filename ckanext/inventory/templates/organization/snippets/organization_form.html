@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{% block basic_fields_custom %}
+  {# TODO @palcu: make these hardcoded values configurable from the settings #}
+
+  {{ form.input('inventory_organization_id', label=_('CIF'), id='field-inventory_organization_id', placeholder=_('RO12345678'), value=data.inventory_organization_id, error=errors.inventory_organization_id, classes=['control-medium']) }}
+{% endblock %}
