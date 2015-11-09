@@ -25,7 +25,7 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
         return mapping
 
     def after_map(self, mapping):
-        controller = 'ckanext.inventory.controllers:InventoryController'
+        controller = 'ckanext.inventory.controllers.inventory:InventoryController'
         mapping.connect('/inventory', controller=controller, action='index')
 
         return mapping
