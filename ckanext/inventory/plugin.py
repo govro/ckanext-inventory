@@ -1,9 +1,9 @@
 import ckan.logic.schema
 from ckan.plugins import (implements, IConfigurer, IGroupForm, IRoutes,
-    SingletonPlugin)
-from ckan.plugins.toolkit import (add_template_directory,
-    add_public_directory, add_resource, DefaultOrganizationForm,
-    get_validator, get_converter)
+                          SingletonPlugin)
+from ckan.plugins.toolkit import (
+    add_template_directory, add_public_directory, add_resource,
+    DefaultOrganizationForm, get_validator, get_converter)
 
 
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
