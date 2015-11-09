@@ -19,6 +19,8 @@ unflatten = dictization_functions.unflatten
 
 class InventoryUserController(UserController):
     def _save_new(self, context):
+        model = context['model']
+
         try:
             data_dict = logic.clean_dict(unflatten(
                 logic.tuplize_dict(logic.parse_params(request.params))))
@@ -27,6 +29,9 @@ class InventoryUserController(UserController):
 
             inventory_organization_id = data_dict.pop('inventory_organization_id')
             user = get_action('user_create')(context, data_dict)
+
+            self._add_user_to_organization(model, user,
+                                           inventory_organization_id)
         except NotAuthorized:
             abort(401, _('Unauthorized to create user %s') % '')
         except NotFound, e:
@@ -55,3 +60,21 @@ class InventoryUserController(UserController):
                             'logged in as "%s" from before') %
                             (data_dict['name'], c.user))
             return render('user/logout_first.html')
+
+    def _add_user_to_organization(self, model, user, inventory_organization_id):
+        rev = model.repo.new_revision()
+        rev.author = user['name']
+
+        # TODO @palcu: Do error handling if inventory_organization_id does not
+        # exist
+        organization_extra = model.meta.Session.query(model.GroupExtra) \
+                                  .filter_by(key='inventory_organization_id') \
+                                  .filter_by(value=inventory_organization_id).first()
+
+        member = model.Member(table_name='user',
+                              table_id=user['id'],
+                              group_id=organization_extra.group_id,
+                              state='active',
+                              capacity='editor')
+        model.Session.add(member)
+        model.repo.commit()
