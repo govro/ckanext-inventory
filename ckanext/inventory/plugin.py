@@ -54,4 +54,5 @@ class InventoryPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
 
     def group_types(self):
         """This should handle only organizations, not other types of groups."""
-        return ['organization']
+        # TODO @palcu: check why putting organizations here is not working
+        return []
