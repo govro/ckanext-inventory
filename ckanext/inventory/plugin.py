@@ -18,6 +18,12 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
         add_resource('fanstatic', 'inventory')
 
     # IRoutes
+    def before_map(self, mapping):
+        controller = 'ckanext.inventory.controllers.user:InventoryUserController'
+        mapping.connect('/user/register', controller=controller,
+                        action='register')
+        return mapping
+
     def after_map(self, mapping):
         controller = 'ckanext.inventory.controllers:InventoryController'
         mapping.connect('/inventory', controller=controller, action='index')
