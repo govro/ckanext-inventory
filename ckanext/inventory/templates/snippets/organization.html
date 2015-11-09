@@ -1,0 +1,19 @@
+{% ckan_extends %}
+
+{% block description %}
+{% if organization.description %}
+  <p>
+    {{ h.markdown_extract(organization.description, 180) }}
+    {% link_for _('read more'), controller='organization', action='about', id=organization.name %}
+  </p>
+{% else %}
+  <p class="empty">{{ _('There is no description for this organization') }}</p>
+{% endif %}
+{% if organization.extras %}
+  <p>
+    {{ organization.extras[0].value }}
+  </p>
+{% else %}
+  <p class="empty">There is no organization id.</p>
+{% endif %}
+{% endblock %}

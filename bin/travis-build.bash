@@ -8,9 +8,9 @@ sudo apt-get update -qq
 sudo apt-get install postgresql-$PGVERSION solr-jetty libcommons-fileupload-java:amd64=1.2.2-1
 
 echo "Installing CKAN and its Python dependencies..."
-git clone https://github.com/ckan/ckan
+git clone https://github.com/govro/ckan
 cd ckan
-git checkout release-v2.4.2
+git checkout ckanext-inventory
 python setup.py develop
 pip install -r requirements.txt --allow-all-external
 pip install -r dev-requirements.txt --allow-all-external
