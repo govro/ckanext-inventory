@@ -50,6 +50,7 @@ class InventoryUserController(UserController):
         model_user = model.Session.query(model.User) \
                           .filter_by(email=user['email']).first()
         model_user.set_pending()
+        model_user.save()
 
         h.flash_success('Your account registration will be reviewed.')
         return render('home/index.html')
