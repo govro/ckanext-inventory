@@ -1,14 +1,15 @@
 import ckan.logic.schema
 from ckan.plugins import (implements, IConfigurer, IGroupForm, IRoutes,
-                          SingletonPlugin)
+                          SingletonPlugin, IActions)
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
     DefaultOrganizationForm, get_validator, get_converter)
-
+from ckanext.inventory.logic.action import pending_user_list
 
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     implements(IGroupForm, inherit=True)
     implements(IConfigurer)
+    implements(IActions)
     implements(IRoutes, inherit=True)
 
     # IConfigurer
@@ -56,3 +57,7 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     def group_types(self):
         """This should handle only organizations, not other types of groups."""
         return ['organization']
+
+    # IActions
+    def get_actions(self):
+        return {'inventory_pending_user_list': pending_user_list}
