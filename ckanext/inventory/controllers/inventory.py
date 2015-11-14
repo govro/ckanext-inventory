@@ -1,7 +1,7 @@
 import ckan.lib.helpers as h
 from ckan.plugins.toolkit import (
     BaseController, render, check_access, NotAuthorized, abort, get_action, c,
-    redirect_to)
+    redirect_to, ValidationError)
 
 
 class InventoryController(BaseController):
@@ -22,6 +22,15 @@ class InventoryController(BaseController):
     def activate_user(self, user_id):
         context = {'user': c.user}
         data_dict = {'id': user_id}
-        get_action('inventory_activate_user')(context, data_dict)
-        h.flash_success('Account has been activated.')
+
+        try:
+            get_action('inventory_activate_user')(context, data_dict)
+            h.flash_success('Account has been activated.')
+        except ValidationError as e:
+            error_message = (e.message or e.error_summary
+                             or e.error_dict)
+            h.flash_error(error_message)
+        except NotAuthorized as e:
+            h.flash_error(e.message)
+
         return redirect_to('/inventory')
