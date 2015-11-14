@@ -21,4 +21,5 @@ def inventory_entry_list(context, data_dict):
     if not organization:
         raise ObjectNotFound('Organization was not found')
 
-    return [table_dictize(entry) for entry in organization.inventory_entries]
+    return [table_dictize(entry, context)
+            for entry in organization.inventory_entries]
