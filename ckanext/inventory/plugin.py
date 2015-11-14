@@ -1,10 +1,11 @@
 import ckan.logic.schema
+from routes.mapper import SubMapper
 from ckan.plugins import (implements, IConfigurer, IGroupForm, IRoutes,
                           SingletonPlugin, IActions)
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
     DefaultOrganizationForm, get_validator, get_converter)
-from ckanext.inventory.logic.action import pending_user_list
+from ckanext.inventory.logic.action import pending_user_list, activate_user
 
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     implements(IGroupForm, inherit=True)
@@ -27,7 +28,10 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
 
     def after_map(self, mapping):
         controller = 'ckanext.inventory.controllers.inventory:InventoryController'
-        mapping.connect('/inventory', controller=controller, action='index')
+        with SubMapper(mapping, controller=controller) as m:
+            m.connect('/inventory', action='index')
+            m.connect('/inventory/activate/{user_id}',
+                      action='activate_user')
 
         return mapping
 
@@ -60,4 +64,5 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
 
     # IActions
     def get_actions(self):
-        return {'inventory_pending_user_list': pending_user_list}
+        return {'inventory_pending_user_list': pending_user_list,
+                'inventory_activate_user': activate_user}

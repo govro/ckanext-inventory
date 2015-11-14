@@ -1,5 +1,5 @@
 from ckan.plugins.toolkit import (BaseController, render, check_access,
-        NotAuthorized, abort, get_action, c)
+        NotAuthorized, abort, get_action, c, redirect_to)
 
 
 class InventoryController(BaseController):
@@ -16,3 +16,9 @@ class InventoryController(BaseController):
         context = {'user': c.user}
         c.users = get_action('inventory_pending_user_list')(context)
         return render('inventory/index.html')
+
+    def activate_user(self, user_id):
+        context = {'user': c.user}
+        data_dict = {'id': user_id}
+        get_action('inventory_activate_user')(context, data_dict)
+        return redirect_to(controller='inventory', action='index')
