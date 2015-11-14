@@ -5,7 +5,8 @@ from ckan.plugins import (implements, IConfigurer, IGroupForm, IRoutes,
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
     DefaultOrganizationForm, get_validator, get_converter)
-from ckanext.inventory.logic.action import pending_user_list, activate_user
+from ckanext.inventory.logic.action import (
+    pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.model import model_setup
 
 
@@ -42,6 +43,12 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
                       '/inventory/admin/activate_user/{user_id}',
                       action='activate_user')
 
+        INVENTORY_MANAGE_CONTROLLER = """
+            ckanext.inventory.controllers.inventory_manage:InventoryManageController"""
+        mapping.connect('/inventory/manage',
+                        controller=INVENTORY_MANAGE_CONTROLLER,
+                        action='index')
+
         return mapping
 
     # IGroupForm
@@ -74,7 +81,8 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     # IActions
     def get_actions(self):
         return {'inventory_pending_user_list': pending_user_list,
-                'inventory_activate_user': activate_user}
+                'inventory_activate_user': activate_user,
+                'inventory_organization_by_inventory_id': organization_by_inventory_id}
 
     # IConfigurable
     def configure(self, config):
