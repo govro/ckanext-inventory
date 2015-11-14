@@ -14,6 +14,5 @@ class InventoryController(BaseController):
 
     def index(self):
         context = {'user': c.user}
-        users_list = get_action('inventory_pending_user_list')(context)
-        c.users = users_list
+        c.users = get_action('inventory_pending_user_list')(context)
         return render('inventory/index.html')

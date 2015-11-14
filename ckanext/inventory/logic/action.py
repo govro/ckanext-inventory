@@ -1,6 +1,7 @@
 from ckan.plugins.toolkit import check_access, side_effect_free
 from ckan.lib.dictization import model_dictize
 
+
 @side_effect_free
 def pending_user_list(context, data_dict):
     check_access('sysadmin', context, {})

@@ -1,3 +1,4 @@
+import ckan.logic.schema
 from ckan.plugins import (implements, IConfigurer, IGroupForm, IRoutes,
                           SingletonPlugin, IActions)
 from ckan.plugins.toolkit import (
