@@ -11,7 +11,7 @@ from logging import getLogger
 from sqlalchemy import Table, Column, ForeignKey, types
 from sqlalchemy.orm import backref, relation
 
-from ckan import model
+from ckan.model import Group, Package
 from ckan.model.meta import metadata, mapper
 from ckan.model.types import make_uuid
 from ckan.model.domain_object import DomainObject
@@ -67,7 +67,7 @@ def define_inventory_entry_table():
         Column('last_added_dataset_timestamp', types.DateTime)
     )
     mapper(InventoryEntry, inventory_entry_table, properties={
-        'group': relation(model.Group, lazy=True, backref=u'inventory_entries')
+        'group': relation(Group, lazy=True, backref=u'inventory_entries')
     })
 
 
@@ -87,7 +87,7 @@ def define_inventory_item_table():
                                     lazy=True,
                                     backref=backref('inventory_items',
                                                     cascade='all,delete-orphan')),
-        'package_entry': relation(model.Package,
+        'package_entry': relation(Package,
                                   lazy=True,
                                   backref=backref('inventory_items',
                                                   cascade='all,delete-orphan')),
