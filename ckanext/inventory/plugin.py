@@ -7,6 +7,11 @@ from ckan.plugins.toolkit import (
     DefaultOrganizationForm, get_validator, get_converter)
 from ckanext.inventory.logic.action import pending_user_list, activate_user
 
+
+INVENTORY_CONTROLLER = """
+    ckanext.inventory.controllers.inventory:InventoryController"""
+
+
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     implements(IGroupForm, inherit=True)
     implements(IConfigurer)
@@ -21,14 +26,12 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
 
     # IRoutes
     def before_map(self, mapping):
-        controller = 'ckanext.inventory.controllers.user:InventoryUserController'
-        mapping.connect('/user/register', controller=controller,
+        mapping.connect('/user/register', controller=INVENTORY_CONTROLLER,
                         action='register')
         return mapping
 
     def after_map(self, mapping):
-        controller = 'ckanext.inventory.controllers.inventory:InventoryController'
-        with SubMapper(mapping, controller=controller) as m:
+        with SubMapper(mapping, controller=INVENTORY_CONTROLLER) as m:
             m.connect('inventory_index',
                       '/inventory',
                       action='index')

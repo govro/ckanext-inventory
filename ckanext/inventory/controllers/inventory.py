@@ -1,6 +1,7 @@
 import ckan.lib.helpers as h
-from ckan.plugins.toolkit import (BaseController, render, check_access,
-        NotAuthorized, abort, get_action, c, redirect_to)
+from ckan.plugins.toolkit import (
+    BaseController, render, check_access, NotAuthorized, abort, get_action, c,
+    redirect_to)
 
 
 class InventoryController(BaseController):
@@ -11,7 +12,7 @@ class InventoryController(BaseController):
             check_access('sysadmin', context, {})
         except NotAuthorized:
             # TODO @palcu: you should only be in a special group, not be sysadmin
-            abort(401, _('Need to be system administrator to check inventory'))
+            abort(401, 'Need to be system administrator to check inventory')
 
     def index(self):
         context = {'user': c.user}

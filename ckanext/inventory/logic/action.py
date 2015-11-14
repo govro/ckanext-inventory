@@ -1,4 +1,5 @@
-from ckan.plugins.toolkit import check_access, side_effect_free, ObjectNotFound, get_or_bust
+from ckan.plugins.toolkit import (
+    check_access, side_effect_free, ObjectNotFound, get_or_bust)
 from ckan.lib.dictization import model_dictize
 
 
@@ -7,8 +8,8 @@ def pending_user_list(context, data_dict):
     check_access('sysadmin', context, {})
 
     model = context['model']
-    query = model.Session.query(model.User).filter_by(
-            state=model.State.PENDING)
+    query = model.Session.query(model.User) \
+                 .filter_by(state=model.State.PENDING)
 
     users_list = []
 
