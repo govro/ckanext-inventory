@@ -9,10 +9,6 @@ from ckanext.inventory.logic.action import pending_user_list, activate_user
 from ckanext.inventory.model import model_setup
 
 
-INVENTORY_CONTROLLER = """
-    ckanext.inventory.controllers.inventory:InventoryController"""
-
-
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     implements(IGroupForm, inherit=True)
     implements(IConfigurer)
@@ -28,17 +24,22 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
 
     # IRoutes
     def before_map(self, mapping):
-        mapping.connect('/user/register', controller=INVENTORY_CONTROLLER,
+        INVENTORY_USER_CONTROLLER = """
+            ckanext.inventory.controllers.user:InventoryUserController"""
+        mapping.connect('/user/register',
+                        controller=INVENTORY_USER_CONTROLLER,
                         action='register')
         return mapping
 
     def after_map(self, mapping):
-        with SubMapper(mapping, controller=INVENTORY_CONTROLLER) as m:
-            m.connect('inventory_index',
-                      '/inventory',
+        INVENTORY_ADMIN_CONTROLLER = """
+            ckanext.inventory.controllers.inventory_admin:InventoryAdminController"""
+        with SubMapper(mapping, controller=INVENTORY_ADMIN_CONTROLLER) as m:
+            m.connect('inventory_admin_index',
+                      '/inventory/admin',
                       action='index')
             m.connect('inventory_activate_user',
-                      '/inventory/activate_user/{user_id}',
+                      '/inventory/admin/activate_user/{user_id}',
                       action='activate_user')
 
         return mapping
