@@ -1,3 +1,4 @@
+import ckan.lib.helpers as h
 from ckan.plugins.toolkit import (BaseController, render, check_access,
         NotAuthorized, abort, get_action, c, redirect_to)
 
@@ -21,4 +22,5 @@ class InventoryController(BaseController):
         context = {'user': c.user}
         data_dict = {'id': user_id}
         get_action('inventory_activate_user')(context, data_dict)
-        return redirect_to(controller='inventory', action='index')
+        h.flash_success('Account has been activated.')
+        return redirect_to('inventory')
