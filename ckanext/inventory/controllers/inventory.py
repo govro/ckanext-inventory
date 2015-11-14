@@ -23,4 +23,4 @@ class InventoryController(BaseController):
         data_dict = {'id': user_id}
         get_action('inventory_activate_user')(context, data_dict)
         h.flash_success('Account has been activated.')
-        return redirect_to('inventory')
+        return redirect_to('/inventory')

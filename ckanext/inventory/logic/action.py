@@ -14,6 +14,7 @@ def pending_user_list(context, data_dict):
 
     for user in query.all():
         result_dict = model_dictize.user_dictize(user, context)
+        result_dict['group_name'] = user.get_groups()[0].name
         users_list.append(result_dict)
 
     return users_list

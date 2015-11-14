@@ -8,6 +8,7 @@
         <th>Name</th>
         <th>Display Name</th>
         <th>Email</th>
+        <th>Group</th>
         <th>Activate</th>
       </tr>
     </thead>
@@ -17,6 +18,7 @@
         <td>{{ user.name }}</td>
         <td>{{ user.display_name }}</td>
         <td>{{ user.email }}</td>
+        <td>{{ user.group_name }}</td>
         <td><a href="{{ h.url_for('inventory_activate_user', user_id=user.id) }}">Activate...</a></td>
       </tr>
       {% endfor %}
