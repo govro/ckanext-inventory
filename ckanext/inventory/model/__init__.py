@@ -38,12 +38,12 @@ class InventoryItem(InventoryDomainObject):
 def model_setup():
     if inventory_entry_table is None:
         define_inventory_tables()
-        log.debug('Inventory tables are defined in memory')
+        log.debug('Inventory tables have been defined in memory')
 
     if not inventory_entry_table.exists():
         inventory_entry_table.create()
         inventory_item_table.create()
-        log.debug('Inventory tables created')
+        log.debug('Inventory tables have been created')
     else:
         log.debug('Inventory tables already exist')
         # Future migrations go here
