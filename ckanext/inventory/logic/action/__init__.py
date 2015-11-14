@@ -31,7 +31,7 @@ def activate_user(context, data_dict):
 
     user_obj = model.User.get(id)
     if not user_obj:
-        raise ObjectNotFound('User was not found.')
+        raise ObjectNotFound('User was not found')
 
     user_obj.activate()
     user_obj.save()

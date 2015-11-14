@@ -7,6 +7,7 @@ from ckan.plugins.toolkit import (
     DefaultOrganizationForm, get_validator, get_converter)
 from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
+from ckanext.inventory.logic.action.inventory_entry import inventory_entry_list
 from ckanext.inventory.model import model_setup
 
 
@@ -49,6 +50,13 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
                         controller=INVENTORY_MANAGE_CONTROLLER,
                         action='index')
 
+        INVENTORY_ENTRY_CONTROLLER = """
+            ckanext.inventory.controllers.inventory_entry:InventoryEntryController"""
+        mapping.connect('/organization/entry/{organization_name}',
+                        controller=INVENTORY_ENTRY_CONTROLLER,
+                        action='index')
+
+
         return mapping
 
     # IGroupForm
@@ -82,7 +90,8 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     def get_actions(self):
         return {'inventory_pending_user_list': pending_user_list,
                 'inventory_activate_user': activate_user,
-                'inventory_organization_by_inventory_id': organization_by_inventory_id}
+                'inventory_organization_by_inventory_id': organization_by_inventory_id,
+                'inventory_entry_list': inventory_entry_list}
 
     # IConfigurable
     def configure(self, config):
