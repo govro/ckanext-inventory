@@ -45,6 +45,12 @@ def organization_by_inventory_id(context, data_dict):
     group_extra = model.meta.Session.query(model.GroupExtra) \
                        .filter_by(key='inventory_organization_id') \
                        .filter_by(value=id).first()
+    if group_extra is None:
+        raise ObjectNotFound('No GroupExtra with specificied inventory id')
+
     organization = model.meta.Session.query(model.Group) \
                         .filter_by(id=group_extra.group_id).first()
+    if organization is None:
+        raise ObjectNotFound('No organization with specificied inventory id')
+
     return model_dictize.group_dictize(organization, context)
