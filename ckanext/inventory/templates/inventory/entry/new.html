@@ -1,0 +1,16 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Add Inventory Item') }}{% endblock %}
+
+{% block primary_content %}
+  <article class="module">
+    <div class="module-content">
+      {% block primary_content_inner %}
+      <h1 class="page-heading">
+        {% block page_heading %}{{ _('Add Inventory Item') }}{% endblock %}
+      </h1>
+      {{ c.form | safe }}
+      {% endblock %}
+    </div>
+  </article>
+{% endblock %}

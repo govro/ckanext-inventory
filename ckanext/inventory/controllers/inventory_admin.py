@@ -4,9 +4,9 @@ from ckan.plugins.toolkit import (
     redirect_to, ValidationError)
 
 
-class InventoryController(BaseController):
+class InventoryAdminController(BaseController):
     def __before__(self, action, **params):
-        super(InventoryController, self).__before__(action, **params)
+        super(InventoryAdminController, self).__before__(action, **params)
         context = {'user': c.user, 'auth_user_obj': c.userobj}
         try:
             check_access('sysadmin', context, {})
@@ -17,7 +17,7 @@ class InventoryController(BaseController):
     def index(self):
         context = {'user': c.user}
         c.users = get_action('inventory_pending_user_list')(context)
-        return render('inventory/index.html')
+        return render('inventory/admin/index.html')
 
     def activate_user(self, user_id):
         context = {'user': c.user}
@@ -33,4 +33,4 @@ class InventoryController(BaseController):
         except NotAuthorized as e:
             h.flash_error(e.message)
 
-        return redirect_to('/inventory')
+        return redirect_to('/inventory/admin')

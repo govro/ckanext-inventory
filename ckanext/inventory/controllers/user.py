@@ -20,6 +20,7 @@ unflatten = dictization_functions.unflatten
 class InventoryUserController(UserController):
     def _save_new(self, context):
         model = context['model']
+        context['ignore_auth'] = True
 
         try:
             data_dict = logic.clean_dict(unflatten(
@@ -27,15 +28,20 @@ class InventoryUserController(UserController):
             context['message'] = data_dict.get('log_message', '')
             captcha.check_recaptcha(request)
 
-            inventory_organization_id = data_dict.pop('inventory_organization_id')
+            organization = get_action('inventory_organization_by_inventory_id')\
+                (context, {'id': data_dict['inventory_organization_id']})
             user = get_action('user_create')(context, data_dict)
 
-            self._add_user_to_organization(model, user,
-                                           inventory_organization_id)
+            data_dict = {
+                'id': organization['id'],
+                'role': 'editor',
+                'username': user['name']
+            }
+            logic.get_action('organization_member_create')(context, data_dict)
         except NotAuthorized:
             abort(401, _('Unauthorized to create user %s') % '')
         except NotFound, e:
-            abort(404, _('User not found'))
+            abort(404, _('User or organization not found'))
         except DataError:
             abort(400, _(u'Integrity Error'))
         except captcha.CaptchaError:
@@ -54,21 +60,3 @@ class InventoryUserController(UserController):
 
         h.flash_success('Your account registration will be reviewed.')
         return render('home/index.html')
-
-    def _add_user_to_organization(self, model, user, inventory_organization_id):
-        rev = model.repo.new_revision()
-        rev.author = user['name']
-
-        # TODO @palcu: Do error handling if inventory_organization_id does not
-        # exist
-        organization_extra = model.meta.Session.query(model.GroupExtra) \
-                                  .filter_by(key='inventory_organization_id') \
-                                  .filter_by(value=inventory_organization_id).first()
-
-        member = model.Member(table_name='user',
-                              table_id=user['id'],
-                              group_id=organization_extra.group_id,
-                              state='active',
-                              capacity='editor')
-        model.Session.add(member)
-        model.repo.commit()

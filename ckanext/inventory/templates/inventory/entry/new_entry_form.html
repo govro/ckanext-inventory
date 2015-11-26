@@ -1,0 +1,13 @@
+{% import "macros/form.html" as form %}
+
+<form id="entry-new-form" class="form-horizontal" action="" method="post">
+  {{ form.errors(error_summary) }}
+  {{ form.input("title", id="field-title", label=_("Title"), placeholder=_("title"), value=data.title, error=errors.title, classes=["control-medium"]) }}
+  {{ form.input("recurring_interval", id="field-recurring_interval", label=_("Recurring Interval"), placeholder=_("recurring interval"), value=data.recurring_interval, error=errors.recurring_interval, classes=["control-medium"]) }}
+
+  <div class="form-actions">
+    {% block form_actions %}
+    <button class="btn btn-primary" type="submit" name="save">{{ _("Add Inventory Item") }}</button>
+    {% endblock %}
+  </div>
+</form>
