@@ -1,6 +1,8 @@
 from ckan.plugins.toolkit import (
-    check_access, side_effect_free, ObjectNotFound, get_or_bust)
-from ckan.lib.dictization import table_dictize
+    check_access, side_effect_free, ObjectNotFound, get_or_bust, get_action)
+from ckan.lib.dictization import table_dictize, table_dict_save
+
+from ckanext.inventory.model import InventoryEntry
 
 
 @side_effect_free
@@ -23,3 +25,21 @@ def inventory_entry_list(context, data_dict):
 
     return [table_dictize(entry, context)
             for entry in organization.inventory_entries]
+
+
+def inventory_entry_create(context, data_dict):
+    session = context['session']
+    model = context['model']
+
+    # TODO @palcu: remove hack
+    data_dict['is_recurring'] = data_dict['recurring_interval'] > 0
+
+    organization = get_action('organization_show')(context,
+                                                   {'id': context['organization_name']})
+    data_dict['group_id'] = organization['id']
+
+    inventory_entry = table_dict_save(data_dict, InventoryEntry, context)
+    model.repo.commit()
+
+    # TODO @palcu: check something
+    return {}
