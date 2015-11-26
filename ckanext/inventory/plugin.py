@@ -52,10 +52,16 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
 
         INVENTORY_ENTRY_CONTROLLER = """
             ckanext.inventory.controllers.inventory_entry:InventoryEntryController"""
-        mapping.connect('inventory_entry',
-                        '/organization/entry/{organization_name}',
-                        controller=INVENTORY_ENTRY_CONTROLLER,
-                        action='index')
+        with SubMapper(mapping, controller=INVENTORY_ENTRY_CONTROLLER) as m:
+            m.connect('inventory_entry',
+                      '/organization/entry/{organization_name}',
+                      action='index')
+            m.connect('inventory_entry_new',
+                      '/organization/entry/{organization_name}/new',
+                      action='new')
+            m.connect('inventory_entry_edit',
+                      '/organization/entry/{organization_name}/edit/{inventory_entry_id}',
+                      action='edit')
 
 
         return mapping

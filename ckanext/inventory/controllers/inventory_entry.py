@@ -26,3 +26,9 @@ class InventoryEntryController(OrganizationController):
             (context, {'name': organization_name})
         return render('inventory/entry/index.html',
                       extra_vars={'group_type': group_type})
+
+    def new(self):
+        return render('inventory/entry/new.html')
+
+    def edit(self):
+        return render('inventory/entry/edit.html')
