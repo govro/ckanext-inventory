@@ -52,7 +52,8 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
 
         INVENTORY_ENTRY_CONTROLLER = """
             ckanext.inventory.controllers.inventory_entry:InventoryEntryController"""
-        mapping.connect('/organization/entry/{organization_name}',
+        mapping.connect('inventory_entry',
+                        '/organization/entry/{organization_name}',
                         controller=INVENTORY_ENTRY_CONTROLLER,
                         action='index')
 
