@@ -2,6 +2,12 @@
 
 {% block subtitle %}{{ _('Entries') }} - {{ super() }}{% endblock %}
 
+{% block page_primary_action %}
+  {% if h.check_access('package_create', {'owner_org': c.group_dict.id}) %}
+    {% link_for _('Add Inventory Item'), controller='package', action='new', group=c.group_dict.id, class_='btn btn-primary', icon='plus-sign-alt' %}
+  {% endif %}
+{% endblock %}
+
 {% block primary_content_inner %}
   <h1>{% block page_heading %}Inventory Entries{% endblock %}</h1>
   <table class="table table-striped table-bordered table-condensed">
