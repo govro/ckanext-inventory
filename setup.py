@@ -78,5 +78,6 @@ setup(
     entry_points='''
         [ckan.plugins]
         inventory=ckanext.inventory.plugin:InventoryPlugin
+        inventoryfix=ckanext.inventory.plugin:InventoryPluginFix
     ''',
 )

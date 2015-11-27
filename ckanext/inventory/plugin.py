@@ -14,14 +14,12 @@ from ckanext.inventory.logic.validators import update_package_inventory_entry
 from ckanext.inventory.model import model_setup
 
 
-class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultDatasetForm):
+class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     implements(IGroupForm)
     implements(IConfigurer)
     implements(IActions)
     implements(IConfigurable)
     implements(IRoutes, inherit=True)
-    implements(IDatasetForm)
-    implements(IValidators)
 
     # IConfigurer
     def update_config(self, config_):
@@ -109,6 +107,15 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultDatasetFo
     def configure(self, config):
         model_setup()
 
+
+class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
+    '''Hack because methods from DefaultOrganizationForm overlap with
+    DefaultDatasetForm. You should add inventory and invetoryfix to your config
+    to load both classes.
+    '''
+    implements(IDatasetForm)
+    implements(IValidators)
+
     # IDatasetForm
     def _modify_package_schema(self, schema):
         schema.update({
@@ -118,17 +125,17 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultDatasetFo
         return schema
 
     def create_package_schema(self):
-        schema = super(InventoryPlugin, self).create_package_schema()
+        schema = super(InventoryPluginFix, self).create_package_schema()
         schema = self._modify_package_schema(schema)
         return schema
 
     def update_package_schema(self):
-        schema = super(InventoryPlugin, self).update_package_schema()
+        schema = super(InventoryPluginFix, self).update_package_schema()
         schema = self._modify_package_schema(schema)
         return schema
 
     def show_package_schema(self):
-        schema = super(InventoryPlugin, self).show_package_schema()
+        schema = super(InventoryPluginFix, self).show_package_schema()
         schema.update({
             'inventory_entry_id': [get_converter('convert_from_extras'),
                                    get_validator('ignore_missing')]
@@ -143,3 +150,7 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultDatasetFo
         return {
             'update_package_inventory_entry': update_package_inventory_entry
         }
+
+    def is_fallback(self):
+        """Register as default handler for groups."""
+        return False
