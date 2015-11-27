@@ -1,0 +1,5 @@
+{% ckan_extends %}
+
+{% block package_basic_fields_custom %}
+  {{ form.input('inventory_entry_id', label=_('Inventory Entry'), id='field-inventory_entry_id', placeholder=_('Just ID for now'), value=data.inventory_entry_id, error=errors.inventory_entry_id, classes=['control-medium']) }}
+{% endblock %}

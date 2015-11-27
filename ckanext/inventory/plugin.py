@@ -1,23 +1,27 @@
 import ckan.logic.schema
 from routes.mapper import SubMapper
-from ckan.plugins import (implements, IConfigurer, IGroupForm, IRoutes,
-                          SingletonPlugin, IActions, IConfigurable)
+from ckan.plugins import (
+    implements, IConfigurer, IGroupForm, IRoutes, SingletonPlugin, IActions,
+    IConfigurable, IDatasetForm, IValidators)
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
-    DefaultOrganizationForm, get_validator, get_converter)
+    DefaultOrganizationForm, get_validator, get_converter, DefaultDatasetForm)
 from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.logic.action.inventory_entry import (
     inventory_entry_list, inventory_entry_create)
+from ckanext.inventory.logic.validators import update_package_inventory_entry
 from ckanext.inventory.model import model_setup
 
 
-class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
-    implements(IGroupForm, inherit=True)
+class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultDatasetForm):
+    implements(IGroupForm)
     implements(IConfigurer)
     implements(IActions)
     implements(IConfigurable)
     implements(IRoutes, inherit=True)
+    implements(IDatasetForm)
+    implements(IValidators)
 
     # IConfigurer
     def update_config(self, config_):
@@ -104,3 +108,38 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     # IConfigurable
     def configure(self, config):
         model_setup()
+
+    # IDatasetForm
+    def _modify_package_schema(self, schema):
+        schema.update({
+            'inventory_entry_id': [get_converter('convert_to_extras'),
+                                   get_converter('update_package_inventory_entry')]
+        })
+        return schema
+
+    def create_package_schema(self):
+        schema = super(InventoryPlugin, self).create_package_schema()
+        schema = self._modify_package_schema(schema)
+        return schema
+
+    def update_package_schema(self):
+        schema = super(InventoryPlugin, self).update_package_schema()
+        schema = self._modify_package_schema(schema)
+        return schema
+
+    def show_package_schema(self):
+        schema = super(InventoryPlugin, self).show_package_schema()
+        schema.update({
+            'inventory_entry_id': [get_converter('convert_from_extras'),
+                                   get_validator('ignore_missing')]
+        })
+        return schema
+
+    def package_types(self):
+        return ['dataset']
+
+    # IValidators
+    def get_validators(self):
+        return {
+            'update_package_inventory_entry': update_package_inventory_entry
+        }
