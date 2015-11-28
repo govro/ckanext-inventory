@@ -27,26 +27,29 @@ To install ckanext-inventory:
 
 1. Activate your CKAN virtual environment, for example::
 
-     . /usr/lib/ckan/default/bin/activate
+```
+. /usr/lib/ckan/default/bin/activate
+```
 
-2. Install the ckanext-inventory Python package into your virtual environment::
+2. Install the ckanext-inventory Python package into your virtual environment:
 
-     pip install ckanext-inventory
+```
+pip install ckanext-inventory
+```
 
-3. Add ``inventory`` to the ``ckan.plugins`` setting in your CKAN
-   config file (by default the config file is located at
-   ``/etc/ckan/default/production.ini``).
+3. Add `inventory inventoryfix` to the `ckan.plugins` setting in your CKAN
+   config file.
 
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
-
-     sudo service apache2 reload
+4. Restart CKAN.
 
 ## Development Installation
 
 To install ckanext-inventory for development, activate your CKAN virtualenv and
-do::
+do:
 
-    git clone https://github.com/govro/ckanext-inventory.git
-    cd ckanext-inventory
-    python setup.py develop
-    pip install -r dev-requirements.txt
+```
+git clone https://github.com/govro/ckanext-inventory.git
+cd ckanext-inventory
+python setup.py develop
+pip install -r dev-requirements.txt
+```
