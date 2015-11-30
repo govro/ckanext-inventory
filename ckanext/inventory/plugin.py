@@ -1,8 +1,9 @@
 import ckan.logic.schema
 from routes.mapper import SubMapper
+from ckan.lib.plugins import DefaultTranslation
 from ckan.plugins import (
     implements, IConfigurer, IGroupForm, IRoutes, SingletonPlugin, IActions,
-    IConfigurable, IDatasetForm, IValidators)
+    IConfigurable, IDatasetForm, IValidators, ITranslation)
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
     DefaultOrganizationForm, get_validator, get_converter, DefaultDatasetForm,
@@ -15,12 +16,13 @@ from ckanext.inventory.logic.validators import update_package_inventory_entry
 from ckanext.inventory.model import model_setup
 
 
-class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
+class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslation):
     implements(IGroupForm)
     implements(IConfigurer)
     implements(IActions)
     implements(IConfigurable)
     implements(IRoutes, inherit=True)
+    implements(ITranslation)
 
     # IConfigurer
     def update_config(self, config):
