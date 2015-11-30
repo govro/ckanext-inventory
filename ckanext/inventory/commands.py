@@ -3,6 +3,7 @@ from os.path import isfile
 import logging
 
 from ckan import model
+from ckan.lib.create_test_data import CreateTestData
 from ckan.plugins.toolkit import CkanCommand, get_action, ValidationError
 
 
@@ -35,45 +36,28 @@ class GenerateOrganizationsCommand(CkanCommand):
             self.logger.error('CSV file does not exist at that path')
             return
 
-        self.context = {
-            'model': model,
-            'session': model.Session,
-            'ignore_auth': True,
-        }
+        group_dicts = self.create_organization_dicts_from_csv(csv_path)
+        CreateTestData().create_groups(group_dicts, admin_user_name)
 
-        admin_user = get_action('user_show')(self.context, {'id': admin_user_name})
-        self.context['user'] = admin_user['name']
-
-        self.create_organizations_from_csv(csv_path)
-
-    def create_organizations_from_csv(self, csv_path):
+    def create_organization_dicts_from_csv(self, csv_path):
+        group_dicts = []
         with open(csv_path) as csvfile:
             reader = unicodecsv.reader(csvfile, delimiter='|')
             for i, row in enumerate(reader):
-                if i > 50: break
                 if len(row) != 2:
                     self.logger.error('Invalid CSV row {0}'.format("".join(row)))
                 else:
-                    self.create_organization(row[0], row[1])
+                    group_dicts.append(self.create_organization_dict(row[0], row[1]))
+        return group_dicts
 
-    def create_organization(self, inventory_id, title):
-        name = self.namefy(title)
-
-        params = {
-            'name': name,
+    def create_organization_dict(self, inventory_id, title):
+        return {
+            'name': self.namefy(title),
             'title': title,
             'inventory_organization_id': inventory_id,
-            'defer_commit': True,
+            'is_organization': True,
+            'type': 'organization',
         }
-
-        try:
-            organization = get_action('organization_create')(self.context, params)
-            self.logger.info('{0} created with id {1}'.format(organization['name'], organization['id']))
-        except ValidationError, e:
-            try:
-                self.logger.error('{0} - {1}'.format(name, e.error_summary))
-            except Exception:
-                pass
 
     def namefy(self, title):
         res = []
