@@ -17,6 +17,7 @@
         <th>{{ _('Recurring') }}</th>
         <th>{{ _('Recurring Interval (days)') }}</th>
         <th>{{ _('Last added dataset') }}</th>
+        <th>{{ _('Next deadline') }}</th>
         <th>{{ _('Edit') }}</th>
       </tr>
     </thead>
@@ -27,6 +28,7 @@
         <td>{{ entry.is_recurring }}</td>
         <td>{{ entry.recurring_interval }}</td>
         <td>{{ h.time_ago_from_timestamp(entry.last_added_dataset_timestamp) }}</td>
+        <td>{{ h.render_datetime(entry.next_deadline_timestamp) }}</td>
         <td><a href="{{ h.url_for('inventory_entry_edit', organization_name=c.group_dict.name, inventory_entry_id=entry.id) }}">{{ _('Edit') }}</a></td>
       </tr>
       {% endfor %}

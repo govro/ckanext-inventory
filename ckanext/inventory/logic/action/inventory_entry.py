@@ -1,6 +1,9 @@
+from datetime import timedelta
+
 from ckan.plugins.toolkit import (
     check_access, side_effect_free, ObjectNotFound, get_or_bust, get_action)
 from ckan.lib.dictization import table_dictize, table_dict_save
+from ckan.lib.helpers import _datestamp_to_datetime
 
 from ckanext.inventory.model import InventoryEntry
 
@@ -23,8 +26,12 @@ def inventory_entry_list(context, data_dict):
     if not organization:
         raise ObjectNotFound('Organization was not found')
 
-    return [table_dictize(entry, context)
-            for entry in organization.inventory_entries]
+    entries = [table_dictize(entry, context)
+        for entry in organization.inventory_entries]
+
+    for entry in entries:
+        entry['next_deadline_timestamp'] = timedelta(days=entry['recurring_interval']) + _datestamp_to_datetime(entry['last_added_dataset_timestamp'])
+    return entries
 
 
 def inventory_entry_create(context, data_dict):
