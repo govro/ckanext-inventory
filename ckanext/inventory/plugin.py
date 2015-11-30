@@ -6,7 +6,7 @@ from ckan.plugins import (
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
     DefaultOrganizationForm, get_validator, get_converter, DefaultDatasetForm,
-    get_action, c)
+    get_action, c, add_ckan_admin_tab)
 from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.logic.action.inventory_entry import (
@@ -23,9 +23,10 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     implements(IRoutes, inherit=True)
 
     # IConfigurer
-    def update_config(self, config_):
-        add_template_directory(config_, 'templates')
-        add_public_directory(config_, 'public')
+    def update_config(self, config):
+        add_template_directory(config, 'templates')
+        add_public_directory(config, 'public')
+        add_ckan_admin_tab(config, 'inventory_admin_index', 'Activate Users')
         add_resource('fanstatic', 'inventory')
 
     # IRoutes
