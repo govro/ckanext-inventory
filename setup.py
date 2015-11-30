@@ -16,14 +16,14 @@ setup(
     # http://packaging.python.org/en/latest/tutorial.html#version
     version='0.0.1',
 
-    description='''CKAN Extension for receiving dataset inventories from organizations and tracking''',
+    description='''CKAN Extension for receiving and tracking dataset inventories from organizations''',
     long_description=long_description,
 
     # The project's main homepage.
     url='https://github.com/govro/ckanext-inventory',
 
     # Author details
-    author='''their status.Alex Palcuie''',
+    author='''Alex Palcuie''',
     author_email='''alex.palcuie@gmail.com''',
 
     # Choose your license
@@ -78,5 +78,6 @@ setup(
     entry_points='''
         [ckan.plugins]
         inventory=ckanext.inventory.plugin:InventoryPlugin
+        inventoryfix=ckanext.inventory.plugin:InventoryPluginFix
     ''',
 )

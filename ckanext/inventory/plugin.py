@@ -1,19 +1,22 @@
 import ckan.logic.schema
 from routes.mapper import SubMapper
-from ckan.plugins import (implements, IConfigurer, IGroupForm, IRoutes,
-                          SingletonPlugin, IActions, IConfigurable)
+from ckan.plugins import (
+    implements, IConfigurer, IGroupForm, IRoutes, SingletonPlugin, IActions,
+    IConfigurable, IDatasetForm, IValidators)
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
-    DefaultOrganizationForm, get_validator, get_converter)
+    DefaultOrganizationForm, get_validator, get_converter, DefaultDatasetForm,
+    get_action, c)
 from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.logic.action.inventory_entry import (
     inventory_entry_list, inventory_entry_create)
+from ckanext.inventory.logic.validators import update_package_inventory_entry
 from ckanext.inventory.model import model_setup
 
 
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
-    implements(IGroupForm, inherit=True)
+    implements(IGroupForm)
     implements(IConfigurer)
     implements(IActions)
     implements(IConfigurable)
@@ -104,3 +107,65 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
     # IConfigurable
     def configure(self, config):
         model_setup()
+
+
+class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
+    '''Hack because methods from DefaultOrganizationForm overlap with
+    DefaultDatasetForm. You should add inventory and invetoryfix to your config
+    to load both classes.
+    '''
+    implements(IDatasetForm)
+    implements(IValidators)
+
+    # IDatasetForm
+    def _modify_package_schema(self, schema):
+        schema.update({
+            'inventory_entry_id': [get_converter('convert_to_extras'),
+                                   get_converter('update_package_inventory_entry')]
+        })
+        return schema
+
+    def create_package_schema(self):
+        schema = super(InventoryPluginFix, self).create_package_schema()
+        schema = self._modify_package_schema(schema)
+        return schema
+
+    def update_package_schema(self):
+        schema = super(InventoryPluginFix, self).update_package_schema()
+        schema = self._modify_package_schema(schema)
+        return schema
+
+    def show_package_schema(self):
+        schema = super(InventoryPluginFix, self).show_package_schema()
+        schema.update({
+            'inventory_entry_id': [get_converter('convert_from_extras'),
+                                   get_validator('ignore_missing')]
+        })
+        return schema
+
+    def setup_template_variables(self, context, data_dict):
+        """Add inventory entries that the user has access to."""
+        # TODO @palcu: send this to it's own logic method
+        organizations = get_action('organization_list_for_user')\
+            (context, {'permission': 'create_dataset'})
+
+        inventory_entries = []
+        for organization in organizations:
+            inventory_entries += get_action('inventory_entry_list')(context, {'name': organization['id']})
+        c.inventory_entries = [(x['id'], x['title']) for x in inventory_entries]
+
+        super(InventoryPluginFix, self).setup_template_variables(context,
+                                                                 data_dict)
+
+    def package_types(self):
+        return ['dataset']
+
+    # IValidators
+    def get_validators(self):
+        return {
+            'update_package_inventory_entry': update_package_inventory_entry
+        }
+
+    def is_fallback(self):
+        """Register as default handler for groups."""
+        return False
