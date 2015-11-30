@@ -77,7 +77,10 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
         [ckan.plugins]
-        inventory=ckanext.inventory.plugin:InventoryPlugin
-        inventoryfix=ckanext.inventory.plugin:InventoryPluginFix
+        inventory = ckanext.inventory.plugin:InventoryPlugin
+        inventoryfix = ckanext.inventory.plugin:InventoryPluginFix
+
+        [paste.paster_command]
+        generate_organizations = ckanext.inventory.commands:GenerateOrganizationsCommand
     ''',
 )
