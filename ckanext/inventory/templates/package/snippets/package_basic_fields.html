@@ -1,5 +1,17 @@
 {% ckan_extends %}
 
 {% block package_basic_fields_custom %}
-  {{ form.input('inventory_entry_id', label=_('Inventory Entry'), id='field-inventory_entry_id', placeholder=_('Just ID for now'), value=data.inventory_entry_id, error=errors.inventory_entry_id, classes=['control-medium']) }}
+<div class="control-group">
+  {% set error = errors.inventory_entry_id %}
+  <label class="control-label" for="field-inventory_entry_id">{{ _("Inventory Entry") }}</label>
+  <div class="controls">
+    <select id="field-inventory_entry_id" name="inventory_entry_id" data-module="autocomplete">
+      {% set existing_inventory_entry_id = data.get('inventory_entry_id') %}
+      {% for inventory_entry_id, inventory_entry_title in c.inventory_entries %}
+        <option value="{{ inventory_entry_id }}" {% if existing_inventory_entry_id == inventory_entry_id %}selected="selected"{% endif %}>{{ inventory_entry_title }}</option>
+      {% endfor %}
+    </select>
+    {% if error %}<span class="error-block">{{ error }}</span>{% endif %}
+  </div>
+</div>
 {% endblock %}
