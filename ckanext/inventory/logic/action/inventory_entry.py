@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from ckan.plugins.toolkit import (
-    check_access, side_effect_free, ObjectNotFound, get_or_bust, get_action)
+    side_effect_free, ObjectNotFound, get_or_bust, get_action)
 from ckan.lib.dictization import table_dictize, table_dict_save
 from ckan.lib.helpers import _datestamp_to_datetime
 
@@ -26,27 +26,27 @@ def inventory_entry_list(context, data_dict):
     if not organization:
         raise ObjectNotFound('Organization was not found')
 
-    entries = [table_dictize(entry, context)
-        for entry in organization.inventory_entries]
+    entries = [table_dictize(entry, context) for entry in organization.inventory_entries]
 
     for entry in entries:
-        entry['next_deadline_timestamp'] = timedelta(days=entry['recurring_interval']) + _datestamp_to_datetime(entry['last_added_dataset_timestamp'])
+        last_added = _datestamp_to_datetime(entry['last_added_dataset_timestamp'])
+        delta = timedelta(days=entry['recurring_interval'])
+        entry['next_deadline_timestamp'] = last_added + delta
     return entries
 
 
 def inventory_entry_create(context, data_dict):
-    session = context['session']
     model = context['model']
 
     # TODO @palcu: remove hack
     data_dict['is_recurring'] = data_dict['recurring_interval'] > 0
 
-    organization = get_action('organization_show')(context,
-                                                   {'id': context['organization_name']})
+    organization = get_action('organization_show')(
+        context, {'id': context['organization_name']})
     data_dict['group_id'] = organization['id']
 
-    inventory_entry = table_dict_save(data_dict, InventoryEntry, context)
+    table_dict_save(data_dict, InventoryEntry, context)
     model.repo.commit()
 
-    # TODO @palcu: check something
+    # TODO @palcu: check something saved entry is ok
     return {}

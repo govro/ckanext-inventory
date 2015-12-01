@@ -5,7 +5,8 @@ import ckan.lib.captcha as captcha
 import ckan.lib.helpers as h
 import ckan.lib.navl.dictization_functions as dictization_functions
 import ckan.logic as logic
-from ckan.common import c, request, response
+from ckan.plugins.toolkit import _
+from ckan.common import request
 
 abort = base.abort
 render = base.render
@@ -28,8 +29,8 @@ class InventoryUserController(UserController):
             context['message'] = data_dict.get('log_message', '')
             captcha.check_recaptcha(request)
 
-            organization = get_action('inventory_organization_by_inventory_id')\
-                (context, {'id': data_dict['inventory_organization_id']})
+            organization = get_action('inventory_organization_by_inventory_id')(
+                context, {'id': data_dict['inventory_organization_id']})
             user = get_action('user_create')(context, data_dict)
 
             data_dict = {

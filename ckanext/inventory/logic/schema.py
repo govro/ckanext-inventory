@@ -1,6 +1,7 @@
-from ckan.lib.navl.validators import ignore_empty, ignore
+from ckan.lib.navl.validators import ignore_empty, not_empty
 from ckan.logic.validators import (
-    name_validator, boolean_validator, is_positive_integer, isodate)
+    name_validator, boolean_validator, is_positive_integer, isodate,
+    group_id_exists)
 
 
 def default_inventory_entry_schema():

@@ -28,6 +28,7 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
     def update_config(self, config):
         add_template_directory(config, 'templates')
         add_public_directory(config, 'public')
+        # TODO @palcu: translate this string
         add_ckan_admin_tab(config, 'inventory_admin_index', 'Activate Users')
         add_resource('fanstatic', 'inventory')
 
@@ -149,12 +150,13 @@ class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
     def setup_template_variables(self, context, data_dict):
         """Add inventory entries that the user has access to."""
         # TODO @palcu: send this to it's own logic method
-        organizations = get_action('organization_list_for_user')\
-            (context, {'permission': 'create_dataset'})
+        organizations = get_action('organization_list_for_user')(
+            context, {'permission': 'create_dataset'})
 
         inventory_entries = []
         for organization in organizations:
-            inventory_entries += get_action('inventory_entry_list')(context, {'name': organization['id']})
+            inventory_entries += get_action('inventory_entry_list')(
+                context, {'name': organization['id']})
         c.inventory_entries = [(x['id'], x['title']) for x in inventory_entries]
 
         super(InventoryPluginFix, self).setup_template_variables(context,
