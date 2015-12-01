@@ -30,9 +30,11 @@ def inventory_entry_list(context, data_dict):
     entries = [table_dictize(entry, context) for entry in organization.inventory_entries]
 
     for entry in entries:
-        last_added = _datestamp_to_datetime(entry['last_added_dataset_timestamp'])
-        delta = timedelta(days=entry['recurring_interval'])
-        entry['next_deadline_timestamp'] = last_added + delta
+        entry['next_deadline_timestamp'] = None
+        if entry['last_added_dataset_timestamp']:
+            last_added = _datestamp_to_datetime(entry['last_added_dataset_timestamp'])
+            delta = timedelta(days=entry['recurring_interval'])
+            entry['next_deadline_timestamp'] = last_added + delta
     return entries
 
 
