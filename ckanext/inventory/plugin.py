@@ -14,7 +14,7 @@ from ckanext.inventory.logic.action.inventory_entry import (
     inventory_entry_list, inventory_entry_create, inventory_organization_show,
     inventory_entry_update_timestamp)
 from ckanext.inventory.logic.action.inventory_item import (
-    inventory_item_create)
+    inventory_item_create, inventory_entry_list_items)
 from ckanext.inventory.logic.validators import update_package_inventory_entry
 from ckanext.inventory.model import model_setup, InventoryEntry
 
@@ -74,6 +74,9 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
             m.connect('inventory_entry_edit',
                       '/organization/entry/{organization_name}/edit/{inventory_entry_id}',
                       action='edit')
+            m.connect('inventory_entry_read',
+                      '/organization/entry/{organization_name}/read/{inventory_entry_id}',
+                      action='read')
 
         return mapping
 
@@ -114,7 +117,8 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
             'inventory_entry_create': inventory_entry_create,
             'inventory_organization_show': inventory_organization_show,
             'inventory_entry_update_timestamp': inventory_entry_update_timestamp,
-            'inventory_item_create': inventory_item_create
+            'inventory_item_create': inventory_item_create,
+            'inventory_entry_list_items': inventory_entry_list_items,
         }
 
     # IConfigurable

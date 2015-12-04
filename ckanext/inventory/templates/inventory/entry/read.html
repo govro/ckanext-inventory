@@ -1,0 +1,12 @@
+{% extends "organization/read_base.html" %}
+
+{% block subtitle %}{{ _('Inventory Items') }} - {{ super() }}{% endblock %}
+
+{% block primary_content_inner %}
+  <h1>{% block page_heading %}{{ _('Inventory Items') }}{% endblock %}</h1>
+  <ul>
+  {% for package_id, package_title in c.entries %}
+    <li>{{ h.link_to(package_title, h.url_for(controller='package', action='read', id=package_id)) }}</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

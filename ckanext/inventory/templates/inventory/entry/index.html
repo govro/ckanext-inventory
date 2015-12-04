@@ -26,7 +26,7 @@
     <tbody>
       {% for entry in c.entries %}
       <tr>
-        <td>{{ entry.title }}</td>
+        <td><a href="{{ h.url_for('inventory_entry_read', organization_name=c.group_dict.name, inventory_entry_id=entry.id) }}">{{ entry.title }}</a></td>
         <td>{{ entry.is_recurring }}</td>
         <td>{{ entry.recurring_interval }}</td>
         <td>{{ h.time_ago_from_timestamp(entry.last_added_dataset_timestamp) }}</td>
