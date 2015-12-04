@@ -1,23 +1,28 @@
 {% import "macros/form.html" as form %}
 
+{% resource 'inventory/check_organization_inventory.js' %}
+
 <form id="user-register-form" class="form-horizontal" action="" method="post">
   {{ form.errors(error_summary) }}
   {{ form.input("name", id="field-username", label=_("Username"), placeholder=_("username"), value=data.name, error=errors.name, classes=["control-medium"]) }}
   {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder=_("Joe Bloggs"), value=data.fullname, error=errors.fullname, classes=["control-medium"]) }}
 
-  <div class="control-group">
-    {% set error = errors.inventory_organization_id %}
-    <label class="control-label" for="field-inventory_organization_id">{{ _("Organization ID") }}</label>
+  {{ form.input("inventory_organization_id", id="field-inventory_organization_id", label=_("Organization ID"), placeholder=_("123456789"), value=data.inventory_organization_id, error=errors.inventory_organization_id, classes=["control-medium"]) }}
+
+
+  <div class="control-group control-medium">
     <div class="controls">
-      <select id="field-inventory_organization_id" name="inventory_organization_id" data-module="autocomplete">
-        {% set existing_inventory_organization_id = data.get('inventory_organization_id') %}
-        {% for inventory_organization_id, inventory_organization_title in c.inventory_organizations %}
-          <option value="{{ inventory_organization_id }}" {% if existing_inventory_organization_id == inventory_organization_id %}selected="selected"{% endif %}>{{ inventory_organization_title }}</option>
-        {% endfor %}
-      </select>
-      {% if error %}<span class="error-block">{{ error }}</span>{% endif %}
+      <button data-module="inventory" class="btn" href="#">
+        {{ _.('Check Organization') }}
+      </button>
     </div>
   </div>
+  <div class="control-group control-medium">
+    <div class="controls">
+      <div class="alert inventory-message"></div>
+    </div>
+  </div>
+
 
   {{ form.input("email", id="field-email", label=_("Email"), type="email", placeholder=_("joe@example.com"), value=data.email, error=errors.email, classes=["control-medium"]) }}
   {{ form.input("password1", id="field-password", label=_("Password"), type="password", placeholder="••••••••", value=data.password1, error=errors.password1, classes=["control-medium"]) }}
