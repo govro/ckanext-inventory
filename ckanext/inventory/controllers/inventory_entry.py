@@ -54,6 +54,22 @@ class InventoryEntryController(OrganizationController):
     def edit(self):
         return render('inventory/entry/edit.html')
 
+    def read(self, organization_name, inventory_entry_id):
+        # TODO @palcu: DRY this and index
+        context = {'model': model,
+                   'session': model.Session,
+                   'user': c.user or c.author}
+        group_type = self._ensure_controller_matches_group_type(organization_name)
+        context = {'model': model, 'user': c.user, 'session': model.Session}
+        c.group_dict = self._get_group_dict(organization_name)
+        group_type = c.group_dict['type']
+        self._setup_template_variables(context, {'id': organization_name},
+                                       group_type=group_type)
+        c.entries = get_action('inventory_entry_list_items')(
+            context, {'inventory_entry_id': inventory_entry_id})
+        return render('inventory/entry/read.html',
+                      extra_vars={'group_type': group_type})
+
     def _save_new(self, context):
         try:
             data_dict = logic.clean_dict(unflatten(
