@@ -82,5 +82,17 @@ setup(
 
         [paste.paster_command]
         generate_organizations = ckanext.inventory.commands:GenerateOrganizationsCommand
+
+        [babel.extractors]
+        ckan = ckan.lib.extract:extract_ckan
     ''',
+
+    # For i18n
+    message_extractors={
+        'ckanext': [
+            ('**.py', 'python', None),
+            ('**.js', 'javascript', None),
+            ('**/templates/**.html', 'ckan', None),
+        ],
+    },
 )

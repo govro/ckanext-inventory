@@ -1,0 +1,165 @@
+# Romanian translations for ckanext-inventory.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the ckanext-inventory
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ckanext-inventory 0.0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-11-30 21:41+0000\n"
+"PO-Revision-Date: 2015-12-01 00:05+0200\n"
+"Language-Team: ro <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n"
+"%100 < 20)) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+"Last-Translator: \n"
+"Language: ro\n"
+"X-Generator: Poedit 1.7.6\n"
+
+#: ckanext/inventory/controllers/user.py:42
+#, python-format
+msgid "Unauthorized to create user %s"
+msgstr "Neautorizat să creezi utilizatorul %s"
+
+#: ckanext/inventory/controllers/user.py:44
+msgid "User or organization not found"
+msgstr "Utilizator sau organizație negăsit"
+
+#: ckanext/inventory/controllers/user.py:46
+msgid "Integrity Error"
+msgstr "Eroare de integritate"
+
+#: ckanext/inventory/controllers/user.py:48
+msgid "Bad Captcha. Please try again."
+msgstr "Cod de securitate greșit. Reîncearcă."
+
+#: ckanext/inventory/logic/validators.py:10
+msgid "No inventory entry provided"
+msgstr "Nu ai oferit o intrare de inventar"
+
+#: ckanext/inventory/logic/validators.py:15
+msgid "Not found"
+msgstr "Negăsit"
+
+#: ckanext/inventory/templates/inventory/admin/index.html:33
+msgid "Activate Users"
+msgstr "Activare Utilizatori"
+
+#: ckanext/inventory/templates/inventory/admin/index.html:37
+msgid " <p>As a sysadmin user you can activate pending users.</p> "
+msgstr "<p>Ca un utilizator sysadmin poți activa alți utilizatori.</p>"
+
+#: ckanext/inventory/templates/inventory/entry/base_form_page.html:4
+msgid "Inventory Entry Form"
+msgstr "Formular pentru intrările în inventar"
+
+#: ckanext/inventory/templates/inventory/entry/index.html:3
+msgid "Entries"
+msgstr "Intrări"
+
+#: ckanext/inventory/templates/inventory/entry/new.html:3
+#: ckanext/inventory/templates/inventory/entry/new.html:10
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:10
+msgid "Add Inventory Item"
+msgstr "Adaugă o intrare în inventar"
+
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
+msgid "Title"
+msgstr "Titlu"
+
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
+msgid "title"
+msgstr "titlu"
+
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
+msgid "Recurring Interval"
+msgstr "Interval de Recurență"
+
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
+msgid "recurring interval"
+msgstr "interval de recurență"
+
+#: ckanext/inventory/templates/organization/read_base.html:4
+msgid "Datasets"
+msgstr "Seturi de date"
+
+#: ckanext/inventory/templates/organization/read_base.html:5
+msgid "Activity Stream"
+msgstr "Activități"
+
+#: ckanext/inventory/templates/organization/read_base.html:6
+msgid "About"
+msgstr "Despre"
+
+#: ckanext/inventory/templates/organization/read_base.html:7
+msgid "Inventory"
+msgstr "Inventar"
+
+#: ckanext/inventory/templates/organization/snippets/organization_form.html:6
+msgid "CIF"
+msgstr "CIF"
+
+#: ckanext/inventory/templates/organization/snippets/organization_form.html:6
+msgid "RO12345678"
+msgstr "RO12345678"
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:6
+msgid "Inventory Entry"
+msgstr "Intrare de Inventar"
+
+#: ckanext/inventory/templates/snippets/organization.html:7
+msgid "read more"
+msgstr "citește mai multe"
+
+#: ckanext/inventory/templates/snippets/organization.html:10
+msgid "There is no description for this organization"
+msgstr "Nu există o descriere a acestei organizații"
+
+#: ckanext/inventory/templates/user/new_user_form.html:5
+msgid "Username"
+msgstr "Nume de utilizator"
+
+#: ckanext/inventory/templates/user/new_user_form.html:5
+msgid "username"
+msgstr "nume de utilizator"
+
+#: ckanext/inventory/templates/user/new_user_form.html:6
+msgid "Full Name"
+msgstr "Nume complet"
+
+#: ckanext/inventory/templates/user/new_user_form.html:6
+msgid "Joe Bloggs"
+msgstr "Ion Popescu"
+
+#: ckanext/inventory/templates/user/new_user_form.html:7
+msgid "Organization ID"
+msgstr "CIF"
+
+#: ckanext/inventory/templates/user/new_user_form.html:7
+msgid "123456789"
+msgstr "123456789"
+
+#: ckanext/inventory/templates/user/new_user_form.html:8
+msgid "Email"
+msgstr "E-mail"
+
+#: ckanext/inventory/templates/user/new_user_form.html:8
+msgid "joe@example.com"
+msgstr "exemplu@gov.ro"
+
+#: ckanext/inventory/templates/user/new_user_form.html:9
+msgid "Password"
+msgstr "Parolă"
+
+#: ckanext/inventory/templates/user/new_user_form.html:10
+msgid "Confirm"
+msgstr "Confirmare"
+
+#: ckanext/inventory/templates/user/new_user_form.html:18
+msgid "Create Account"
+msgstr "Creare cont"

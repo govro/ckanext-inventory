@@ -1,7 +1,7 @@
-{% extends "page.html" %}
+{% extends "admin/base.html" %}
 
 {% block primary_content_inner %}
-  <h1>Pending Users</h1>
+  <h1>Activate Users</h1>
   <table class="table table-striped table-bordered table-condensed">
     <thead>
       <tr>
@@ -24,4 +24,19 @@
       {% endfor %}
     </tbody>
   </table>
+{% endblock %}
+
+{% block secondary_content %}
+  <div class="module module-narrow module-shallow">
+    <h2 class="module-heading">
+      <i class="icon-info-sign"></i>
+      {{ _('Activate Users') }}
+    </h2>
+    <div class="module-content">
+
+      {% trans %}
+        <p>As a sysadmin user you can activate pending users.</p>
+      {% endtrans %}
+    </div>
+  </div>
 {% endblock %}

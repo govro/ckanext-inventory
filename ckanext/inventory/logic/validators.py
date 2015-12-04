@@ -2,8 +2,8 @@ from datetime import datetime
 from ckanext.inventory.model import InventoryEntry
 from ckan.plugins.toolkit import Invalid, _
 
+
 def update_package_inventory_entry(value, context):
-    model = context['model']
     session = context['session']
 
     if not value:

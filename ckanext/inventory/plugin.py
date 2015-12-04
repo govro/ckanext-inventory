@@ -1,31 +1,35 @@
 import ckan.logic.schema
 from routes.mapper import SubMapper
+from ckan.lib.plugins import DefaultTranslation
 from ckan.plugins import (
     implements, IConfigurer, IGroupForm, IRoutes, SingletonPlugin, IActions,
-    IConfigurable, IDatasetForm, IValidators)
+    IConfigurable, IDatasetForm, IValidators, ITranslation)
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
     DefaultOrganizationForm, get_validator, get_converter, DefaultDatasetForm,
-    get_action, c)
+    get_action, c, add_ckan_admin_tab)
 from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.logic.action.inventory_entry import (
-    inventory_entry_list, inventory_entry_create)
+    inventory_entry_list, inventory_entry_create, inventory_organizations_show)
 from ckanext.inventory.logic.validators import update_package_inventory_entry
 from ckanext.inventory.model import model_setup
 
 
-class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
+class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslation):
     implements(IGroupForm)
     implements(IConfigurer)
     implements(IActions)
     implements(IConfigurable)
     implements(IRoutes, inherit=True)
+    implements(ITranslation)
 
     # IConfigurer
-    def update_config(self, config_):
-        add_template_directory(config_, 'templates')
-        add_public_directory(config_, 'public')
+    def update_config(self, config):
+        add_template_directory(config, 'templates')
+        add_public_directory(config, 'public')
+        # TODO @palcu: translate this string
+        add_ckan_admin_tab(config, 'inventory_admin_index', 'Activate Users')
         add_resource('fanstatic', 'inventory')
 
     # IRoutes
@@ -102,7 +106,8 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm):
                 'inventory_activate_user': activate_user,
                 'inventory_organization_by_inventory_id': organization_by_inventory_id,
                 'inventory_entry_list': inventory_entry_list,
-                'inventory_entry_create': inventory_entry_create}
+                'inventory_entry_create': inventory_entry_create,
+                'inventory_organizations_show': inventory_organizations_show}
 
     # IConfigurable
     def configure(self, config):
@@ -146,12 +151,13 @@ class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
     def setup_template_variables(self, context, data_dict):
         """Add inventory entries that the user has access to."""
         # TODO @palcu: send this to it's own logic method
-        organizations = get_action('organization_list_for_user')\
-            (context, {'permission': 'create_dataset'})
+        organizations = get_action('organization_list_for_user')(
+            context, {'permission': 'create_dataset'})
 
         inventory_entries = []
         for organization in organizations:
-            inventory_entries += get_action('inventory_entry_list')(context, {'name': organization['id']})
+            inventory_entries += get_action('inventory_entry_list')(
+                context, {'name': organization['id']})
         c.inventory_entries = [(x['id'], x['title']) for x in inventory_entries]
 
         super(InventoryPluginFix, self).setup_template_variables(context,

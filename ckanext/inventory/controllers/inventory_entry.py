@@ -1,6 +1,6 @@
 from ckan.plugins.toolkit import (
-    BaseController, c, check_access, NotAuthorized, abort, get_action, render,
-    request, redirect_to)
+    c, check_access, NotAuthorized, abort, get_action, render, request,
+    redirect_to)
 from ckan import model
 from ckan.controllers.organization import OrganizationController
 import ckan.lib.navl.dictization_functions as dictization_functions
@@ -28,8 +28,8 @@ class InventoryEntryController(OrganizationController):
         group_type = c.group_dict['type']
         self._setup_template_variables(context, {'id': organization_name},
                                        group_type=group_type)
-        c.entries = get_action('inventory_entry_list')\
-            (context, {'name': organization_name})
+        c.entries = get_action('inventory_entry_list')(
+            context, {'name': organization_name})
         return render('inventory/entry/index.html',
                       extra_vars={'group_type': group_type})
 
