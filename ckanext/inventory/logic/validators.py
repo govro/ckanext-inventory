@@ -14,8 +14,4 @@ def update_package_inventory_entry(value, context):
     if not result:
         raise Invalid(_('Not found') + ': %s' % value)
 
-    # TODO @palcu: use a hook from IPackageController
-    result.last_added_dataset_timestamp = datetime.now()
-    result.save()
-
     return value

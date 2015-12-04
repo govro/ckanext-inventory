@@ -1,9 +1,11 @@
+from datetime import datetime
+
 import ckan.logic.schema
 from routes.mapper import SubMapper
 from ckan.lib.plugins import DefaultTranslation
 from ckan.plugins import (
     implements, IConfigurer, IGroupForm, IRoutes, SingletonPlugin, IActions,
-    IConfigurable, IDatasetForm, IValidators, ITranslation)
+    IConfigurable, IDatasetForm, IValidators, ITranslation, IPackageController)
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
     DefaultOrganizationForm, get_validator, get_converter, DefaultDatasetForm,
@@ -13,7 +15,7 @@ from ckanext.inventory.logic.action import (
 from ckanext.inventory.logic.action.inventory_entry import (
     inventory_entry_list, inventory_entry_create, inventory_organization_show)
 from ckanext.inventory.logic.validators import update_package_inventory_entry
-from ckanext.inventory.model import model_setup
+from ckanext.inventory.model import model_setup, InventoryEntry
 
 
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslation):
@@ -23,6 +25,7 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
     implements(IConfigurable)
     implements(IRoutes, inherit=True)
     implements(ITranslation)
+    implements(IPackageController, inherit=True)
 
     # IConfigurer
     def update_config(self, config):
@@ -114,6 +117,16 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
     # IConfigurable
     def configure(self, config):
         model_setup()
+
+    # IPackageController
+    def after_create(self, context, pkg_dict):
+        session = context['session']
+        inventory_entry_id = pkg_dict['inventory_entry_id']
+
+        result = session.query(InventoryEntry).filter_by(id=inventory_entry_id).first()
+
+        result.last_added_dataset_timestamp = datetime.now()
+        result.save()
 
 
 class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
