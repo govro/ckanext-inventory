@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-from ckan.model import Group, GroupExtra
 from ckan.plugins.toolkit import (
     side_effect_free, ObjectNotFound, get_or_bust, get_action)
 from ckan.lib.dictization import table_dictize, table_dict_save
@@ -55,7 +54,20 @@ def inventory_entry_create(context, data_dict):
     return {}
 
 
-def inventory_organizations_show(context, data_dict):
+@side_effect_free
+def inventory_organization_show(context, data_dict):
     model = context['model']
-    pairs = model.Session.query(Group, GroupExtra).join(GroupExtra)
-    return [(pair[1].value, " - ".join([pair[1].value, pair[0].title])) for pair in pairs]
+    group_extra = model.Session.query(model.GroupExtra) \
+                       .filter_by(key='inventory_organization_id') \
+                       .filter_by(value=data_dict['inventory_organization_id']) \
+                       .first()
+
+    if not group_extra:
+        raise ObjectNotFound('Group extra was not found')
+
+    organization = model.Group.get(group_extra.group_id)
+
+    if not organization:
+        raise ObjectNotFound('Organization was not found')
+
+    return {'title': organization.title}
