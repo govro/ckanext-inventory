@@ -55,7 +55,27 @@ def inventory_entry_create(context, data_dict):
     return {}
 
 
+@side_effect_free
 def inventory_organizations_show(context, data_dict):
     model = context['model']
     pairs = model.Session.query(Group, GroupExtra).join(GroupExtra)
     return [(pair[1].value, " - ".join([pair[1].value, pair[0].title])) for pair in pairs]
+
+
+@side_effect_free
+def inventory_organization_show(context, data_dict):
+    model = context['model']
+    group_extra = model.Session.query(model.GroupExtra) \
+                       .filter_by(key='inventory_organization_id') \
+                       .filter_by(value=data_dict['inventory_organization_id']) \
+                       .first()
+
+    if not group_extra:
+        raise ObjectNotFound('Group extra was not found')
+
+    organization = model.Group.get(group_extra.group_id)
+
+    if not organization:
+        raise ObjectNotFound('Organization was not found')
+
+    return {'title': organization.title}
