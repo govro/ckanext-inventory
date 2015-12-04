@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import ckan.logic.schema
 from routes.mapper import SubMapper
 from ckan.lib.plugins import DefaultTranslation
@@ -13,7 +11,10 @@ from ckan.plugins.toolkit import (
 from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.logic.action.inventory_entry import (
-    inventory_entry_list, inventory_entry_create, inventory_organization_show)
+    inventory_entry_list, inventory_entry_create, inventory_organization_show,
+    inventory_entry_update_timestamp)
+from ckanext.inventory.logic.action.inventory_item import (
+    inventory_item_create)
 from ckanext.inventory.logic.validators import update_package_inventory_entry
 from ckanext.inventory.model import model_setup, InventoryEntry
 
@@ -112,6 +113,8 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
             'inventory_entry_list': inventory_entry_list,
             'inventory_entry_create': inventory_entry_create,
             'inventory_organization_show': inventory_organization_show,
+            'inventory_entry_update_timestamp': inventory_entry_update_timestamp,
+            'inventory_item_create': inventory_item_create
         }
 
     # IConfigurable
@@ -120,13 +123,11 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
 
     # IPackageController
     def after_create(self, context, pkg_dict):
-        session = context['session']
-        inventory_entry_id = pkg_dict['inventory_entry_id']
-
-        result = session.query(InventoryEntry).filter_by(id=inventory_entry_id).first()
-
-        result.last_added_dataset_timestamp = datetime.now()
-        result.save()
+        get_action('inventory_entry_update_timestamp')(
+            context, {'inventory_entry_id': pkg_dict['inventory_entry_id']})
+        get_action('inventory_item_create')(
+            context, {'inventory_entry_id': pkg_dict['inventory_entry_id'],
+                      'package_id': pkg_dict['id']})
 
 
 class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):

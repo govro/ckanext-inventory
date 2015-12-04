@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from ckan.plugins.toolkit import (
     side_effect_free, ObjectNotFound, get_or_bust, get_action)
@@ -47,11 +47,19 @@ def inventory_entry_create(context, data_dict):
         context, {'id': context['organization_name']})
     data_dict['group_id'] = organization['id']
 
-    table_dict_save(data_dict, InventoryEntry, context)
+    obj = table_dict_save(data_dict, InventoryEntry, context)
     model.repo.commit()
 
-    # TODO @palcu: check something saved entry is ok
-    return {}
+    return table_dictize(obj, context)
+
+
+def inventory_entry_update_timestamp(context, data_dict):
+    session = context['session']
+
+    result = session.query(InventoryEntry)\
+                    .filter_by(id=data_dict['inventory_entry_id']).first()
+    result.last_added_dataset_timestamp = datetime.now()
+    result.save()
 
 
 @side_effect_free
