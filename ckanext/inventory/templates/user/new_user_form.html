@@ -9,7 +9,6 @@
 
   {{ form.input("inventory_organization_id", id="field-inventory_organization_id", label=_("Organization ID"), placeholder=_("123456789"), value=data.inventory_organization_id, error=errors.inventory_organization_id, classes=["control-medium"]) }}
 
-
   <div class="control-group control-medium">
     <div class="controls">
       <button data-module="inventory" class="btn" href="#">
@@ -22,7 +21,6 @@
       <div class="alert inventory-message"></div>
     </div>
   </div>
-
 
   {{ form.input("email", id="field-email", label=_("Email"), type="email", placeholder=_("joe@example.com"), value=data.email, error=errors.email, classes=["control-medium"]) }}
   {{ form.input("password1", id="field-password", label=_("Password"), type="password", placeholder="••••••••", value=data.password1, error=errors.password1, classes=["control-medium"]) }}

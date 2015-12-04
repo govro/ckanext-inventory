@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-from ckan.model import Group, GroupExtra
 from ckan.plugins.toolkit import (
     side_effect_free, ObjectNotFound, get_or_bust, get_action)
 from ckan.lib.dictization import table_dictize, table_dict_save
@@ -53,13 +52,6 @@ def inventory_entry_create(context, data_dict):
 
     # TODO @palcu: check something saved entry is ok
     return {}
-
-
-@side_effect_free
-def inventory_organizations_show(context, data_dict):
-    model = context['model']
-    pairs = model.Session.query(Group, GroupExtra).join(GroupExtra)
-    return [(pair[1].value, " - ".join([pair[1].value, pair[0].title])) for pair in pairs]
 
 
 @side_effect_free
