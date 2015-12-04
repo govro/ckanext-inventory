@@ -12,7 +12,7 @@ from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.logic.action.inventory_entry import (
     inventory_entry_list, inventory_entry_create, inventory_organization_show,
-    inventory_entry_update_timestamp)
+    inventory_entry_update_timestamp, inventory_entry_list_for_user)
 from ckanext.inventory.logic.action.inventory_item import (
     inventory_item_create, inventory_entry_list_items)
 from ckanext.inventory.logic.validators import update_package_inventory_entry
@@ -119,6 +119,7 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
             'inventory_entry_update_timestamp': inventory_entry_update_timestamp,
             'inventory_item_create': inventory_item_create,
             'inventory_entry_list_items': inventory_entry_list_items,
+            'inventory_entry_list_for_user': inventory_entry_list_for_user,
         }
 
     # IConfigurable
@@ -171,13 +172,8 @@ class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
     def setup_template_variables(self, context, data_dict):
         """Add inventory entries that the user has access to."""
         # TODO @palcu: send this to it's own logic method
-        organizations = get_action('organization_list_for_user')(
+        inventory_entries = get_action('inventory_entry_list_for_user')(
             context, {'permission': 'create_dataset'})
-
-        inventory_entries = []
-        for organization in organizations:
-            inventory_entries += get_action('inventory_entry_list')(
-                context, {'name': organization['id']})
         c.inventory_entries = [(x['id'], x['title']) for x in inventory_entries]
 
         super(InventoryPluginFix, self).setup_template_variables(context,

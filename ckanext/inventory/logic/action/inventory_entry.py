@@ -1,7 +1,8 @@
 from datetime import timedelta, datetime
 
+import ckan.authz as authz
 from ckan.plugins.toolkit import (
-    side_effect_free, ObjectNotFound, get_or_bust, get_action)
+    side_effect_free, ObjectNotFound, get_or_bust, get_action, check_access)
 from ckan.lib.dictization import table_dictize, table_dict_save
 from ckan.lib.helpers import _datestamp_to_datetime
 
@@ -35,6 +36,60 @@ def inventory_entry_list(context, data_dict):
             delta = timedelta(days=entry['recurring_interval'])
             entry['next_deadline_timestamp'] = last_added + delta
     return entries
+
+
+@side_effect_free
+def inventory_entry_list_for_user(context, data_dict):
+    #TODO @palcu: DRY the code below from organization_list_for_user
+    model = context['model']
+    user = context['user']
+
+    check_access('organization_list_for_user', context, data_dict)
+    sysadmin = authz.is_sysadmin(user)
+
+    orgs_q = model.Session.query(InventoryEntry).join(model.Group) \
+        .filter(model.Group.is_organization == True) \
+        .filter(model.Group.state == 'active')
+
+    if not sysadmin:
+        # for non-Sysadmins check they have the required permission
+
+        # NB 'edit_group' doesn't exist so by default this action returns just
+        # orgs with admin role
+        permission = data_dict.get('permission', 'edit_group')
+
+        roles = authz.get_roles_with_permission(permission)
+
+        if not roles:
+            return []
+        user_id = authz.get_user_id_for_username(user, allow_none=True)
+        if not user_id:
+            return []
+
+        q = model.Session.query(model.Member, model.Group) \
+            .filter(model.Member.table_name == 'user') \
+            .filter(model.Member.capacity.in_(roles)) \
+            .filter(model.Member.table_id == user_id) \
+            .filter(model.Member.state == 'active') \
+            .join(model.Group)
+
+        group_ids = set()
+        roles_that_cascade = \
+            authz.check_config_permission('roles_that_cascade_to_sub_groups')
+        for member, group in q.all():
+            if member.capacity in roles_that_cascade:
+                group_ids |= set([
+                    grp_tuple[0] for grp_tuple
+                    in group.get_children_group_hierarchy(type='organization')
+                    ])
+            group_ids.add(group.id)
+
+        if not group_ids:
+            return []
+
+        orgs_q = orgs_q.filter(model.Group.id.in_(group_ids))
+
+    return [table_dictize(obj, context) for obj in orgs_q.all()]
 
 
 def inventory_entry_create(context, data_dict):
