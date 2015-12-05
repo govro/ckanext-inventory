@@ -1,6 +1,8 @@
+import ckan.lib.helpers as h
 from ckan.plugins.toolkit import (
-    check_access, side_effect_free, ObjectNotFound, get_or_bust)
+    check_access, side_effect_free, ObjectNotFound, get_or_bust, _)
 from ckan.lib.dictization import model_dictize
+from ckan.lib.mailer import send_reset_link
 
 
 @side_effect_free
@@ -35,6 +37,10 @@ def activate_user(context, data_dict):
 
     user_obj.activate()
     user_obj.save()
+    try:
+        send_reset_link(user_obj)
+    except Exception, e:
+        h.flash_error(_('Could not send reset link: %s') % unicode(e))
 
 
 @side_effect_free
