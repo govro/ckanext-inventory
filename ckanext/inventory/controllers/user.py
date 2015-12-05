@@ -1,3 +1,5 @@
+import random
+
 from ckan.controllers.user import UserController
 
 import ckan.lib.base as base
@@ -31,6 +33,11 @@ class InventoryUserController(UserController):
 
             organization = get_action('inventory_organization_by_inventory_id')(
                 context, {'id': data_dict['inventory_organization_id']})
+
+            password = str(random.SystemRandom().random())
+            data_dict['password1'] = password
+            data_dict['password2'] = password
+            data_dict['state'] = model.State.PENDING
             user = get_action('user_create')(context, data_dict)
 
             data_dict = {
@@ -54,10 +61,5 @@ class InventoryUserController(UserController):
             error_summary = e.error_summary
             return self.new(data_dict, errors, error_summary)
 
-        model_user = model.Session.query(model.User) \
-                          .filter_by(email=user['email']).first()
-        model_user.set_pending()
-        model_user.save()
-
-        h.flash_success('Your account registration will be reviewed.')
+        h.flash_success(_('Your account registration will be reviewed.'))
         return render('home/index.html')
