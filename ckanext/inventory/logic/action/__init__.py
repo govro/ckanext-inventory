@@ -19,7 +19,7 @@ def pending_user_list(context, data_dict):
         groups = user.get_groups()
         if groups:
             result_dict = model_dictize.user_dictize(user, context)
-            result_dict['group_name'] = user.get_groups()[0].name
+            result_dict['group_name'] = user.get_groups()[0].title
             users_list.append(result_dict)
 
     return users_list
