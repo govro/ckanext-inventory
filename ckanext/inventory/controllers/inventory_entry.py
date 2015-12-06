@@ -1,10 +1,13 @@
 from ckan.plugins.toolkit import (
     c, check_access, NotAuthorized, abort, get_action, render, request,
     redirect_to)
+
 from ckan import model
 from ckan.controllers.organization import OrganizationController
 import ckan.lib.navl.dictization_functions as dictization_functions
 import ckan.logic as logic
+
+from ckanext.inventory.logic.schema import default_inventory_entry_schema_create
 
 unflatten = dictization_functions.unflatten
 ValidationError = logic.ValidationError
@@ -28,8 +31,10 @@ class InventoryEntryController(OrganizationController):
         group_type = c.group_dict['type']
         self._setup_template_variables(context, {'id': organization_name},
                                        group_type=group_type)
-        c.entries = get_action('inventory_entry_list')(
+        inventory_entries = get_action('inventory_entry_list')(
             context, {'name': organization_name})
+        c.inventory_entries = [x for x in inventory_entries if x['is_recurring']]
+        c.inventory_archived_entries = [x for x in inventory_entries if not x['is_recurring']]
         return render('inventory/entry/index.html',
                       extra_vars={'group_type': group_type})
 
@@ -38,9 +43,10 @@ class InventoryEntryController(OrganizationController):
                    'session': model.Session,
                    'user': c.user or c.author,
                    'organization_name': c.organization_name,
-                   'save': 'save' in request.params}
+                   'save': 'save' in request.params,
+                   'schema': default_inventory_entry_schema_create()}
 
-        if context['save']:
+        if context['save'] and not data:
             return self._save_new(context)
 
         data = data or {}
@@ -65,7 +71,7 @@ class InventoryEntryController(OrganizationController):
         group_type = c.group_dict['type']
         self._setup_template_variables(context, {'id': organization_name},
                                        group_type=group_type)
-        c.entries = get_action('inventory_entry_list_items')(
+        c.entries =  get_action('inventory_entry_list_items')(
             context, {'inventory_entry_id': inventory_entry_id})
         return render('inventory/entry/read.html',
                       extra_vars={'group_type': group_type})
@@ -74,6 +80,8 @@ class InventoryEntryController(OrganizationController):
         try:
             data_dict = logic.clean_dict(unflatten(
                 logic.tuplize_dict(logic.parse_params(request.params))))
+            data_dict['is_recurring'] = data_dict['recurring_interval'] > 0
+
             logic.get_action('inventory_entry_create')(context, data_dict)
             redirect_to('inventory_entry',
                         organization_name=c.organization_name)

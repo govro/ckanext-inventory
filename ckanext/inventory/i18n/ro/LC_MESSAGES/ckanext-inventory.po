@@ -8,85 +8,185 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-30 21:41+0000\n"
-"PO-Revision-Date: 2015-12-01 00:05+0200\n"
-"Language-Team: ro <LL@li.org>\n"
+"POT-Creation-Date: 2015-12-06 21:07+0000\n"
+"PO-Revision-Date: 2015-12-06 23:23+0200\n"
+"Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n"
 "%100 < 20)) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 "Last-Translator: \n"
 "Language: ro\n"
 "X-Generator: Poedit 1.7.6\n"
 
-#: ckanext/inventory/controllers/user.py:42
+#: ckanext/inventory/controllers/inventory_admin.py:28
+msgid "Account has been activated."
+msgstr "Contul a fost activat."
+
+#: ckanext/inventory/controllers/user.py:50
 #, python-format
 msgid "Unauthorized to create user %s"
 msgstr "Neautorizat să creezi utilizatorul %s"
 
-#: ckanext/inventory/controllers/user.py:44
+#: ckanext/inventory/controllers/user.py:52
 msgid "User or organization not found"
-msgstr "Utilizator sau organizație negăsit"
+msgstr "Utilizator sau organizaţia nu au fost găsite"
 
-#: ckanext/inventory/controllers/user.py:46
+#: ckanext/inventory/controllers/user.py:54
 msgid "Integrity Error"
 msgstr "Eroare de integritate"
 
-#: ckanext/inventory/controllers/user.py:48
+#: ckanext/inventory/controllers/user.py:56
 msgid "Bad Captcha. Please try again."
 msgstr "Cod de securitate greșit. Reîncearcă."
 
-#: ckanext/inventory/logic/validators.py:10
-msgid "No inventory entry provided"
-msgstr "Nu ai oferit o intrare de inventar"
+#: ckanext/inventory/controllers/user.py:64
+msgid "Your account registration will be reviewed."
+msgstr "Înregistrarea contului dumneavoastră va fi revizuită."
 
-#: ckanext/inventory/logic/validators.py:15
+#: ckanext/inventory/logic/validators.py:11
+msgid "No inventory entry provided"
+msgstr "Nici o intrare de inventar furnizată"
+
+#: ckanext/inventory/logic/validators.py:16
 msgid "Not found"
 msgstr "Negăsit"
+
+#: ckanext/inventory/logic/action/__init__.py:43
+#, python-format
+msgid "Could not send reset link: %s"
+msgstr "Nu am putut trimite link-ul de resetare: %s"
+
+#: ckanext/inventory/templates/header.html:8
+#: ckanext/inventory/templates/header.html:10
+msgid "My Organization"
+msgstr "Instituția mea"
+
+#: ckanext/inventory/templates/inventory/admin/index.html:8
+msgid "Name"
+msgstr "Denumire"
+
+#: ckanext/inventory/templates/inventory/admin/index.html:9
+msgid "Display Name"
+msgstr "Nume afișat"
+
+#: ckanext/inventory/templates/inventory/admin/index.html:10
+#: ckanext/inventory/templates/user/new_user_form.html:35
+msgid "Email"
+msgstr "E-mail"
+
+#: ckanext/inventory/templates/inventory/admin/index.html:11
+msgid "Organization"
+msgstr "Instituție"
+
+#: ckanext/inventory/templates/inventory/admin/index.html:12
+#: ckanext/inventory/templates/inventory/admin/index.html:22
+msgid "Activate"
+msgstr "Activare"
 
 #: ckanext/inventory/templates/inventory/admin/index.html:33
 msgid "Activate Users"
 msgstr "Activare Utilizatori"
 
-#: ckanext/inventory/templates/inventory/admin/index.html:37
-msgid " <p>As a sysadmin user you can activate pending users.</p> "
-msgstr "<p>Ca un utilizator sysadmin poți activa alți utilizatori.</p>"
+#: ckanext/inventory/templates/inventory/admin/index.html:36
+msgid "As a sysadmin user you can activate pending users."
+msgstr "Ca un utilizator sysadmin poți activa alți utilizatori."
 
 #: ckanext/inventory/templates/inventory/entry/base_form_page.html:4
 msgid "Inventory Entry Form"
-msgstr "Formular pentru intrările în inventar"
+msgstr "Formular pentru intrări în inventar"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:3
 msgid "Entries"
 msgstr "Intrări"
 
+#: ckanext/inventory/templates/inventory/entry/index.html:7
 #: ckanext/inventory/templates/inventory/entry/new.html:3
 #: ckanext/inventory/templates/inventory/entry/new.html:10
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:10
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:12
 msgid "Add Inventory Item"
 msgstr "Adaugă o intrare în inventar"
 
+#: ckanext/inventory/templates/inventory/entry/index.html:12
+#: ckanext/inventory/templates/organization/read_base.html:7
+msgid "Inventory"
+msgstr "Inventar"
+
+#: ckanext/inventory/templates/inventory/entry/index.html:18
+#: ckanext/inventory/templates/inventory/entry/index.html:51
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
 msgid "Title"
 msgstr "Titlu"
 
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
-msgid "title"
-msgstr "titlu"
-
+#: ckanext/inventory/templates/inventory/entry/index.html:19
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
 msgid "Recurring Interval"
-msgstr "Interval de Recurență"
+msgstr "Interval de recurență"
 
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
-msgid "recurring interval"
-msgstr "interval de recurență"
+#: ckanext/inventory/templates/inventory/entry/index.html:20
+#: ckanext/inventory/templates/inventory/entry/index.html:52
+msgid "Last added dataset"
+msgstr "Ultima dată când a fost adăugat"
 
+#: ckanext/inventory/templates/inventory/entry/index.html:21
+msgid "Next deadline"
+msgstr "Următorul deadline"
+
+#: ckanext/inventory/templates/inventory/entry/index.html:31
+msgid "day"
+msgid_plural "days"
+msgstr[0] "zi"
+msgstr[1] "zile"
+msgstr[2] "de zile"
+
+#: ckanext/inventory/templates/inventory/entry/index.html:33
+msgid "Unknown"
+msgstr "Necunoscut"
+
+#: ckanext/inventory/templates/inventory/entry/index.html:42
+msgid "There are no entries in the inventory."
+msgstr "Nu există intrări în inventar."
+
+#: ckanext/inventory/templates/inventory/entry/index.html:45
+msgid "Archived Datasets"
+msgstr "Seturi de date arhivate"
+
+#: ckanext/inventory/templates/inventory/entry/index.html:71
+msgid "There are no archived entries in the inventory."
+msgstr "Nu există intrări arhivate în inventar"
+
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
+msgid "budget"
+msgstr "buget"
+
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:8
+msgid ""
+"The recurring interval should be an integer representing the number of "
+"days that will pass between since a new dataset will be added for the "
+"inventory entry. Add zero only if the dataset is non-recurring, like "
+"archived documents for example."
+msgstr ""
+"Intervalul de recurență ar trebui să fie un număr care reprezintă "
+"numărul de zile care vor trece între publicările unor versiuni mai nou "
+"ale acelui set de date în inventar. Dacă setul de date nu este recurent, "
+"ca de exemplu documente din arhivă, setați valoarea zero."
+
+#: ckanext/inventory/templates/inventory/entry/read.html:3
+#: ckanext/inventory/templates/inventory/entry/read.html:6
 #: ckanext/inventory/templates/organization/read_base.html:4
 msgid "Datasets"
 msgstr "Seturi de date"
+
+#: ckanext/inventory/templates/inventory/entry/read.html:15
+msgid "There are no datasets available for this inventory entry."
+msgstr "Nu există seturi de date pentru această intrare de inventar."
+
+#: ckanext/inventory/templates/inventory/entry/read.html:18
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:17
+msgid "Go and add one."
+msgstr "Mergi și adaugă unul."
 
 #: ckanext/inventory/templates/organization/read_base.html:5
 msgid "Activity Stream"
@@ -96,10 +196,6 @@ msgstr "Activități"
 msgid "About"
 msgstr "Despre"
 
-#: ckanext/inventory/templates/organization/read_base.html:7
-msgid "Inventory"
-msgstr "Inventar"
-
 #: ckanext/inventory/templates/organization/snippets/organization_form.html:6
 msgid "CIF"
 msgstr "CIF"
@@ -108,58 +204,66 @@ msgstr "CIF"
 msgid "RO12345678"
 msgstr "RO12345678"
 
-#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:6
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:7
 msgid "Inventory Entry"
 msgstr "Intrare de Inventar"
 
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:17
+msgid "You don't have any inventory entries."
+msgstr "Nu ai intrări de inventar"
+
 #: ckanext/inventory/templates/snippets/organization.html:7
 msgid "read more"
-msgstr "citește mai multe"
+msgstr "mai multe"
 
 #: ckanext/inventory/templates/snippets/organization.html:10
 msgid "There is no description for this organization"
 msgstr "Nu există o descriere a acestei organizații"
 
-#: ckanext/inventory/templates/user/new_user_form.html:5
+#: ckanext/inventory/templates/user/new_user_form.html:7
 msgid "Username"
 msgstr "Nume de utilizator"
 
-#: ckanext/inventory/templates/user/new_user_form.html:5
+#: ckanext/inventory/templates/user/new_user_form.html:7
 msgid "username"
 msgstr "nume de utilizator"
 
-#: ckanext/inventory/templates/user/new_user_form.html:6
+#: ckanext/inventory/templates/user/new_user_form.html:8
 msgid "Full Name"
 msgstr "Nume complet"
 
-#: ckanext/inventory/templates/user/new_user_form.html:6
+#: ckanext/inventory/templates/user/new_user_form.html:8
 msgid "Joe Bloggs"
 msgstr "Ion Popescu"
 
-#: ckanext/inventory/templates/user/new_user_form.html:7
+#: ckanext/inventory/templates/user/new_user_form.html:10
 msgid "Organization ID"
 msgstr "CIF"
 
-#: ckanext/inventory/templates/user/new_user_form.html:7
+#: ckanext/inventory/templates/user/new_user_form.html:10
 msgid "123456789"
 msgstr "123456789"
 
-#: ckanext/inventory/templates/user/new_user_form.html:8
-msgid "Email"
-msgstr "E-mail"
+#: ckanext/inventory/templates/user/new_user_form.html:15
+msgid "Check Organization"
+msgstr "Verifică Organizația"
 
-#: ckanext/inventory/templates/user/new_user_form.html:8
+#: ckanext/inventory/templates/user/new_user_form.html:22
+msgid "Check the organzation before sending the form"
+msgstr "Verifică organizația selectată înainte de a trimite formularul"
+
+#: ckanext/inventory/templates/user/new_user_form.html:26
+msgid "No organization has been found"
+msgstr "Nicio organizație nu a fost găistă"
+
+#: ckanext/inventory/templates/user/new_user_form.html:30
+msgid "You will be added in the organization"
+msgstr "Vei fi adăugat la organizația"
+
+#: ckanext/inventory/templates/user/new_user_form.html:35
 msgid "joe@example.com"
 msgstr "exemplu@gov.ro"
 
-#: ckanext/inventory/templates/user/new_user_form.html:9
-msgid "Password"
-msgstr "Parolă"
-
-#: ckanext/inventory/templates/user/new_user_form.html:10
-msgid "Confirm"
-msgstr "Confirmare"
-
-#: ckanext/inventory/templates/user/new_user_form.html:18
+#: ckanext/inventory/templates/user/new_user_form.html:43
 msgid "Create Account"
-msgstr "Creare cont"
+msgstr "Cont Nou"

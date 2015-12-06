@@ -7,31 +7,31 @@ ckan.module('inventory', function ($, _) {
     initialize: function () {
       $.proxyAll(this, /_on/)
       this.el.on('click', this._onClick)
-
-      var $inventory_message = $('.inventory-message')
-      $inventory_message.addClass('alert')
-      $inventory_message.html('<p>Verifica organizatia inainte de a trimite formularul.</p>')
     },
 
     _onClick: function(event) {
       event.preventDefault();
 
       var inventory_organization_id = $('#field-inventory_organization_id').val()
-      var $inventory_message = $('.inventory-message')
+      var $inventory_message_neutral = $('.inventory-message-neutral')
+      var $inventory_message_negative = $('.inventory-message-negative')
+      var $inventory_message_positive = $('.inventory-message-positive')
 
       this.sandbox.ajax({
         url: '/api/3/action/inventory_organization_show',
         data: {inventory_organization_id: inventory_organization_id},
         success: function(data) {
-          $inventory_message.removeClass('alert-error')
-          $inventory_message.addClass('alert-success')
-          var message = '<p>Vei fi adaugat in organizatia ' + data.result.title + '.</p>'
-          $inventory_message.html(message)
+          $inventory_message_neutral.addClass('hide')
+          $inventory_message_negative.addClass('hide')
+          $inventory_message_positive.removeClass('hide')
+
+          var $inventory_organization_name = $('.inventory-organization-name')
+          $inventory_organization_name.html(data.result.title)
         }.bind(this),
         error: function(data) {
-          $inventory_message.addClass('alert-error')
-          $inventory_message.removeClass('alert-success')
-          $inventory_message.html('<p>Nicio organizatie nu a fost gasita.</p>')
+          $inventory_message_neutral.addClass('hide')
+          $inventory_message_positive.addClass('hide')
+          $inventory_message_negative.removeClass('hide')
         }.bind(this)
       })
     }

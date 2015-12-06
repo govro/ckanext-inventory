@@ -2,8 +2,10 @@
 
 <form id="entry-new-form" class="form-horizontal" action="" method="post">
   {{ form.errors(error_summary) }}
-  {{ form.input("title", id="field-title", label=_("Title"), placeholder=_("title"), value=data.title, error=errors.title, classes=["control-medium"]) }}
-  {{ form.input("recurring_interval", id="field-recurring_interval", label=_("Recurring Interval"), placeholder=_("recurring interval"), value=data.recurring_interval, error=errors.recurring_interval, classes=["control-medium"]) }}
+  {{ form.input("title", id="field-title", label=_("Title"), placeholder=_("budget"), value=data.title, error=errors.title, classes=["control-medium"]) }}
+  {{ form.input("recurring_interval", id="field-recurring_interval", label=_("Recurring Interval"), placeholder="30", value=data.recurring_interval, error=errors.recurring_interval, classes=["control-medium"]) }}
+
+  <p>{% trans %}The recurring interval should be an integer representing the number of days that will pass between since a new dataset will be added for the inventory entry. Add zero only if the dataset is non-recurring, like archived documents for example.{% endtrans %}</p>
 
   <div class="form-actions">
     {% block form_actions %}

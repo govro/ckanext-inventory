@@ -18,7 +18,17 @@
   </div>
   <div class="control-group control-medium">
     <div class="controls">
-      <div class="alert inventory-message"></div>
+      <div class="alert inventory-message inventory-message-neutral">
+        <p>{% trans %}Check the organzation before sending the form{% endtrans %}.</p>
+      </div>
+
+      <div class="hide alert alert-error inventory-message inventory-message-negative">
+        <p>{% trans %}No organization has been found{% endtrans %}.</p>
+      </div>
+
+      <div class="hide alert alert-success inventory-message inventory-message-positive">
+        <p>{% trans %}You will be added in the organization{% endtrans %} <span class="inventory-organization-name"></span>.</p>
+      </div>
     </div>
   </div>
 

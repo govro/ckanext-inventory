@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-30 22:14+0000\n"
+"POT-Creation-Date: 2015-12-06 21:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,38 +18,77 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: ckanext/inventory/plugin.py:31
-#: ckanext/inventory/templates/inventory/admin/index.html:33
-msgid "Activate Users"
+#: ckanext/inventory/controllers/inventory_admin.py:28
+msgid "Account has been activated."
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:42
+#: ckanext/inventory/controllers/user.py:50
 #, python-format
 msgid "Unauthorized to create user %s"
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:44
+#: ckanext/inventory/controllers/user.py:52
 msgid "User or organization not found"
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:46
+#: ckanext/inventory/controllers/user.py:54
 msgid "Integrity Error"
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:48
+#: ckanext/inventory/controllers/user.py:56
 msgid "Bad Captcha. Please try again."
 msgstr ""
 
-#: ckanext/inventory/logic/validators.py:10
+#: ckanext/inventory/controllers/user.py:64
+msgid "Your account registration will be reviewed."
+msgstr ""
+
+#: ckanext/inventory/logic/validators.py:11
 msgid "No inventory entry provided"
 msgstr ""
 
-#: ckanext/inventory/logic/validators.py:15
+#: ckanext/inventory/logic/validators.py:16
 msgid "Not found"
 msgstr ""
 
-#: ckanext/inventory/templates/inventory/admin/index.html:37
-msgid " <p>As a sysadmin user you can activate pending users.</p> "
+#: ckanext/inventory/logic/action/__init__.py:43
+#, python-format
+msgid "Could not send reset link: %s"
+msgstr ""
+
+#: ckanext/inventory/templates/header.html:8
+#: ckanext/inventory/templates/header.html:10
+msgid "My Organization"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/admin/index.html:8
+msgid "Name"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/admin/index.html:9
+msgid "Display Name"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/admin/index.html:10
+#: ckanext/inventory/templates/user/new_user_form.html:35
+msgid "Email"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/admin/index.html:11
+msgid "Organization"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/admin/index.html:12
+#: ckanext/inventory/templates/inventory/admin/index.html:22
+msgid "Activate"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/admin/index.html:33
+msgid "Activate Users"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/admin/index.html:36
+msgid "As a sysadmin user you can activate pending users."
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/base_form_page.html:4
@@ -60,30 +99,85 @@ msgstr ""
 msgid "Entries"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/entry/index.html:7
 #: ckanext/inventory/templates/inventory/entry/new.html:3
 #: ckanext/inventory/templates/inventory/entry/new.html:10
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:10
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:12
 msgid "Add Inventory Item"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/entry/index.html:12
+#: ckanext/inventory/templates/organization/read_base.html:7
+msgid "Inventory"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/index.html:18
+#: ckanext/inventory/templates/inventory/entry/index.html:51
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
 msgid "Title"
 msgstr ""
 
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
-msgid "title"
-msgstr ""
-
+#: ckanext/inventory/templates/inventory/entry/index.html:19
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
 msgid "Recurring Interval"
 msgstr ""
 
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
-msgid "recurring interval"
+#: ckanext/inventory/templates/inventory/entry/index.html:20
+#: ckanext/inventory/templates/inventory/entry/index.html:52
+msgid "Last added dataset"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/entry/index.html:21
+msgid "Next deadline"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/index.html:31
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/inventory/templates/inventory/entry/index.html:33
+msgid "Unknown"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/index.html:42
+msgid "There are no entries in the inventory."
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/index.html:45
+msgid "Archived Datasets"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/index.html:71
+msgid "There are no archived entries in the inventory."
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
+msgid "budget"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:8
+msgid ""
+"The recurring interval should be an integer representing the number of days "
+"that will pass between since a new dataset will be added for the inventory "
+"entry. Add zero only if the dataset is non-recurring, like archived documents"
+" for example."
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/read.html:3
+#: ckanext/inventory/templates/inventory/entry/read.html:6
 #: ckanext/inventory/templates/organization/read_base.html:4
 msgid "Datasets"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/read.html:15
+msgid "There are no datasets available for this inventory entry."
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/read.html:18
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:17
+msgid "Go and add one."
 msgstr ""
 
 #: ckanext/inventory/templates/organization/read_base.html:5
@@ -94,10 +188,6 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: ckanext/inventory/templates/organization/read_base.html:7
-msgid "Inventory"
-msgstr ""
-
 #: ckanext/inventory/templates/organization/snippets/organization_form.html:6
 msgid "CIF"
 msgstr ""
@@ -106,8 +196,12 @@ msgstr ""
 msgid "RO12345678"
 msgstr ""
 
-#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:6
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:7
 msgid "Inventory Entry"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:17
+msgid "You don't have any inventory entries."
 msgstr ""
 
 #: ckanext/inventory/templates/snippets/organization.html:7
@@ -118,47 +212,51 @@ msgstr ""
 msgid "There is no description for this organization"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:5
+#: ckanext/inventory/templates/user/new_user_form.html:7
 msgid "Username"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:5
+#: ckanext/inventory/templates/user/new_user_form.html:7
 msgid "username"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:6
+#: ckanext/inventory/templates/user/new_user_form.html:8
 msgid "Full Name"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:6
+#: ckanext/inventory/templates/user/new_user_form.html:8
 msgid "Joe Bloggs"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:7
+#: ckanext/inventory/templates/user/new_user_form.html:10
 msgid "Organization ID"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:7
+#: ckanext/inventory/templates/user/new_user_form.html:10
 msgid "123456789"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:8
-msgid "Email"
+#: ckanext/inventory/templates/user/new_user_form.html:15
+msgid "Check Organization"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:8
+#: ckanext/inventory/templates/user/new_user_form.html:22
+msgid "Check the organzation before sending the form"
+msgstr ""
+
+#: ckanext/inventory/templates/user/new_user_form.html:26
+msgid "No organization has been found"
+msgstr ""
+
+#: ckanext/inventory/templates/user/new_user_form.html:30
+msgid "You will be added in the organization"
+msgstr ""
+
+#: ckanext/inventory/templates/user/new_user_form.html:35
 msgid "joe@example.com"
 msgstr ""
 
-#: ckanext/inventory/templates/user/new_user_form.html:9
-msgid "Password"
-msgstr ""
-
-#: ckanext/inventory/templates/user/new_user_form.html:10
-msgid "Confirm"
-msgstr ""
-
-#: ckanext/inventory/templates/user/new_user_form.html:18
+#: ckanext/inventory/templates/user/new_user_form.html:43
 msgid "Create Account"
 msgstr ""
 

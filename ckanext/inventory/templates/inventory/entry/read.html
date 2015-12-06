@@ -4,9 +4,19 @@
 
 {% block primary_content_inner %}
   <h1>{% block page_heading %}{{ _('Datasets') }}{% endblock %}</h1>
-  <ul>
-  {% for package_id, package_title in c.entries %}
-    <li>{{ h.link_to(package_title, h.url_for(controller='package', action='read', id=package_id)) }}</li>
-  {% endfor %}
-  </ul>
+
+  {% if c.entries|length > 0 %}
+    <ul>
+    {% for package_id, package_title in c.entries %}
+      <li>{{ h.link_to(package_title, h.url_for(controller='package', action='read', id=package_id)) }}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>{% trans %}There are no datasets available for this inventory entry.{% endtrans %}</p>
+
+    {% if h.check_access('package_create', {'owner_org': c.group_dict.id}) %}
+      <p>{% link_for _('Go and add one.'), controller='package', action='new', group=c.group_dict.id %}</p>
+    {% endif %}
+  {% endif %}
+
 {% endblock %}
