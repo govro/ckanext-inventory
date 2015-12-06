@@ -6,11 +6,19 @@ from ckan.logic.validators import (
 
 def default_inventory_entry_schema():
     schema = {
-        'id': [ignore_empty, unicode],
-        'title': [not_empty, unicode, name_validator],
+        'id': [unicode, ignore_empty],
+        'title': [unicode, not_empty],
         'group_id': [group_id_exists],
         'is_recurring': [boolean_validator],
         'recurring_interval': [is_positive_integer],
         'last_added_dataset_timestamp': [isodate],
+    }
+    return schema
+
+
+def default_inventory_entry_schema_create():
+    schema = {
+        'title': [unicode, not_empty],
+        'recurring_interval': [is_positive_integer],
     }
     return schema

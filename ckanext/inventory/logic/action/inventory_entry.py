@@ -1,8 +1,10 @@
 from datetime import timedelta, datetime
 
 import ckan.authz as authz
+import ckan.logic as logic
 from ckan.plugins.toolkit import (
-    side_effect_free, ObjectNotFound, get_or_bust, get_action, check_access)
+    side_effect_free, ObjectNotFound, get_or_bust, get_action, check_access,
+    navl_validate, ValidationError)
 from ckan.lib.dictization import table_dictize, table_dict_save
 from ckan.lib.helpers import _datestamp_to_datetime
 
@@ -94,13 +96,17 @@ def inventory_entry_list_for_user(context, data_dict):
 
 def inventory_entry_create(context, data_dict):
     model = context['model']
+    schema = context['schema']
+    session = context['session']
 
-    # TODO @palcu: remove hack
-    data_dict['is_recurring'] = data_dict['recurring_interval'] > 0
+    organization = model.Group.get(context['organization_name'])
+    data_dict['group_id'] = organization.id
 
-    organization = get_action('organization_show')(
-        context, {'id': context['organization_name']})
-    data_dict['group_id'] = organization['id']
+    data, errors = navl_validate(data_dict, schema, context)
+
+    if errors:
+        session.rollback()
+        raise ValidationError(errors)
 
     obj = table_dict_save(data_dict, InventoryEntry, context)
     model.repo.commit()

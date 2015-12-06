@@ -1,10 +1,13 @@
 from ckan.plugins.toolkit import (
     c, check_access, NotAuthorized, abort, get_action, render, request,
     redirect_to)
+
 from ckan import model
 from ckan.controllers.organization import OrganizationController
 import ckan.lib.navl.dictization_functions as dictization_functions
 import ckan.logic as logic
+
+from ckanext.inventory.logic.schema import default_inventory_entry_schema_create
 
 unflatten = dictization_functions.unflatten
 ValidationError = logic.ValidationError
@@ -38,9 +41,10 @@ class InventoryEntryController(OrganizationController):
                    'session': model.Session,
                    'user': c.user or c.author,
                    'organization_name': c.organization_name,
-                   'save': 'save' in request.params}
+                   'save': 'save' in request.params,
+                   'schema': default_inventory_entry_schema_create()}
 
-        if context['save']:
+        if context['save'] and not data:
             return self._save_new(context)
 
         data = data or {}
@@ -76,6 +80,8 @@ class InventoryEntryController(OrganizationController):
         try:
             data_dict = logic.clean_dict(unflatten(
                 logic.tuplize_dict(logic.parse_params(request.params))))
+            data_dict['is_recurring'] = data_dict['recurring_interval'] > 0
+
             logic.get_action('inventory_entry_create')(context, data_dict)
             redirect_to('inventory_entry',
                         organization_name=c.organization_name)
