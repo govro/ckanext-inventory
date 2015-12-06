@@ -2,10 +2,13 @@
 
 {% block header_account_settings_link %}
   {{ super() }}
+
+  {% if c.userobj.get_groups()|length == 1 %}
   <li>
     <a href="{{ h.url_for(controller='organization', action='read', id=c.userobj.get_groups()[0].id) }}" title="{{ _('My Organization') }}">
       <i class="icon-folder-close" aria-hidden="true"></i>
       <span class="text">{{ _('My Organization') }}</span>
     </a>
   </li>
+  {% endif %}
 {% endblock %}
