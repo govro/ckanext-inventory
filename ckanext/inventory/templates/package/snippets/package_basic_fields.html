@@ -3,14 +3,21 @@
 {% block package_basic_fields_custom %}
 <div class="control-group">
   {% set error = errors.inventory_entry_id %}
+
   <label class="control-label" for="field-inventory_entry_id">{{ _("Inventory Entry") }}</label>
   <div class="controls">
+    {% if c.inventory_entries|length > 0 %}
     <select id="field-inventory_entry_id" name="inventory_entry_id" data-module="autocomplete">
-      {% set existing_inventory_entry_id = data.get('inventory_entry_id') %}
       {% for inventory_entry_id, inventory_entry_title in c.inventory_entries %}
-        <option value="{{ inventory_entry_id }}" {% if existing_inventory_entry_id == inventory_entry_id %}selected="selected"{% endif %}>{{ inventory_entry_title }}</option>
+        <option value="{{ inventory_entry_id }}" {% if data.get('inventory_entry_id') == inventory_entry_id %}selected="selected"{% endif %}>{{ inventory_entry_title }}</option>
       {% endfor %}
     </select>
+    {% else %}
+    <div class="alert alert-error">
+      <p>{% trans %}You don't have any inventory entries.{% endtrans %} <strong style="text-decoration: underline"><a href="{{ h.url_for('inventory_entry', organization_name=c.userobj.get_groups()[0].id) }}">{% trans %}Go and add one.{% endtrans %}</a></strong></p>
+    </div>
+    {% endif %}
+
     {% if error %}<span class="error-block">{{ error }}</span>{% endif %}
   </div>
 </div>
