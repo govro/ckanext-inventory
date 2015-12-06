@@ -1,7 +1,7 @@
 import ckan.lib.helpers as h
 from ckan.plugins.toolkit import (
     BaseController, render, check_access, NotAuthorized, abort, get_action, c,
-    redirect_to, ValidationError)
+    redirect_to, ValidationError, _)
 
 
 class InventoryAdminController(BaseController):
@@ -25,7 +25,7 @@ class InventoryAdminController(BaseController):
 
         try:
             get_action('inventory_activate_user')(context, data_dict)
-            h.flash_success('Account has been activated.')
+            h.flash_success(_('Account has been activated.'))
         except ValidationError as e:
             error_message = (e.message or e.error_summary
                              or e.error_dict)
