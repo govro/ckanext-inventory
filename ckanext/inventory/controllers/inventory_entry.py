@@ -65,8 +65,10 @@ class InventoryEntryController(OrganizationController):
         group_type = c.group_dict['type']
         self._setup_template_variables(context, {'id': organization_name},
                                        group_type=group_type)
-        c.entries = get_action('inventory_entry_list_items')(
+        inventory_entries =  get_action('inventory_entry_list_items')(
             context, {'inventory_entry_id': inventory_entry_id})
+        c.inventory_entries = [x for x in inventory_entries if x.is_recurring]
+        c.inventory_archived_entries = [x for x in inventory_entries if not x.is_recurring]
         return render('inventory/entry/read.html',
                       extra_vars={'group_type': group_type})
 
