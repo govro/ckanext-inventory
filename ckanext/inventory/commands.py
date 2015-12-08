@@ -4,6 +4,7 @@ import logging
 
 from ckan import model
 from ckan.lib.create_test_data import CreateTestData
+from ckan.lib.munge import munge_title_to_name
 from ckan.plugins.toolkit import CkanCommand, get_action, ValidationError
 
 
@@ -52,18 +53,9 @@ class GenerateOrganizationsCommand(CkanCommand):
 
     def create_organization_dict(self, inventory_id, title):
         return {
-            'name': self.namefy(title),
+            'name': munge_title_to_name(title),
             'title': title,
             'inventory_organization_id': inventory_id,
             'is_organization': True,
             'type': 'organization',
         }
-
-    def namefy(self, title):
-        res = []
-        for c in title:
-            if c.isalnum():
-                res.append(c.lower())
-            elif c == ' ':
-                res.append('-')
-        return "".join(res)
