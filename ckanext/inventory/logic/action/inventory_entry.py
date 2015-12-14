@@ -101,6 +101,7 @@ def inventory_entry_create(context, data_dict):
 
     organization = model.Group.get(context['organization_name'])
     data_dict['group_id'] = organization.id
+    data_dict['is_recurring'] = (data_dict['recurring_interval'] == 0)
 
     data, errors = navl_validate(data_dict, schema, context)
 
