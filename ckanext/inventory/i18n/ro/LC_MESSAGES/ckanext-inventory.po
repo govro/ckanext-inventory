@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-06 21:07+0000\n"
-"PO-Revision-Date: 2015-12-06 23:23+0200\n"
+"PO-Revision-Date: 2015-12-14 14:25+0200\n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n"
 "%100 < 20)) ? 1 : 2);\n"
@@ -123,7 +123,7 @@ msgstr "Titlu"
 #: ckanext/inventory/templates/inventory/entry/index.html:19
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
 msgid "Recurring Interval"
-msgstr "Interval de recurență"
+msgstr "Interval de actualizare"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:20
 #: ckanext/inventory/templates/inventory/entry/index.html:52
@@ -168,7 +168,7 @@ msgid ""
 "inventory entry. Add zero only if the dataset is non-recurring, like "
 "archived documents for example."
 msgstr ""
-"Intervalul de recurență ar trebui să fie un număr care reprezintă "
+"Intervalul de actualizare ar trebui să fie un număr care reprezintă "
 "numărul de zile care vor trece între publicările unor versiuni mai nou "
 "ale acelui set de date în inventar. Dacă setul de date nu este recurent, "
 "ca de exemplu documente din arhivă, setați valoarea zero."
