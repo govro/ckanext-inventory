@@ -141,3 +141,10 @@ def inventory_organization_show(context, data_dict):
         raise ObjectNotFound('Organization was not found')
 
     return {'title': organization.title}
+
+
+@side_effect_free
+def inventory_entry_show(context, data_dict):
+    model = context['model']
+    inventory_entry = model.Session.query(InventoryEntry).get(data_dict['id'])
+    return table_dictize(inventory_entry, context)

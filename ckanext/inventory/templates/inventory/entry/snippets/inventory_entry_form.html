@@ -9,7 +9,7 @@
 
   <div class="form-actions">
     {% block form_actions %}
-    <button class="btn btn-primary" type="submit" name="save">{{ _("Add Inventory Item") }}</button>
+    <button class="btn btn-primary" type="submit" name="save">{% block save_text %}{% endblock %}</button>
     {% endblock %}
   </div>
 </form>
