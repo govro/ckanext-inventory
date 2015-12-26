@@ -17,7 +17,7 @@ from ckanext.inventory.logic.action.inventory_entry import (
 from ckanext.inventory.logic.action.inventory_item import (
     inventory_item_create, inventory_entry_list_items)
 from ckanext.inventory.logic.validators import update_package_inventory_entry
-from ckanext.inventory.model import model_setup, InventoryEntry
+from ckanext.inventory.model import model_setup
 
 
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslation):

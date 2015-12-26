@@ -1,6 +1,6 @@
 from ckan.plugins.toolkit import (
     c, check_access, NotAuthorized, abort, get_action, render, request,
-    redirect_to)
+    redirect_to, _)
 
 from ckan import model
 from ckan.controllers.organization import OrganizationController
@@ -35,7 +35,8 @@ class InventoryEntryController(OrganizationController):
         inventory_entries = get_action('inventory_entry_list')(
             context, {'name': organization_name})
         c.inventory_entries = [x for x in inventory_entries if x['is_recurring']]
-        c.inventory_archived_entries = [x for x in inventory_entries if not x['is_recurring']]
+        c.inventory_archived_entries = [
+            x for x in inventory_entries if not x['is_recurring']]
         return render('inventory/entry/index.html',
                       extra_vars={'group_type': group_type})
 
@@ -56,10 +57,12 @@ class InventoryEntryController(OrganizationController):
         vars = {'data': data, 'errors': errors, 'error_summary': error_summary,
                 'action': 'new'}
 
-        c.form = render('inventory/entry/inventory_entry_form.html', extra_vars=vars)
+        c.form = render('inventory/entry/inventory_entry_form.html',
+                        extra_vars=vars)
         return render('inventory/entry/new.html')
 
-    def edit(self, organization_name, inventory_entry_id, data=None, errors=None, error_summary=None):
+    def edit(self, organization_name, inventory_entry_id, data=None,
+             errors=None, error_summary=None):
         context = {'model': model,
                    'session': model.Session,
                    'user': c.user or c.author,
@@ -72,7 +75,7 @@ class InventoryEntryController(OrganizationController):
 
         try:
             old_data = get_action('inventory_entry_show')(
-                    context, {'id': inventory_entry_id})
+                context, {'id': inventory_entry_id})
             data = data or old_data
         except NotFound:
             abort(404, _('Inventory Entry not found'))
@@ -100,7 +103,7 @@ class InventoryEntryController(OrganizationController):
         group_type = c.group_dict['type']
         self._setup_template_variables(context, {'id': organization_name},
                                        group_type=group_type)
-        c.entries =  get_action('inventory_entry_list_items')(
+        c.entries = get_action('inventory_entry_list_items')(
             context, {'inventory_entry_id': inventory_entry_id})
         return render('inventory/entry/read.html',
                       extra_vars={'group_type': group_type})
