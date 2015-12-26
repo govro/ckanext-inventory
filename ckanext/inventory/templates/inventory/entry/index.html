@@ -19,9 +19,9 @@
         <th>{{ _('Recurring Interval') }}</th>
         <th>{{ _('Last added dataset') }}</th>
         <th>{{ _('Next deadline') }}</th>
-        {#
+        {% if h.check_access('package_create', {'owner_org': c.group_dict.id}) %}
         <th>{{ _('Edit') }}</th>
-        #}
+        {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -31,9 +31,9 @@
         <td>{{ entry.recurring_interval }} {{ ungettext("day", "days", entry.recurring_interval) }}</td>
         <td>{{ h.time_ago_from_timestamp(entry.last_added_dataset_timestamp) }}</td>
         <td>{{ h.render_datetime(entry.next_deadline_timestamp) if entry.next_deadline_timestamp else _('Unknown') }}</td>
-        {#
+        {% if h.check_access('package_create', {'owner_org': c.group_dict.id}) %}
         <td><a href="{{ h.url_for('inventory_entry_edit', organization_name=c.group_dict.name, inventory_entry_id=entry.id) }}">{{ _('Edit') }}</a></td>
-        #}
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>
@@ -50,9 +50,7 @@
       <tr>
         <th>{{ _('Title') }}</th>
         <th>{{ _('Last added dataset') }}</th>
-        {#
         <th>{{ _('Edit') }}</th>
-        #}
       </tr>
     </thead>
     <tbody>
@@ -60,9 +58,7 @@
       <tr>
         <td><a href="{{ h.url_for('inventory_entry_read', organization_name=c.group_dict.name, inventory_entry_id=entry.id) }}">{{ entry.title }}</a></td>
         <td>{{ h.time_ago_from_timestamp(entry.last_added_dataset_timestamp) }}</td>
-        {#
         <td><a href="{{ h.url_for('inventory_entry_edit', organization_name=c.group_dict.name, inventory_entry_id=entry.id) }}">{{ _('Edit') }}</a></td>
-        #}
       </tr>
       {% endfor %}
     </tbody>

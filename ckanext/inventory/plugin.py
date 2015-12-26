@@ -12,11 +12,12 @@ from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.logic.action.inventory_entry import (
     inventory_entry_list, inventory_entry_create, inventory_organization_show,
-    inventory_entry_update_timestamp, inventory_entry_list_for_user)
+    inventory_entry_update_timestamp, inventory_entry_list_for_user,
+    inventory_entry_show, inventory_entry_update)
 from ckanext.inventory.logic.action.inventory_item import (
     inventory_item_create, inventory_entry_list_items)
 from ckanext.inventory.logic.validators import update_package_inventory_entry
-from ckanext.inventory.model import model_setup, InventoryEntry
+from ckanext.inventory.model import model_setup
 
 
 class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslation):
@@ -120,6 +121,8 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
             'inventory_item_create': inventory_item_create,
             'inventory_entry_list_items': inventory_entry_list_items,
             'inventory_entry_list_for_user': inventory_entry_list_for_user,
+            'inventory_entry_show': inventory_entry_show,
+            'inventory_entry_update': inventory_entry_update,
         }
 
     # IConfigurable

@@ -1,9 +1,8 @@
 from datetime import timedelta, datetime
 
 import ckan.authz as authz
-import ckan.logic as logic
 from ckan.plugins.toolkit import (
-    side_effect_free, ObjectNotFound, get_or_bust, get_action, check_access,
+    side_effect_free, ObjectNotFound, get_or_bust, check_access,
     navl_validate, ValidationError)
 from ckan.lib.dictization import table_dictize, table_dict_save
 from ckan.lib.helpers import _datestamp_to_datetime
@@ -29,7 +28,8 @@ def inventory_entry_list(context, data_dict):
     if not organization:
         raise ObjectNotFound('Organization was not found')
 
-    entries = [table_dictize(entry, context) for entry in organization.inventory_entries]
+    entries = [
+        table_dictize(entry, context) for entry in organization.inventory_entries]
 
     for entry in entries:
         entry['next_deadline_timestamp'] = None
@@ -42,7 +42,7 @@ def inventory_entry_list(context, data_dict):
 
 @side_effect_free
 def inventory_entry_list_for_user(context, data_dict):
-    #TODO @palcu: DRY the code below from organization_list_for_user
+    # TODO @palcu: DRY the code below from organization_list_for_user
     model = context['model']
     user = context['user']
 
@@ -50,7 +50,7 @@ def inventory_entry_list_for_user(context, data_dict):
     sysadmin = authz.is_sysadmin(user)
 
     orgs_q = model.Session.query(InventoryEntry).join(model.Group) \
-        .filter(model.Group.is_organization == True) \
+        .filter(model.Group.is_organization is True) \
         .filter(model.Group.state == 'active')
 
     if not sysadmin:
@@ -101,7 +101,8 @@ def inventory_entry_create(context, data_dict):
 
     organization = model.Group.get(context['organization_name'])
     data_dict['group_id'] = organization.id
-    data_dict['is_recurring'] = (data_dict['recurring_interval'] == 0)
+    # TODO @palcu: fix this
+    data_dict['is_recurring'] = (data_dict['recurring_interval'] != '0')
 
     data, errors = navl_validate(data_dict, schema, context)
 
@@ -141,3 +142,32 @@ def inventory_organization_show(context, data_dict):
         raise ObjectNotFound('Organization was not found')
 
     return {'title': organization.title}
+
+
+@side_effect_free
+def inventory_entry_show(context, data_dict):
+    model = context['model']
+    inventory_entry = model.Session.query(InventoryEntry).get(data_dict['id'])
+    return table_dictize(inventory_entry, context)
+
+
+def inventory_entry_update(context, data_dict):
+    # TODO @palcu: DRY this w/ inventory_entry_create
+    model = context['model']
+    schema = context['schema']
+    session = context['session']
+
+    organization = model.Group.get(context['organization_name'])
+    data_dict['group_id'] = organization.id
+    data_dict['is_recurring'] = (data_dict['recurring_interval'] != '0')
+
+    data, errors = navl_validate(data_dict, schema, context)
+
+    if errors:
+        session.rollback()
+        raise ValidationError(errors)
+
+    obj = table_dict_save(data_dict, InventoryEntry, context)
+    model.repo.commit()
+
+    return table_dictize(obj, context)

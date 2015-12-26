@@ -1,6 +1,6 @@
 from ckan.plugins.toolkit import (
     c, check_access, NotAuthorized, abort, get_action, render, request,
-    redirect_to)
+    redirect_to, _)
 
 from ckan import model
 from ckan.controllers.organization import OrganizationController
@@ -11,6 +11,7 @@ from ckanext.inventory.logic.schema import default_inventory_entry_schema_create
 
 unflatten = dictization_functions.unflatten
 ValidationError = logic.ValidationError
+NotFound = logic.NotFound
 
 
 class InventoryEntryController(OrganizationController):
@@ -34,7 +35,8 @@ class InventoryEntryController(OrganizationController):
         inventory_entries = get_action('inventory_entry_list')(
             context, {'name': organization_name})
         c.inventory_entries = [x for x in inventory_entries if x['is_recurring']]
-        c.inventory_archived_entries = [x for x in inventory_entries if not x['is_recurring']]
+        c.inventory_archived_entries = [
+            x for x in inventory_entries if not x['is_recurring']]
         return render('inventory/entry/index.html',
                       extra_vars={'group_type': group_type})
 
@@ -52,12 +54,42 @@ class InventoryEntryController(OrganizationController):
         data = data or {}
         errors = errors or {}
         error_summary = error_summary or {}
-        vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
+        vars = {'data': data, 'errors': errors, 'error_summary': error_summary,
+                'action': 'new'}
 
-        c.form = render('inventory/entry/new_entry_form.html', extra_vars=vars)
+        c.form = render('inventory/entry/inventory_entry_form.html',
+                        extra_vars=vars)
         return render('inventory/entry/new.html')
 
-    def edit(self):
+    def edit(self, organization_name, inventory_entry_id, data=None,
+             errors=None, error_summary=None):
+        context = {'model': model,
+                   'session': model.Session,
+                   'user': c.user or c.author,
+                   'organization_name': c.organization_name,
+                   'save': 'save' in request.params,
+                   'schema': default_inventory_entry_schema_create()}
+
+        if context['save'] and not data:
+            return self._save_edit(inventory_entry_id, context)
+
+        try:
+            old_data = get_action('inventory_entry_show')(
+                context, {'id': inventory_entry_id})
+            data = data or old_data
+        except NotFound:
+            abort(404, _('Inventory Entry not found'))
+        except NotAuthorized:
+            abort(401, _('Unauthorized to read inventory entry'))
+
+        data = data or {}
+        errors = errors or {}
+        error_summary = error_summary or {}
+        vars = {'data': data, 'errors': errors, 'error_summary': error_summary,
+                'action': 'edit'}
+
+        c.form = render('inventory/entry/inventory_entry_form.html', extra_vars=vars)
+
         return render('inventory/entry/edit.html')
 
     def read(self, organization_name, inventory_entry_id):
@@ -71,7 +103,7 @@ class InventoryEntryController(OrganizationController):
         group_type = c.group_dict['type']
         self._setup_template_variables(context, {'id': organization_name},
                                        group_type=group_type)
-        c.entries =  get_action('inventory_entry_list_items')(
+        c.entries = get_action('inventory_entry_list_items')(
             context, {'inventory_entry_id': inventory_entry_id})
         return render('inventory/entry/read.html',
                       extra_vars={'group_type': group_type})
@@ -80,9 +112,22 @@ class InventoryEntryController(OrganizationController):
         try:
             data_dict = logic.clean_dict(unflatten(
                 logic.tuplize_dict(logic.parse_params(request.params))))
-            data_dict['is_recurring'] = data_dict['recurring_interval'] > 0
 
             logic.get_action('inventory_entry_create')(context, data_dict)
+            redirect_to('inventory_entry',
+                        organization_name=c.organization_name)
+
+        except ValidationError, e:
+            errors = e.error_dict
+            error_summary = e.error_summary
+            return self.new(data_dict, errors, error_summary)
+
+    def _save_edit(self, id, context):
+        try:
+            data_dict = logic.clean_dict(unflatten(
+                logic.tuplize_dict(logic.parse_params(request.params))))
+            data_dict['id'] = id
+            logic.get_action('inventory_entry_update')(context, data_dict)
             redirect_to('inventory_entry',
                         organization_name=c.organization_name)
 

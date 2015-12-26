@@ -1,0 +1,9 @@
+{% extends "inventory/entry/snippets/inventory_entry_form.html" %}
+
+{% block save_text %}
+  {% if action == "edit" %}
+    {{ _('Save Inventory Item') }}
+  {% else %}
+    {{ _('Add Inventory Item') }}
+  {% endif %}
+{% endblock %}
