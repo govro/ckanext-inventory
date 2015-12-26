@@ -68,7 +68,7 @@ class InventoryEntryController(OrganizationController):
                    'schema': default_inventory_entry_schema_create()}
 
         if context['save'] and not data:
-            return self._save_edit(context)
+            return self._save_edit(inventory_entry_id, context)
 
         try:
             old_data = get_action('inventory_entry_show')(
@@ -119,11 +119,11 @@ class InventoryEntryController(OrganizationController):
             error_summary = e.error_summary
             return self.new(data_dict, errors, error_summary)
 
-    def _save_edit(self, context):
+    def _save_edit(self, id, context):
         try:
             data_dict = logic.clean_dict(unflatten(
                 logic.tuplize_dict(logic.parse_params(request.params))))
-
+            data_dict['id'] = id
             logic.get_action('inventory_entry_update')(context, data_dict)
             redirect_to('inventory_entry',
                         organization_name=c.organization_name)

@@ -101,7 +101,8 @@ def inventory_entry_create(context, data_dict):
 
     organization = model.Group.get(context['organization_name'])
     data_dict['group_id'] = organization.id
-    data_dict['is_recurring'] = (data_dict['recurring_interval'] == 0)
+    # TODO @palcu: fix this
+    data_dict['is_recurring'] = (data_dict['recurring_interval'] != '0')
 
     data, errors = navl_validate(data_dict, schema, context)
 
@@ -148,3 +149,28 @@ def inventory_entry_show(context, data_dict):
     model = context['model']
     inventory_entry = model.Session.query(InventoryEntry).get(data_dict['id'])
     return table_dictize(inventory_entry, context)
+
+
+def inventory_entry_update(context, data_dict):
+    # TODO @palcu: DRY this w/ inventory_entry_create
+    model = context['model']
+    schema = context['schema']
+    session = context['session']
+
+    id = get_or_bust(data_dict, 'id')
+    inventory_entry = session.query(InventoryEntry).get(id)
+
+    organization = model.Group.get(context['organization_name'])
+    data_dict['group_id'] = organization.id
+    data_dict['is_recurring'] = (data_dict['recurring_interval'] != '0')
+
+    data, errors = navl_validate(data_dict, schema, context)
+
+    if errors:
+        session.rollback()
+        raise ValidationError(errors)
+
+    obj = table_dict_save(data_dict, InventoryEntry, context)
+    model.repo.commit()
+
+    return table_dictize(obj, context)

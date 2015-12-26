@@ -50,9 +50,7 @@
       <tr>
         <th>{{ _('Title') }}</th>
         <th>{{ _('Last added dataset') }}</th>
-        {#
         <th>{{ _('Edit') }}</th>
-        #}
       </tr>
     </thead>
     <tbody>
@@ -60,9 +58,7 @@
       <tr>
         <td><a href="{{ h.url_for('inventory_entry_read', organization_name=c.group_dict.name, inventory_entry_id=entry.id) }}">{{ entry.title }}</a></td>
         <td>{{ h.time_ago_from_timestamp(entry.last_added_dataset_timestamp) }}</td>
-        {#
         <td><a href="{{ h.url_for('inventory_entry_edit', organization_name=c.group_dict.name, inventory_entry_id=entry.id) }}">{{ _('Edit') }}</a></td>
-        #}
       </tr>
       {% endfor %}
     </tbody>
