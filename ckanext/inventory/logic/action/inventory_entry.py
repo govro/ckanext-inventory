@@ -50,7 +50,7 @@ def inventory_entry_list_for_user(context, data_dict):
     sysadmin = authz.is_sysadmin(user)
 
     orgs_q = model.Session.query(InventoryEntry).join(model.Group) \
-        .filter(model.Group.is_organization is True) \
+        .filter(model.Group.is_organization == True) \
         .filter(model.Group.state == 'active')
 
     if not sysadmin:
