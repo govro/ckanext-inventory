@@ -1,3 +1,4 @@
+from collections import defaultdict
 from datetime import timedelta, datetime
 
 import ckan.authz as authz
@@ -39,6 +40,37 @@ def inventory_entry_list(context, data_dict):
             entry['next_deadline_timestamp'] = last_added + delta
     return entries
 
+
+@side_effect_free
+def inventory_entry_organization_summary(context, data_dict):
+    model = context['model']
+    good_entries = defaultdict(int)
+    late_entries = defaultdict(int)
+    no_entries = defaultdict(int)
+    organizations = {}
+    inventory_entries = model.Session.query(InventoryEntry).join(model.Group)
+    for entry in inventory_entries:
+        if not entry.last_added_dataset_timestamp or entry.is_recurring == False:
+            no_entries[entry.group_id] += 1
+            continue
+
+        next_date = entry.last_added_dataset_timestamp + timedelta(days=entry.recurring_interval)
+        if next_date > datetime.now():
+            good_entries[entry.group_id] += 1
+        else:
+            late_entries[entry.group_id] += 1
+        organizations[entry.group_id] = entry.group.name
+
+    res = []
+    for k, v in organizations.items():
+        res.append({
+            'id': k,
+            'name': v,
+            'ontime_entries': good_entries.get(k, 0),
+            'late_entries': late_entries.get(k, 0),
+            'no_entries': no_entries.get(k, 0),
+        })
+    return res
 
 @side_effect_free
 def inventory_entry_list_for_user(context, data_dict):
