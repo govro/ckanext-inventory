@@ -13,7 +13,7 @@ from ckanext.inventory.logic.action import (
 from ckanext.inventory.logic.action.inventory_entry import (
     inventory_entry_list, inventory_entry_create, inventory_organization_show,
     inventory_entry_update_timestamp, inventory_entry_list_for_user,
-    inventory_entry_show, inventory_entry_update)
+    inventory_entry_show, inventory_entry_update, inventory_entry_organization_summary)
 from ckanext.inventory.logic.action.inventory_item import (
     inventory_item_create, inventory_entry_list_items)
 from ckanext.inventory.logic.validators import update_package_inventory_entry
@@ -47,6 +47,13 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
         return mapping
 
     def after_map(self, mapping):
+        INVENTORY_CONTROLLER = """
+            ckanext.inventory.controllers.inventory:InventoryController"""
+        with SubMapper(mapping, controller=INVENTORY_CONTROLLER) as m:
+            m.connect('inventory_index',
+                      '/inventory',
+                      action='index')
+
         INVENTORY_ADMIN_CONTROLLER = """
             ckanext.inventory.controllers.inventory_admin:InventoryAdminController"""
         with SubMapper(mapping, controller=INVENTORY_ADMIN_CONTROLLER) as m:
@@ -123,6 +130,7 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
             'inventory_entry_list_for_user': inventory_entry_list_for_user,
             'inventory_entry_show': inventory_entry_show,
             'inventory_entry_update': inventory_entry_update,
+            'inventory_entry_organization_summary': inventory_entry_organization_summary,
         }
 
     # IConfigurable
