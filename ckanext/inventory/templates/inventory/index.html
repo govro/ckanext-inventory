@@ -14,8 +14,29 @@
             <br>
             <cite><a href="http://legislatie.just.ro/Public/DetaliiDocument/173535">Conform Art. 9</a></cite>
           </blockquote>
+
+      <h1>Intrari de inventar</h1>
+      <table class="table table-striped table-bordered table-condensed">
+        <thead>
+          <tr>
+            <th>{{ _('Organization') }}</th>
+            <th>Seturi de date actualizate la timp</th>
+            <th>Seturi de date rămase în urmă</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in c.entries %}
+          <tr>
+            <td><a href="{{ h.url_for('inventory_entry', organization_name=entry.id) }}">{{ entry.name }}</a></td>
+            <td>{{ entry.ontime_entries }}</td>
+            <td>{{ entry.late_entries }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </article>
+
 {% endblock %}
 
 {% block secondary %}{% endblock %}
