@@ -47,6 +47,13 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
         return mapping
 
     def after_map(self, mapping):
+        INVENTORY_CONTROLLER = """
+            ckanext.inventory.controllers.inventory:InventoryController"""
+        with SubMapper(mapping, controller=INVENTORY_CONTROLLER) as m:
+            m.connect('inventory_index',
+                      '/inventory',
+                      action='index')
+
         INVENTORY_ADMIN_CONTROLLER = """
             ckanext.inventory.controllers.inventory_admin:InventoryAdminController"""
         with SubMapper(mapping, controller=INVENTORY_ADMIN_CONTROLLER) as m:
