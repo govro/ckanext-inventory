@@ -1,15 +1,15 @@
 # Translations template for ckanext-inventory.
-# Copyright (C) 2015 ORGANIZATION
+# Copyright (C) 2016 ORGANIZATION
 # This file is distributed under the same license as the ckanext-inventory
 # project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-06 21:07+0000\n"
+"POT-Creation-Date: 2016-01-26 07:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,24 +22,32 @@ msgstr ""
 msgid "Account has been activated."
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:50
+#: ckanext/inventory/controllers/inventory_entry.py:81
+msgid "Inventory Entry not found"
+msgstr ""
+
+#: ckanext/inventory/controllers/inventory_entry.py:83
+msgid "Unauthorized to read inventory entry"
+msgstr ""
+
+#: ckanext/inventory/controllers/user.py:51
 #, python-format
 msgid "Unauthorized to create user %s"
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:52
+#: ckanext/inventory/controllers/user.py:53
 msgid "User or organization not found"
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:54
+#: ckanext/inventory/controllers/user.py:55
 msgid "Integrity Error"
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:56
+#: ckanext/inventory/controllers/user.py:57
 msgid "Bad Captcha. Please try again."
 msgstr ""
 
-#: ckanext/inventory/controllers/user.py:64
+#: ckanext/inventory/controllers/user.py:70
 msgid "Your account registration will be reviewed."
 msgstr ""
 
@@ -61,6 +69,11 @@ msgstr ""
 msgid "My Organization"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/index.html:22
+#: ckanext/inventory/templates/inventory/admin/index.html:11
+msgid "Organization"
+msgstr ""
+
 #: ckanext/inventory/templates/inventory/admin/index.html:8
 msgid "Name"
 msgstr ""
@@ -72,10 +85,6 @@ msgstr ""
 #: ckanext/inventory/templates/inventory/admin/index.html:10
 #: ckanext/inventory/templates/user/new_user_form.html:35
 msgid "Email"
-msgstr ""
-
-#: ckanext/inventory/templates/inventory/admin/index.html:11
-msgid "Organization"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/admin/index.html:12
@@ -95,14 +104,21 @@ msgstr ""
 msgid "Inventory Entry Form"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/entry/edit.html:3
+#: ckanext/inventory/templates/inventory/entry/edit.html:10
+msgid "Edit Inventory Item"
+msgstr ""
+
 #: ckanext/inventory/templates/inventory/entry/index.html:3
 msgid "Entries"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:7
+#: ckanext/inventory/templates/inventory/entry/inventory_entry_form.html:7
 #: ckanext/inventory/templates/inventory/entry/new.html:3
 #: ckanext/inventory/templates/inventory/entry/new.html:10
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:12
+#: ckanext/inventory/templates/inventory/entry/new_inventory_entry_form.html:7
 msgid "Add Inventory Item"
 msgstr ""
 
@@ -114,11 +130,13 @@ msgstr ""
 #: ckanext/inventory/templates/inventory/entry/index.html:18
 #: ckanext/inventory/templates/inventory/entry/index.html:51
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:5
 msgid "Title"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:19
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:6
 msgid "Recurring Interval"
 msgstr ""
 
@@ -129,6 +147,13 @@ msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:21
 msgid "Next deadline"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/index.html:23
+#: ckanext/inventory/templates/inventory/entry/index.html:35
+#: ckanext/inventory/templates/inventory/entry/index.html:53
+#: ckanext/inventory/templates/inventory/entry/index.html:61
+msgid "Edit"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:31
@@ -149,15 +174,22 @@ msgstr ""
 msgid "Archived Datasets"
 msgstr ""
 
-#: ckanext/inventory/templates/inventory/entry/index.html:71
+#: ckanext/inventory/templates/inventory/entry/index.html:67
 msgid "There are no archived entries in the inventory."
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/entry/inventory_entry_form.html:5
+#: ckanext/inventory/templates/inventory/entry/new_inventory_entry_form.html:5
+msgid "Save Inventory Item"
+msgstr ""
+
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:5
 msgid "budget"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:8
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:8
 msgid ""
 "The recurring interval should be an integer representing the number of days "
 "that will pass between since a new dataset will be added for the inventory "
@@ -176,7 +208,6 @@ msgid "There are no datasets available for this inventory entry."
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/read.html:18
-#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:17
 msgid "Go and add one."
 msgstr ""
 
@@ -201,7 +232,21 @@ msgid "Inventory Entry"
 msgstr ""
 
 #: ckanext/inventory/templates/package/snippets/package_basic_fields.html:17
-msgid "You don't have any inventory entries."
+msgid ""
+"Please double check the that the selected inventory entry matches with your "
+"new dataset. If that isn't the case "
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:17
+msgid "go and add one."
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:21
+msgid "You haven't added your dataset inventory."
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:21
+msgid "Go and add it."
 msgstr ""
 
 #: ckanext/inventory/templates/snippets/organization.html:7
