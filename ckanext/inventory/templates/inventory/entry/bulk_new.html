@@ -1,13 +1,13 @@
 {% extends "organization/read_base.html" %}
 
-{% block subtitle %}{{ _('Add Inventory Items') }}{% endblock %}
+{% block subtitle %}{{ _('Add inventory items') }}{% endblock %}
 
 {% block primary_content %}
   <article class="module">
     <div class="module-content">
       {% block primary_content_inner %}
       <h1 class="page-heading">
-        {% block page_heading %}{{ _('Add Inventory Items') }}{% endblock %}
+        {% block page_heading %}{{ _('Add inventory items') }}{% endblock %}
       </h1>
       {{ c.form | safe }}
       {% endblock %}
