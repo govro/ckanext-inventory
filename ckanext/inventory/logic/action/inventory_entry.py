@@ -42,6 +42,14 @@ def inventory_entry_list(context, data_dict):
 
 
 @side_effect_free
+def inventory_entry_csv(context, data_dict):
+    model = context['model']
+    inventory_entries = model.Session.query(InventoryEntry).join(model.Group)
+    return [(entry.group.title, entry.title, entry.recurring_interval, entry.last_added_dataset_timestamp)
+            for entry in inventory_entries]
+
+
+@side_effect_free
 def inventory_entry_organization_summary(context, data_dict):
     model = context['model']
     good_entries = defaultdict(int)
@@ -59,7 +67,7 @@ def inventory_entry_organization_summary(context, data_dict):
             good_entries[entry.group_id] += 1
         else:
             late_entries[entry.group_id] += 1
-        organizations[entry.group_id] = entry.group.name
+        organizations[entry.group_id] = entry.group.title
 
     res = []
     for k, v in organizations.items():
