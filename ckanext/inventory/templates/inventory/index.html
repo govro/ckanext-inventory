@@ -36,6 +36,10 @@
           {% endfor %}
         </tbody>
       </table>
+
+      {% if h.check_access('sysadmin') %}
+        <a href="{{ h.url_for('inventory_get_entries_csv') }}">{{ _('Download CSV file with all entries.') }}</a>
+      {% endif %}
     </div>
   </article>
 

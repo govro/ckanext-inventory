@@ -4,6 +4,7 @@ from ckan.plugins.toolkit import (
 
 from ckan import model
 from ckan.controllers.organization import OrganizationController
+import ckan.lib.helpers as h
 import ckan.lib.navl.dictization_functions as dictization_functions
 import ckan.logic as logic
 
@@ -18,6 +19,16 @@ class InventoryEntryController(OrganizationController):
     def __before__(self, action, **params):
         super(InventoryEntryController, self).__before__(action, **params)
         context = {'user': c.user, 'auth_user_obj': c.userobj}
+
+        # This is almost the same as organization/{name}/about.
+        organization_name = params['organization_name']
+        group_type = self._ensure_controller_matches_group_type(organization_name)
+        context = {'model': model, 'user': c.user, 'session': model.Session}
+        c.group_dict = self._get_group_dict(organization_name)
+        group_type = c.group_dict['type']
+        self._setup_template_variables(context, {'id': organization_name},
+                                       group_type=group_type)
+
         try:
             # TODO @palcu: fix this
             check_access('user_show', context, {})
@@ -25,20 +36,14 @@ class InventoryEntryController(OrganizationController):
             abort(401, 'You need to have an account.')
 
     def index(self, organization_name):
-        '''This is almost the same as organization/{name}/about.'''
-        group_type = self._ensure_controller_matches_group_type(organization_name)
         context = {'model': model, 'user': c.user, 'session': model.Session}
-        c.group_dict = self._get_group_dict(organization_name)
-        group_type = c.group_dict['type']
-        self._setup_template_variables(context, {'id': organization_name},
-                                       group_type=group_type)
         inventory_entries = get_action('inventory_entry_list')(
             context, {'name': organization_name})
         c.inventory_entries = [x for x in inventory_entries if x['is_recurring']]
         c.inventory_archived_entries = [
             x for x in inventory_entries if not x['is_recurring']]
         return render('inventory/entry/index.html',
-                      extra_vars={'group_type': group_type})
+                      extra_vars={'group_type': self._ensure_controller_matches_group_type(organization_name)})
 
     def new(self, data=None, errors=None, error_summary=None):
         context = {'model': model,
@@ -93,20 +98,35 @@ class InventoryEntryController(OrganizationController):
         return render('inventory/entry/edit.html')
 
     def read(self, organization_name, inventory_entry_id):
-        # TODO @palcu: DRY this and index
         context = {'model': model,
                    'session': model.Session,
                    'user': c.user or c.author}
-        group_type = self._ensure_controller_matches_group_type(organization_name)
-        context = {'model': model, 'user': c.user, 'session': model.Session}
-        c.group_dict = self._get_group_dict(organization_name)
-        group_type = c.group_dict['type']
-        self._setup_template_variables(context, {'id': organization_name},
-                                       group_type=group_type)
+
         c.entries = get_action('inventory_entry_list_items')(
             context, {'inventory_entry_id': inventory_entry_id})
         return render('inventory/entry/read.html',
                       extra_vars={'group_type': group_type})
+
+    def bulk_new(self, data=None, errors=None, error_summary=None):
+        context = {'model': model,
+                   'session': model.Session,
+                   'user': c.user or c.author,
+                   'organization_name': c.organization_name,
+                   'save': 'save' in request.params or 'save-and-add' in request.params,
+                   'add-after-save': 'save-and-add' in request.params,
+                   'schema': default_inventory_entry_schema_create()}
+
+        if context['save'] and not data:
+            return self._save_new_bulk(context)
+
+        data = data or {}
+        errors = errors or {}
+        error_summary = error_summary or {}
+        vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
+
+        c.form = render('inventory/entry/snippets/inventory_entry_bulk_form.html',
+                        extra_vars=vars)
+        return render('inventory/entry/bulk_new.html')
 
     def _save_new(self, context):
         try:
@@ -121,6 +141,24 @@ class InventoryEntryController(OrganizationController):
             errors = e.error_dict
             error_summary = e.error_summary
             return self.new(data_dict, errors, error_summary)
+
+    def _save_new_bulk(self, context):
+        try:
+            data_dict = logic.clean_dict(unflatten(
+                logic.tuplize_dict(logic.parse_params(request.params))))
+            logic.get_action('inventory_entry_bulk_create')(context, data_dict)
+            if context['add-after-save']:
+                h.flash_success(_('Entries have been successfully added.'))
+                redirect_to('inventory_entry_bulk_new',
+                            organization_name=c.organization_name)
+            else:
+                redirect_to('inventory_entry',
+                            organization_name=c.organization_name)
+
+        except ValidationError, e:
+            errors = e.error_dict
+            error_summary = e.error_summary
+            return self.bulk_new(data_dict, errors, error_summary)
 
     def _save_edit(self, id, context):
         try:

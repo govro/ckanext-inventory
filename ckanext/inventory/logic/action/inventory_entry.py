@@ -4,7 +4,7 @@ from datetime import timedelta, datetime
 import ckan.authz as authz
 from ckan.plugins.toolkit import (
     side_effect_free, ObjectNotFound, get_or_bust, check_access,
-    navl_validate, ValidationError)
+    navl_validate, ValidationError, _)
 from ckan.lib.dictization import table_dictize, table_dict_save
 from ckan.lib.helpers import _datestamp_to_datetime
 
@@ -42,6 +42,14 @@ def inventory_entry_list(context, data_dict):
 
 
 @side_effect_free
+def inventory_entry_csv(context, data_dict):
+    model = context['model']
+    inventory_entries = model.Session.query(InventoryEntry).join(model.Group)
+    return [(entry.group.title, entry.title, entry.recurring_interval, entry.last_added_dataset_timestamp)
+            for entry in inventory_entries]
+
+
+@side_effect_free
 def inventory_entry_organization_summary(context, data_dict):
     model = context['model']
     good_entries = defaultdict(int)
@@ -59,7 +67,7 @@ def inventory_entry_organization_summary(context, data_dict):
             good_entries[entry.group_id] += 1
         else:
             late_entries[entry.group_id] += 1
-        organizations[entry.group_id] = entry.group.name
+        organizations[entry.group_id] = entry.group.title
 
     res = []
     for k, v in organizations.items():
@@ -143,6 +151,39 @@ def inventory_entry_create(context, data_dict):
         raise ValidationError(errors)
 
     obj = table_dict_save(data_dict, InventoryEntry, context)
+    model.repo.commit()
+
+    return table_dictize(obj, context)
+
+
+def inventory_entry_bulk_create(context, data_dict):
+    model = context['model']
+    schema = context['schema']
+    session = context['session']
+
+    organization = model.Group.get(context['organization_name'])
+    inventory_entry_dict = {'group_id': organization.id}
+
+    if not data_dict['field-name-input-0']:
+        raise ValidationError({'error': [_('Please add at least one inventory entry.')]})
+
+    for inventory_entry_id in range(10):
+        inventory_entry_name = data_dict['field-name-input-' + str(inventory_entry_id)]
+        if not inventory_entry_name:
+            break
+
+        inventory_entry_dict['title'] = inventory_entry_name
+        inventory_entry_dict['recurring_interval'] = data_dict['field-recurring-input-' + str(inventory_entry_id)]
+        inventory_entry_dict['is_recurring'] = (inventory_entry_dict['recurring_interval'] != '0')
+
+        data, errors = navl_validate(inventory_entry_dict, schema, context)
+
+        if errors:
+            session.rollback()
+            raise ValidationError({'error': [_('Please check entry number {0}.'.format(inventory_entry_id+1))]})
+
+        obj = table_dict_save(inventory_entry_dict, InventoryEntry, context)
+
     model.repo.commit()
 
     return table_dictize(obj, context)

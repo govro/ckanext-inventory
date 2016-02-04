@@ -1,6 +1,7 @@
 import random
 
 from ckan.controllers.user import UserController
+from ckanext.inventory.lib.mailer import send_activate_user_notification
 
 import ckan.lib.base as base
 import ckan.lib.captcha as captcha
@@ -60,6 +61,11 @@ class InventoryUserController(UserController):
             errors = e.error_dict
             error_summary = e.error_summary
             return self.new(data_dict, errors, error_summary)
+
+        try:
+            send_activate_user_notification()
+        except Exception as e:
+            h.flash_error('Could not send activation email to admin.')
 
         h.flash_success(_('Your account registration will be reviewed.'))
         return render('home/index.html')

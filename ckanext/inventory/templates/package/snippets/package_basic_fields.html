@@ -5,6 +5,7 @@
   {% set error = errors.inventory_entry_id %}
 
   <label class="control-label" for="field-inventory_entry_id">{{ _("Inventory Entry") }}</label>
+
   <div class="controls">
     {% if c.inventory_entries|length > 0 %}
     <select id="field-inventory_entry_id" name="inventory_entry_id" data-module="autocomplete">
@@ -12,9 +13,12 @@
         <option value="{{ inventory_entry_id }}" {% if data.get('inventory_entry_id') == inventory_entry_id %}selected="selected"{% endif %}>{{ inventory_entry_title }}</option>
       {% endfor %}
     </select>
+    <div class="alert alert-warning" style="margin-top: 10px;">
+      <p>{% trans %}Please double check the that the selected inventory entry matches with your new dataset. If that isn't the case {% endtrans %} <strong style="text-decoration: underline"><a href="{{ h.url_for('inventory_entry', organization_name=c.userobj.get_groups()[0].id) }}">{% trans %}go and add one.{% endtrans %}</a></strong></p>
+    </div>
     {% else %}
     <div class="alert alert-error">
-      <p>{% trans %}You don't have any inventory entries.{% endtrans %} <strong style="text-decoration: underline"><a href="{{ h.url_for('inventory_entry', organization_name=c.userobj.get_groups()[0].id) }}">{% trans %}Go and add one.{% endtrans %}</a></strong></p>
+      <p>{% trans %}You haven't added your dataset inventory.{% endtrans %} <strong style="text-decoration: underline"><a href="{{ h.url_for('inventory_entry', organization_name=c.userobj.get_groups()[0].id) }}">{% trans %}Go and add it.{% endtrans %}</a></strong></p>
     </div>
     {% endif %}
 

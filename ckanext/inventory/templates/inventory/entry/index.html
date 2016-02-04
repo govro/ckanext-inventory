@@ -4,7 +4,7 @@
 
 {% block page_primary_action %}
   {% if h.check_access('package_create', {'owner_org': c.group_dict.id}) %}
-    <a class='btn btn-primary' href="{{ h.url_for('inventory_entry_new', organization_name=c.group_dict.name) }}">{{ _('Add Inventory Item') }}</a>
+    <a class='btn btn-primary' href="{{ h.url_for('inventory_entry_bulk_new', organization_name=c.group_dict.name) }}">{{ _('Add inventory items') }}</a>
   {% endif %}
 {% endblock %}
 
