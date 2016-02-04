@@ -1,0 +1,39 @@
+{% import "macros/form.html" as form %}
+<style>
+  .form-table input {display: block; margin: 0; border: 0; width: 100%; padding-left: 0; padding-right: 0;}
+</style>
+
+<form id="entry-new-form" class="form-horizontal" action="" method="post">
+  {{ form.errors(error_summary) }}
+
+  <table class="table table-bordered table-condensed form-table">
+    <thead>
+      <tr>
+       <th>{{ _("Title") }}</th>
+       <th>{{ _("Recurring Interval") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for n in range(10) %}
+      <tr>
+        <td>
+          <input name="field-name-input-{{n}}" id="field-name-input-{{n}}" type="text" class="form-control" value="{{ data['field-name-input-{0}'.format(n)]}}">
+        </td>
+        <td>
+          <input name="field-recurring-input-{{n}}" id="field-recurring-input-{{n}}" type="text" class="form-control" value="{{ data['field-recurring-input-{0}'.format(n)]}}">
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p>{% trans %}The recurring interval should be an integer representing the number of days that will pass between since a new dataset will be added for the inventory entry. Add zero only if the dataset is non-recurring, like archived documents for example.{% endtrans %}</p>
+
+  <div class="form-actions">
+    {% block form_actions %}
+    <button class="btn btn-primary" type="submit" name="save">{{ _('Add inventory items') }}</button>
+    <button class="btn btn-secondary" type="submit" name="save-and-add">{{ _('Add inventory items and add more') }}</button>
+    {% endblock %}
+  </div>
+</form>
+
