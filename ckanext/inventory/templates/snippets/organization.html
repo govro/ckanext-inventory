@@ -9,11 +9,15 @@
 {% else %}
   <p class="empty">{{ _('There is no description for this organization') }}</p>
 {% endif %}
-{% if organization.extras %}
-  <p>
-    {{ organization.extras[0].value }}
-  </p>
-{% else %}
-  <p class="empty">There is no organization id.</p>
+
+{% if h.check_access('sysadmin') %}
+  {% if organization.extras %}
+    <p>
+      {{ organization.extras[0].value }}
+    </p>
+  {% else %}
+    <p class="empty">There is no organization id.</p>
+  {% endif %}
 {% endif %}
+
 {% endblock %}
