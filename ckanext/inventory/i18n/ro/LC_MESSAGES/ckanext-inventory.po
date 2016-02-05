@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-02-05 14:41+0000\n"
-"PO-Revision-Date: 2016-02-05 16:54+0200\n"
+"PO-Revision-Date: 2016-02-05 17:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -162,7 +162,7 @@ msgstr "Titlu"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:19
 msgid "Recurring Interval (days)"
-msgstr "Inteval de recurență (zile)"
+msgstr "Interval de recurență (zile)"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:20
 #: ckanext/inventory/templates/inventory/entry/index.html:52
