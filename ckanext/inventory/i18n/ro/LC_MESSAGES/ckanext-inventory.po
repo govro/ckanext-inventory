@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-02-05 14:41+0000\n"
-"PO-Revision-Date: 2016-02-05 17:10+0200\n"
+"PO-Revision-Date: 2016-02-05 17:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -171,7 +171,7 @@ msgstr "Ultima dată când a fost adăugat"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:21
 msgid "Next deadline"
-msgstr "Următorul deadline"
+msgstr "Următorul termen"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:23
 #: ckanext/inventory/templates/inventory/entry/index.html:35
