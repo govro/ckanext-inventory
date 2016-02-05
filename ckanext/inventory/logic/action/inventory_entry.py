@@ -196,7 +196,8 @@ def inventory_entry_bulk_create(context, data_dict):
 
         if errors:
             session.rollback()
-            raise ValidationError({'error': [_('Please check entry number {0}.'.format(inventory_entry_id+1))]})
+            # TODO @palcu: i18n
+            raise ValidationError({'error': [_('Verificati intrarea cu numarul {0}.'.format(inventory_entry_id+1))]})
 
         obj = table_dict_save(inventory_entry_dict, InventoryEntry, context)
 
