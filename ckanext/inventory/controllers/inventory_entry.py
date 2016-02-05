@@ -42,9 +42,9 @@ class InventoryEntryController(OrganizationController):
         context = {'model': model, 'user': c.user, 'session': model.Session}
         inventory_entries = get_action('inventory_entry_list')(
             context, {'name': organization_name})
-        c.inventory_entries = [x for x in inventory_entries if x['is_recurring']]
-        c.inventory_archived_entries = [
-            x for x in inventory_entries if not x['is_recurring']]
+
+        c.inventory_entries = inventory_entries
+
         return render('inventory/entry/index.html',
                       extra_vars={'group_type': self._ensure_controller_matches_group_type(organization_name)})
 
