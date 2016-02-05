@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-02-05 14:41+0000\n"
-"PO-Revision-Date: 2016-02-05 16:52+0200\n"
+"PO-Revision-Date: 2016-02-05 16:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -270,7 +270,7 @@ msgstr "RO12345678"
 
 #: ckanext/inventory/templates/package/snippets/package_basic_fields.html:7
 msgid "Inventory Entry"
-msgstr "Intrare de inventar de set de date"
+msgstr "Intrare de inventar"
 
 #: ckanext/inventory/templates/package/snippets/package_basic_fields.html:17
 msgid ""
