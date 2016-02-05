@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-02-05 12:47+0000\n"
-"PO-Revision-Date: 2016-02-05 14:49+0200\n"
+"PO-Revision-Date: 2016-02-05 14:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -158,7 +158,7 @@ msgstr "Inventar"
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:5
 msgid "Title"
-msgstr "Denumirea intrării de inventar pentru setul de date"
+msgstr "Titlu"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:19
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
