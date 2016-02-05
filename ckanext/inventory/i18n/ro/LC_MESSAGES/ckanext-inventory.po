@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-05 12:47+0000\n"
-"PO-Revision-Date: 2016-02-05 16:35+0200\n"
+"POT-Creation-Date: 2016-02-05 14:41+0000\n"
+"PO-Revision-Date: 2016-02-05 16:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -25,15 +25,15 @@ msgstr ""
 msgid "Account has been activated."
 msgstr "Contul a fost activat."
 
-#: ckanext/inventory/controllers/inventory_entry.py:86
+#: ckanext/inventory/controllers/inventory_entry.py:89
 msgid "Inventory Entry not found"
 msgstr "Intrare de inventar de set de date negăsită"
 
-#: ckanext/inventory/controllers/inventory_entry.py:88
+#: ckanext/inventory/controllers/inventory_entry.py:91
 msgid "Unauthorized to read inventory entry"
 msgstr "Neautorizat pentru citirea intrării de inventar a setului de date"
 
-#: ckanext/inventory/controllers/inventory_entry.py:149
+#: ckanext/inventory/controllers/inventory_entry.py:167
 msgid "Entries have been successfully added."
 msgstr "Intrările de inventar de seturi de date au fost adăugate cu succes."
 
@@ -71,13 +71,13 @@ msgstr "Negăsit"
 msgid "Could not send reset link: %s"
 msgstr "Nu am putut trimite link-ul de resetare: %s"
 
-#: ckanext/inventory/logic/action/inventory_entry.py:168
+#: ckanext/inventory/logic/action/inventory_entry.py:184
 msgid "Please add at least one inventory entry."
 msgstr "Vă rugăm adăugați minim o intrare de inventar pentru setul de date."
 
-#: ckanext/inventory/logic/action/inventory_entry.py:183
-msgid "Please check entry number {0}."
-msgstr "Vă rugăm să verificaţi intrarea de pe rândul {0}."
+#: ckanext/inventory/logic/action/inventory_entry.py:200
+msgid "Verificati intrarea cu numarul {0}."
+msgstr "Verificati intrarea cu numarul {0}."
 
 #: ckanext/inventory/templates/header.html:8
 #: ckanext/inventory/templates/header.html:10
@@ -90,6 +90,7 @@ msgid "Organization"
 msgstr "Instituție"
 
 #: ckanext/inventory/templates/inventory/index.html:41
+#: ckanext/inventory/templates/inventory/entry/index.html:69
 msgid "Download CSV file with all entries."
 msgstr "Descarcă fișierul de CSV cu toate intrările."
 
@@ -126,7 +127,7 @@ msgstr "Formular pentru intrări de inventar de seturi de date"
 #: ckanext/inventory/templates/inventory/entry/bulk_new.html:3
 #: ckanext/inventory/templates/inventory/entry/bulk_new.html:10
 #: ckanext/inventory/templates/inventory/entry/index.html:7
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:34
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:42
 msgid "Add inventory items"
 msgstr "Adaugă intrări de inventar"
 
@@ -160,11 +161,8 @@ msgid "Title"
 msgstr "Titlu"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:19
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:13
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:6
-msgid "Recurring Interval"
-msgstr "Interval de actualizare"
+msgid "Recurring Interval (days)"
+msgstr "Inteval de recurență (zile)"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:20
 #: ckanext/inventory/templates/inventory/entry/index.html:52
@@ -181,13 +179,6 @@ msgstr "Următorul deadline"
 #: ckanext/inventory/templates/inventory/entry/index.html:61
 msgid "Edit"
 msgstr "Editează"
-
-#: ckanext/inventory/templates/inventory/entry/index.html:31
-msgid "day"
-msgid_plural "days"
-msgstr[0] "zi"
-msgstr[1] "zile"
-msgstr[2] "de zile"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:33
 msgid "Unknown"
@@ -223,8 +214,14 @@ msgstr "Adaugă o intrare în inventarul de seturi de date"
 msgid "budget"
 msgstr "buget"
 
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:13
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:6
+msgid "Recurring Interval"
+msgstr "Interval de actualizare"
+
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:8
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:30
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:38
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:8
 msgid ""
 "The recurring interval should be an integer representing the number of days "
@@ -351,6 +348,15 @@ msgstr "exemplu@gov.ro"
 #: ckanext/inventory/templates/user/new_user_form.html:43
 msgid "Create Account"
 msgstr "Cont Nou"
+
+#~ msgid "Please check entry number {0}."
+#~ msgstr "Vă rugăm să verificaţi intrarea de pe rândul {0}."
+
+#~ msgid "day"
+#~ msgid_plural "days"
+#~ msgstr[0] "zi"
+#~ msgstr[1] "zile"
+#~ msgstr[2] "de zile"
 
 #~ msgid "Add Inventory Items"
 #~ msgstr "Adaugă o intrare de inventar de set de date"
