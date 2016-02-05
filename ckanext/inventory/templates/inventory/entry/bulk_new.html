@@ -9,6 +9,10 @@
       <h1 class="page-heading">
         {% block page_heading %}{{ _('Add inventory items') }}{% endblock %}
       </h1>
+      <ul>
+        <li><a href="">{{ _('Go and add a dataset') }}</a></li>
+        <li><a href="">{{ _('Go and see the inventory datasets') }}</a></li>
+      </ul>
       {{ c.form | safe }}
       {% endblock %}
     </div>

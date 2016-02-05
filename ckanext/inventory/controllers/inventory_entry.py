@@ -112,8 +112,7 @@ class InventoryEntryController(OrganizationController):
                    'session': model.Session,
                    'user': c.user or c.author,
                    'organization_name': c.organization_name,
-                   'save': 'save' in request.params or 'save-and-add' in request.params,
-                   'add-after-save': 'save-and-add' in request.params,
+                   'save': 'save' in request.params ,
                    'schema': default_inventory_entry_schema_create()}
 
         if context['save'] and not data:
@@ -147,13 +146,9 @@ class InventoryEntryController(OrganizationController):
             data_dict = logic.clean_dict(unflatten(
                 logic.tuplize_dict(logic.parse_params(request.params))))
             logic.get_action('inventory_entry_bulk_create')(context, data_dict)
-            if context['add-after-save']:
-                h.flash_success(_('Entries have been successfully added.'))
-                redirect_to('inventory_entry_bulk_new',
-                            organization_name=c.organization_name)
-            else:
-                redirect_to('inventory_entry',
-                            organization_name=c.organization_name)
+            h.flash_success(_('Entries have been successfully added.'))
+            redirect_to('inventory_entry_bulk_new',
+                        organization_name=c.organization_name)
 
         except ValidationError, e:
             errors = e.error_dict
