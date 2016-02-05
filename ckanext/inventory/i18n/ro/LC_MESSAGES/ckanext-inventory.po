@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-02-04 21:31+0000\n"
-"PO-Revision-Date: 2016-02-05 13:49+0200\n"
+"PO-Revision-Date: 2016-02-05 13:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -241,7 +241,7 @@ msgstr "Mergi și adaugă unul."
 
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:34
 msgid "Add inventory items"
-msgstr "Adaugă intrări de invntar"
+msgstr "Adaugă intrări de inventar"
 
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:35
 msgid "Add inventory items and add more"
