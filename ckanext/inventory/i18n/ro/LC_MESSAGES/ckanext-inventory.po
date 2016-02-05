@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-04 21:31+0000\n"
-"PO-Revision-Date: 2016-02-05 14:26+0200\n"
+"POT-Creation-Date: 2016-02-05 12:47+0000\n"
+"PO-Revision-Date: 2016-02-05 14:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -33,7 +33,7 @@ msgstr "Intrare de inventar pentru set de date negăsită"
 msgid "Unauthorized to read inventory entry"
 msgstr "Neautorizat pentru citirea intrării de inventar pentru setul de date"
 
-#: ckanext/inventory/controllers/inventory_entry.py:151
+#: ckanext/inventory/controllers/inventory_entry.py:149
 msgid "Entries have been successfully added."
 msgstr ""
 "Intrările de inventar pentru seturi de date au fost adăugate cu succes."
@@ -72,11 +72,11 @@ msgstr "Negăsit"
 msgid "Could not send reset link: %s"
 msgstr "Nu am putut trimite link-ul de resetare: %s"
 
-#: ckanext/inventory/logic/action/inventory_entry.py:160
+#: ckanext/inventory/logic/action/inventory_entry.py:168
 msgid "Please add at least one inventory entry."
 msgstr "Vă rugăm adăugați minim o intrare de inventar pentru setul de date."
 
-#: ckanext/inventory/logic/action/inventory_entry.py:175
+#: ckanext/inventory/logic/action/inventory_entry.py:183
 msgid "Please check entry number {0}."
 msgstr "Vă rugăm să verificaţi intrarea de pe rândul {0}."
 
@@ -89,6 +89,10 @@ msgstr "Instituția mea"
 #: ckanext/inventory/templates/inventory/admin/index.html:11
 msgid "Organization"
 msgstr "Instituție"
+
+#: ckanext/inventory/templates/inventory/index.html:41
+msgid "Download CSV file with all entries."
+msgstr "Descarcă fișierul de CSV cu toate intrările."
 
 #: ckanext/inventory/templates/inventory/admin/index.html:8
 msgid "Name"
@@ -123,8 +127,17 @@ msgstr "Formular pentru intrări de inventar pentru seturi de date"
 #: ckanext/inventory/templates/inventory/entry/bulk_new.html:3
 #: ckanext/inventory/templates/inventory/entry/bulk_new.html:10
 #: ckanext/inventory/templates/inventory/entry/index.html:7
-msgid "Add Inventory Items"
-msgstr "Adaugă o intrare de inventar de set de date"
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:34
+msgid "Add inventory items"
+msgstr "Adaugă intrări de inventar de seturi de date"
+
+#: ckanext/inventory/templates/inventory/entry/bulk_new.html:13
+msgid "Go and add a dataset"
+msgstr "Mergi și adaugă un set de date"
+
+#: ckanext/inventory/templates/inventory/entry/bulk_new.html:14
+msgid "Go and see the inventory datasets"
+msgstr "Mergi și vezi toate intrările de inventar de seturi de date"
 
 #: ckanext/inventory/templates/inventory/entry/edit.html:3
 #: ckanext/inventory/templates/inventory/entry/edit.html:10
@@ -143,10 +156,9 @@ msgstr "Inventar"
 #: ckanext/inventory/templates/inventory/entry/index.html:18
 #: ckanext/inventory/templates/inventory/entry/index.html:51
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:12
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:5
 msgid "Title"
-msgstr "Titlu"
+msgstr "Denumirea intrării de inventar pentru setul de date"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:19
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
@@ -240,14 +252,9 @@ msgstr "Nu există seturi de date pentru această intrare de inventar."
 msgid "Go and add one."
 msgstr "Mergi și adaugă unul."
 
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:34
-msgid "Add inventory items"
-msgstr "Adaugă intrări de inventar de seturi de date"
-
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:35
-msgid "Add inventory items and add more"
-msgstr ""
-"Adaugă intrările de inventar de seturi de date și mai continuă cu altele"
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:12
+msgid "Inventory Entry Title"
+msgstr "Denumirea intrării de inventar pentru setul de date"
 
 #: ckanext/inventory/templates/organization/read_base.html:5
 msgid "Activity Stream"
@@ -345,6 +352,13 @@ msgstr "exemplu@gov.ro"
 #: ckanext/inventory/templates/user/new_user_form.html:43
 msgid "Create Account"
 msgstr "Cont Nou"
+
+#~ msgid "Add Inventory Items"
+#~ msgstr "Adaugă o intrare de inventar de set de date"
+
+#~ msgid "Add inventory items and add more"
+#~ msgstr ""
+#~ "Adaugă intrările de inventar de seturi de date și mai continuă cu altele"
 
 #~ msgid "You don't have any inventory entries."
 #~ msgstr "Nu ai intrări de inventar"
