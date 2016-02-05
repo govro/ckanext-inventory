@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-02-05 12:47+0000\n"
-"PO-Revision-Date: 2016-02-05 14:58+0200\n"
+"PO-Revision-Date: 2016-02-05 16:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -27,16 +27,15 @@ msgstr "Contul a fost activat."
 
 #: ckanext/inventory/controllers/inventory_entry.py:86
 msgid "Inventory Entry not found"
-msgstr "Intrare de inventar pentru set de date negăsită"
+msgstr "Intrare de inventar de set de date negăsită"
 
 #: ckanext/inventory/controllers/inventory_entry.py:88
 msgid "Unauthorized to read inventory entry"
-msgstr "Neautorizat pentru citirea intrării de inventar pentru setul de date"
+msgstr "Neautorizat pentru citirea intrării de inventar a setului de date"
 
 #: ckanext/inventory/controllers/inventory_entry.py:149
 msgid "Entries have been successfully added."
-msgstr ""
-"Intrările de inventar pentru seturi de date au fost adăugate cu succes."
+msgstr "Intrările de inventar de seturi de date au fost adăugate cu succes."
 
 #: ckanext/inventory/controllers/user.py:51
 #, python-format
@@ -122,7 +121,7 @@ msgstr "Ca un utilizator sysadmin poți activa alți utilizatori."
 
 #: ckanext/inventory/templates/inventory/entry/base_form_page.html:4
 msgid "Inventory Entry Form"
-msgstr "Formular pentru intrări de inventar pentru seturi de date"
+msgstr "Formular pentru intrări de inventar de seturi de date"
 
 #: ckanext/inventory/templates/inventory/entry/bulk_new.html:3
 #: ckanext/inventory/templates/inventory/entry/bulk_new.html:10
@@ -196,7 +195,7 @@ msgstr "Necunoscut"
 
 #: ckanext/inventory/templates/inventory/entry/index.html:42
 msgid "There are no entries in the inventory."
-msgstr "Nu există intrări în inventar pentru seturi de date."
+msgstr "Nu există intrări în inventar de seturi de date."
 
 #: ckanext/inventory/templates/inventory/entry/index.html:45
 msgid "Archived Datasets"
@@ -254,7 +253,7 @@ msgstr "Mergi și adaugă unul."
 
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:12
 msgid "Inventory Entry Title"
-msgstr "Denumirea intrării de inventar pentru setul de date"
+msgstr "Denumirea intrării de inventar a setului de date"
 
 #: ckanext/inventory/templates/organization/read_base.html:5
 msgid "Activity Stream"
