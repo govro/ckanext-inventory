@@ -66,4 +66,5 @@
   {% else %}
   <p>{{ _('There are no archived entries in the inventory.') }}</p>
   {% endif %}
+  <a href="{{ h.url_for('inventory_entry_csv', organization_name=c.organization_name) }}">{{ _('Download CSV file with all entries.') }}</a>
 {% endblock %}

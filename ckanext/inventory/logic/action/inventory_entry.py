@@ -50,6 +50,22 @@ def inventory_entry_csv(context, data_dict):
 
 
 @side_effect_free
+def inventory_entry_csv_single(context, data_dict):
+    model = context['model']
+    name = get_or_bust(data_dict, 'name')
+    organization = model.Group.get(name)
+    if not organization:
+        raise ObjectNotFound('Organization was not found')
+
+    entries = [
+        table_dictize(entry, context) for entry in organization.inventory_entries]
+
+    inventory_entries = model.Session.query(InventoryEntry).join(model.Group)
+    return [(entry.title, entry.recurring_interval, entry.last_added_dataset_timestamp)
+            for entry in inventory_entries]
+
+
+@side_effect_free
 def inventory_entry_organization_summary(context, data_dict):
     model = context['model']
     good_entries = defaultdict(int)

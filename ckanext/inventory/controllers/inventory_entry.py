@@ -1,6 +1,9 @@
+import unicodecsv
+from cStringIO import StringIO
+
 from ckan.plugins.toolkit import (
     c, check_access, NotAuthorized, abort, get_action, render, request,
-    redirect_to, _)
+    redirect_to, _, response)
 
 from ckan import model
 from ckan.controllers.organization import OrganizationController
@@ -126,6 +129,21 @@ class InventoryEntryController(OrganizationController):
         c.form = render('inventory/entry/snippets/inventory_entry_bulk_form.html',
                         extra_vars=vars)
         return render('inventory/entry/bulk_new.html')
+
+    def csv(self, organization_name):
+        # TODO @palcu: DRY code with get_inventory_entries_csv
+        context = {'user': c.user}
+        entries = get_action('inventory_entry_csv_single')(context, {'name': organization_name})
+
+        response.headers['Content-Type'] = 'text/csv'
+        s = StringIO()
+        writer = unicodecsv.writer(s)
+
+        writer.writerow(['nume_intrare_de_inventar', 'interval_de_recurenta', 'ultima_actualizare'])
+        for entry in entries:
+            writer.writerow(entry)
+
+        return s.getvalue()
 
     def _save_new(self, context):
         try:
