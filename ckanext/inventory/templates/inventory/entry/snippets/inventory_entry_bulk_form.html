@@ -10,7 +10,7 @@
     <thead>
       <tr>
        <th>{{ _("Inventory Entry Title") }}</th>
-       <th>{{ _("Recurring Interval") }}</th>
+       <th>{{ _("Recurring Interval") }}*</th>
       </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
           <input name="field-name-input-0" id="field-name-input-0" type="text" class="form-control" value="{{ data['field-name-input-0'] }}" placeholder="ex: Registrul National ONG">
         </td>
         <td>
-          <input name="field-recurring-input-0" id="field-recurring-input-0" type="text" class="form-control" value="{{ data['field-recurring-input-0'] }}" placeholder="365">
+          <input name="field-recurring-input-0" id="field-recurring-input-0" type="text" class="form-control" value="{{ data['field-recurring-input-0'] }}" placeholder="ex: 365">
         </td>
       </tr>
       {% for n in range(1,10) %}
@@ -35,7 +35,7 @@
     </tbody>
   </table>
 
-  <p>{% trans %}The recurring interval should be an integer representing the number of days that will pass between since a new dataset will be added for the inventory entry. Add zero only if the dataset is non-recurring, like archived documents for example.{% endtrans %}</p>
+  <p>*{% trans %}The recurring interval should be an integer representing the number of days that will pass between since a new dataset will be added for the inventory entry. Add zero only if the dataset is non-recurring, like archived documents for example.{% endtrans %}</p>
 
   <div class="form-actions">
     {% block form_actions %}
