@@ -105,7 +105,7 @@ class InventoryEntryController(OrganizationController):
         c.entries = get_action('inventory_entry_list_items')(
             context, {'inventory_entry_id': inventory_entry_id})
         return render('inventory/entry/read.html',
-                      extra_vars={'group_type': self._ensure_controller_matches_group_type(organization_name)}})
+                      extra_vars={'group_type': self._ensure_controller_matches_group_type(organization_name)})
 
     def bulk_new(self, data=None, errors=None, error_summary=None):
         context = {'model': model,
