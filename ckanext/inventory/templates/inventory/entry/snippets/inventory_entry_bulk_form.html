@@ -14,7 +14,15 @@
       </tr>
     </thead>
     <tbody>
-      {% for n in range(10) %}
+      <tr>
+        <td>
+          <input name="field-name-input-0" id="field-name-input-0" type="text" class="form-control" value="{{ data['field-name-input-0'] }}" placeholder="ex: Registrul National ONG">
+        </td>
+        <td>
+          <input name="field-recurring-input-0" id="field-recurring-input-0" type="text" class="form-control" value="{{ data['field-recurring-input-0'] }}" placeholder="365">
+        </td>
+      </tr>
+      {% for n in range(1,10) %}
       <tr>
         <td>
           <input name="field-name-input-{{n}}" id="field-name-input-{{n}}" type="text" class="form-control" value="{{ data['field-name-input-{0}'.format(n)]}}">
