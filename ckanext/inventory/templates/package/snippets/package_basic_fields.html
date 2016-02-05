@@ -18,7 +18,7 @@
     </div>
     {% else %}
     <div class="alert alert-error">
-      <p>{% trans %}You haven't added your dataset inventory.{% endtrans %} <strong style="text-decoration: underline"><a href="{{ h.url_for('inventory_entry', organization_name=c.userobj.get_groups()[0].id) }}">{% trans %}Go and add it.{% endtrans %}</a></strong></p>
+      <p>{% trans %}You haven't added your dataset inventory.{% endtrans %} <strong style="text-decoration: underline"><a href="{{ h.url_for('inventory_entry_bulk_new', organization_name=c.userobj.get_groups()[0].id) }}">{% trans %}Go and add it.{% endtrans %}</a></strong></p>
     </div>
     {% endif %}
 

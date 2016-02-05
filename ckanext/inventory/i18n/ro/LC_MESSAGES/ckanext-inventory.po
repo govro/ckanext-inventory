@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-02-04 21:31+0000\n"
-"PO-Revision-Date: 2016-02-04 23:36+0200\n"
+"PO-Revision-Date: 2016-02-05 13:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -281,7 +281,7 @@ msgstr "mergeți și adăugați o intrare de inventar corespunzătoare."
 
 #: ckanext/inventory/templates/package/snippets/package_basic_fields.html:21
 msgid "You haven't added your dataset inventory."
-msgstr "Nu v-ați adăugat un inventarul pentru seturile de date."
+msgstr "Nu v-ați adăugat inventarul pentru seturile de date."
 
 #: ckanext/inventory/templates/package/snippets/package_basic_fields.html:21
 msgid "Go and add it."
