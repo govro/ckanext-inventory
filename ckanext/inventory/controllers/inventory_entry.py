@@ -1,6 +1,9 @@
+import unicodecsv
+from cStringIO import StringIO
+
 from ckan.plugins.toolkit import (
     c, check_access, NotAuthorized, abort, get_action, render, request,
-    redirect_to, _)
+    redirect_to, _, response)
 
 from ckan import model
 from ckan.controllers.organization import OrganizationController
@@ -39,9 +42,9 @@ class InventoryEntryController(OrganizationController):
         context = {'model': model, 'user': c.user, 'session': model.Session}
         inventory_entries = get_action('inventory_entry_list')(
             context, {'name': organization_name})
-        c.inventory_entries = [x for x in inventory_entries if x['is_recurring']]
-        c.inventory_archived_entries = [
-            x for x in inventory_entries if not x['is_recurring']]
+
+        c.inventory_entries = inventory_entries
+
         return render('inventory/entry/index.html',
                       extra_vars={'group_type': self._ensure_controller_matches_group_type(organization_name)})
 
@@ -105,15 +108,14 @@ class InventoryEntryController(OrganizationController):
         c.entries = get_action('inventory_entry_list_items')(
             context, {'inventory_entry_id': inventory_entry_id})
         return render('inventory/entry/read.html',
-                      extra_vars={'group_type': group_type})
+                      extra_vars={'group_type': self._ensure_controller_matches_group_type(organization_name)})
 
     def bulk_new(self, data=None, errors=None, error_summary=None):
         context = {'model': model,
                    'session': model.Session,
                    'user': c.user or c.author,
                    'organization_name': c.organization_name,
-                   'save': 'save' in request.params or 'save-and-add' in request.params,
-                   'add-after-save': 'save-and-add' in request.params,
+                   'save': 'save' in request.params ,
                    'schema': default_inventory_entry_schema_create()}
 
         if context['save'] and not data:
@@ -127,6 +129,21 @@ class InventoryEntryController(OrganizationController):
         c.form = render('inventory/entry/snippets/inventory_entry_bulk_form.html',
                         extra_vars=vars)
         return render('inventory/entry/bulk_new.html')
+
+    def csv(self, organization_name):
+        # TODO @palcu: DRY code with get_inventory_entries_csv
+        context = {'user': c.user}
+        entries = get_action('inventory_entry_csv_single')(context, {'name': organization_name})
+
+        response.headers['Content-Type'] = 'text/csv'
+        s = StringIO()
+        writer = unicodecsv.writer(s)
+
+        writer.writerow(['nume_intrare_de_inventar', 'interval_de_recurenta', 'ultima_actualizare'])
+        for entry in entries:
+            writer.writerow(entry)
+
+        return s.getvalue()
 
     def _save_new(self, context):
         try:
@@ -147,13 +164,9 @@ class InventoryEntryController(OrganizationController):
             data_dict = logic.clean_dict(unflatten(
                 logic.tuplize_dict(logic.parse_params(request.params))))
             logic.get_action('inventory_entry_bulk_create')(context, data_dict)
-            if context['add-after-save']:
-                h.flash_success(_('Entries have been successfully added.'))
-                redirect_to('inventory_entry_bulk_new',
-                            organization_name=c.organization_name)
-            else:
-                redirect_to('inventory_entry',
-                            organization_name=c.organization_name)
+            h.flash_success(_('Entries have been successfully added.'))
+            redirect_to('inventory_entry_bulk_new',
+                        organization_name=c.organization_name)
 
         except ValidationError, e:
             errors = e.error_dict

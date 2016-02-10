@@ -1,4 +1,4 @@
-import csv
+import unicodecsv
 from cStringIO import StringIO
 
 from ckan.plugins.toolkit import BaseController, render, c, get_action, response
@@ -15,7 +15,7 @@ class InventoryController(BaseController):
 
         response.headers['Content-Type'] = 'text/csv'
         s = StringIO()
-        writer = csv.writer(s)
+        writer = unicodecsv.writer(s)
 
         writer.writerow(['nume_organizatie', 'nume_intrare_de_inventar', 'interval_de_recurenta', 'ultima_actualizare'])
         for entry in entries:

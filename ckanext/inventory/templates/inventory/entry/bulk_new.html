@@ -9,6 +9,10 @@
       <h1 class="page-heading">
         {% block page_heading %}{{ _('Add inventory items') }}{% endblock %}
       </h1>
+      <ul>
+        <li>{% link_for _('Go and add a dataset'), controller='package', action='new', group=c.organization_name %}</li>
+        <li><a href="{{ h.url_for('inventory_entry', organization_name=c.organization_name) }}">{{ _('Go and see the inventory datasets') }}</a></li>
+      </ul>
       {{ c.form | safe }}
       {% endblock %}
     </div>

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-04 21:31+0000\n"
+"POT-Creation-Date: 2016-02-05 14:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "Account has been activated."
 msgstr ""
 
-#: ckanext/inventory/controllers/inventory_entry.py:86
+#: ckanext/inventory/controllers/inventory_entry.py:89
 msgid "Inventory Entry not found"
 msgstr ""
 
-#: ckanext/inventory/controllers/inventory_entry.py:88
+#: ckanext/inventory/controllers/inventory_entry.py:91
 msgid "Unauthorized to read inventory entry"
 msgstr ""
 
-#: ckanext/inventory/controllers/inventory_entry.py:151
+#: ckanext/inventory/controllers/inventory_entry.py:167
 msgid "Entries have been successfully added."
 msgstr ""
 
@@ -68,12 +68,12 @@ msgstr ""
 msgid "Could not send reset link: %s"
 msgstr ""
 
-#: ckanext/inventory/logic/action/inventory_entry.py:160
+#: ckanext/inventory/logic/action/inventory_entry.py:184
 msgid "Please add at least one inventory entry."
 msgstr ""
 
-#: ckanext/inventory/logic/action/inventory_entry.py:175
-msgid "Please check entry number {0}."
+#: ckanext/inventory/logic/action/inventory_entry.py:200
+msgid "Verificati intrarea cu numarul {0}."
 msgstr ""
 
 #: ckanext/inventory/templates/header.html:8
@@ -84,6 +84,11 @@ msgstr ""
 #: ckanext/inventory/templates/inventory/index.html:22
 #: ckanext/inventory/templates/inventory/admin/index.html:11
 msgid "Organization"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/index.html:41
+#: ckanext/inventory/templates/inventory/entry/index.html:69
+msgid "Download CSV file with all entries."
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/admin/index.html:8
@@ -119,7 +124,16 @@ msgstr ""
 #: ckanext/inventory/templates/inventory/entry/bulk_new.html:3
 #: ckanext/inventory/templates/inventory/entry/bulk_new.html:10
 #: ckanext/inventory/templates/inventory/entry/index.html:7
-msgid "Add Inventory Items"
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:42
+msgid "Add inventory items"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/bulk_new.html:13
+msgid "Go and add a dataset"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/bulk_new.html:14
+msgid "Go and see the inventory datasets"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/edit.html:3
@@ -139,16 +153,12 @@ msgstr ""
 #: ckanext/inventory/templates/inventory/entry/index.html:18
 #: ckanext/inventory/templates/inventory/entry/index.html:51
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:12
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:5
 msgid "Title"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:19
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:13
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:6
-msgid "Recurring Interval"
+msgid "Recurring Interval (days)"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:20
@@ -166,12 +176,6 @@ msgstr ""
 #: ckanext/inventory/templates/inventory/entry/index.html:61
 msgid "Edit"
 msgstr ""
-
-#: ckanext/inventory/templates/inventory/entry/index.html:31
-msgid "day"
-msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:33
 msgid "Unknown"
@@ -207,8 +211,14 @@ msgstr ""
 msgid "budget"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:13
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:6
+msgid "Recurring Interval"
+msgstr ""
+
 #: ckanext/inventory/templates/inventory/entry/new_entry_form.html:8
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:30
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:38
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:8
 msgid ""
 "The recurring interval should be an integer representing the number of days "
@@ -231,12 +241,8 @@ msgstr ""
 msgid "Go and add one."
 msgstr ""
 
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:34
-msgid "Add inventory items"
-msgstr ""
-
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:35
-msgid "Add inventory items and add more"
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:12
+msgid "Inventory Entry Title"
 msgstr ""
 
 #: ckanext/inventory/templates/organization/read_base.html:5
