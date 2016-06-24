@@ -1,12 +1,12 @@
 import ckan.logic.schema
 from routes.mapper import SubMapper
-from ckan.lib.plugins import DefaultTranslation
+from ckan.lib.plugins import DefaultTranslation, DefaultOrganizationForm
 from ckan.plugins import (
     implements, IConfigurer, IGroupForm, IRoutes, SingletonPlugin, IActions,
     IConfigurable, IDatasetForm, IValidators, ITranslation, IPackageController)
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
-    DefaultOrganizationForm, get_validator, get_converter, DefaultDatasetForm,
+    get_validator, get_converter, DefaultDatasetForm,
     get_action, c, add_ckan_admin_tab)
 from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
