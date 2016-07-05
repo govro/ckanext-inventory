@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-07-05 11:06+0000\n"
-"PO-Revision-Date: 2016-07-05 14:10+0200\n"
+"POT-Creation-Date: 2016-07-05 11:27+0000\n"
+"PO-Revision-Date: 2016-07-05 14:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: ro <alex.palcuie@gmail.com>\n"
 "Language: ro\n"
@@ -88,11 +88,31 @@ msgstr "Verificati intrarea cu numarul {0}."
 msgid "My Organization"
 msgstr "Instituția mea"
 
+#: ckanext/inventory/templates/inventory/index.html:6
+msgid "Inventories"
+msgstr "Inventare"
+
+#: ckanext/inventory/templates/inventory/index.html:18
+msgid "Inventory entries"
+msgstr "Intrări de inventar"
+
 #: ckanext/inventory/templates/inventory/index.html:22
 #: ckanext/inventory/templates/inventory/admin/index.html:11
 #: ckanext/inventory/templates/package/snippets/package_basic_fields.html:94
 msgid "Organization"
 msgstr "Instituție"
+
+#: ckanext/inventory/templates/inventory/index.html:23
+msgid "Updated datasets"
+msgstr "Seturi de date actualizate la timp"
+
+#: ckanext/inventory/templates/inventory/index.html:24
+msgid "Late datasets"
+msgstr "Seturi de date cu întârziere"
+
+#: ckanext/inventory/templates/inventory/index.html:25
+msgid "Archived datasets"
+msgstr "Seturi de date arhivate"
 
 #: ckanext/inventory/templates/inventory/index.html:41
 #: ckanext/inventory/templates/inventory/entry/index.html:45
@@ -402,6 +422,12 @@ msgstr "exemplu@gov.ro"
 #: ckanext/inventory/templates/user/new_user_form.html:43
 msgid "Create Account"
 msgstr "Cont Nou"
+
+#~ msgid "Inventare"
+#~ msgstr "Inventories"
+
+#~ msgid "Intrari de inventar"
+#~ msgstr "Inventory entries"
 
 #~ msgid "Archived Datasets"
 #~ msgstr "Seturi de date arhivate"

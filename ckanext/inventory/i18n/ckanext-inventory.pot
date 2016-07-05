@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-07-05 11:06+0000\n"
+"POT-Creation-Date: 2016-07-05 11:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,10 +85,30 @@ msgstr ""
 msgid "My Organization"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/index.html:6
+msgid "Inventories"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/index.html:18
+msgid "Inventory entries"
+msgstr ""
+
 #: ckanext/inventory/templates/inventory/index.html:22
 #: ckanext/inventory/templates/inventory/admin/index.html:11
 #: ckanext/inventory/templates/package/snippets/package_basic_fields.html:94
 msgid "Organization"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/index.html:23
+msgid "Updated datasets"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/index.html:24
+msgid "Late datasets"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/index.html:25
+msgid "Archived datasets"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/index.html:41
