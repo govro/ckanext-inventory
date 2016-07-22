@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-inventory 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-05 14:41+0000\n"
+"POT-Creation-Date: 2016-07-05 11:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
+
+#: ckanext/inventory/plugin.py:208
+msgid "No inventory entry"
+msgstr ""
 
 #: ckanext/inventory/controllers/inventory_admin.py:28
 msgid "Account has been activated."
@@ -55,11 +59,11 @@ msgstr ""
 msgid "Your account registration will be reviewed."
 msgstr ""
 
-#: ckanext/inventory/logic/validators.py:11
+#: ckanext/inventory/logic/validators.py:10
 msgid "No inventory entry provided"
 msgstr ""
 
-#: ckanext/inventory/logic/validators.py:16
+#: ckanext/inventory/logic/validators.py:15
 msgid "Not found"
 msgstr ""
 
@@ -81,13 +85,34 @@ msgstr ""
 msgid "My Organization"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/index.html:6
+msgid "Inventories"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/index.html:18
+msgid "Inventory entries"
+msgstr ""
+
 #: ckanext/inventory/templates/inventory/index.html:22
 #: ckanext/inventory/templates/inventory/admin/index.html:11
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:94
 msgid "Organization"
 msgstr ""
 
+#: ckanext/inventory/templates/inventory/index.html:23
+msgid "Updated datasets"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/index.html:24
+msgid "Late datasets"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/index.html:25
+msgid "Archived datasets"
+msgstr ""
+
 #: ckanext/inventory/templates/inventory/index.html:41
-#: ckanext/inventory/templates/inventory/entry/index.html:69
+#: ckanext/inventory/templates/inventory/entry/index.html:45
 msgid "Download CSV file with all entries."
 msgstr ""
 
@@ -151,9 +176,8 @@ msgid "Inventory"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:18
-#: ckanext/inventory/templates/inventory/entry/index.html:51
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:5
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:31
 msgid "Title"
 msgstr ""
 
@@ -162,7 +186,6 @@ msgid "Recurring Interval (days)"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:20
-#: ckanext/inventory/templates/inventory/entry/index.html:52
 msgid "Last added dataset"
 msgstr ""
 
@@ -172,8 +195,6 @@ msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/index.html:23
 #: ckanext/inventory/templates/inventory/entry/index.html:35
-#: ckanext/inventory/templates/inventory/entry/index.html:53
-#: ckanext/inventory/templates/inventory/entry/index.html:61
 msgid "Edit"
 msgstr ""
 
@@ -185,46 +206,14 @@ msgstr ""
 msgid "There are no entries in the inventory."
 msgstr ""
 
-#: ckanext/inventory/templates/inventory/entry/index.html:45
-msgid "Archived Datasets"
-msgstr ""
-
-#: ckanext/inventory/templates/inventory/entry/index.html:67
-msgid "There are no archived entries in the inventory."
-msgstr ""
-
 #: ckanext/inventory/templates/inventory/entry/inventory_entry_form.html:5
-#: ckanext/inventory/templates/inventory/entry/new_inventory_entry_form.html:5
 msgid "Save Inventory Item"
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/inventory_entry_form.html:7
 #: ckanext/inventory/templates/inventory/entry/new.html:3
 #: ckanext/inventory/templates/inventory/entry/new.html:10
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:12
-#: ckanext/inventory/templates/inventory/entry/new_inventory_entry_form.html:7
 msgid "Add Inventory Item"
-msgstr ""
-
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:5
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:5
-msgid "budget"
-msgstr ""
-
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:6
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:13
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:6
-msgid "Recurring Interval"
-msgstr ""
-
-#: ckanext/inventory/templates/inventory/entry/new_entry_form.html:8
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:38
-#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:8
-msgid ""
-"The recurring interval should be an integer representing the number of days "
-"that will pass between since a new dataset will be added for the inventory "
-"entry. Add zero only if the dataset is non-recurring, like archived documents"
-" for example."
 msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/read.html:3
@@ -243,6 +232,24 @@ msgstr ""
 
 #: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:12
 msgid "Inventory Entry Title"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:13
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:6
+msgid "Recurring Interval"
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_bulk_form.html:38
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:8
+msgid ""
+"The recurring interval should be an integer representing the number of days "
+"that will pass between since a new dataset will be added for the inventory "
+"entry. Add zero only if the dataset is non-recurring, like archived documents"
+" for example."
+msgstr ""
+
+#: ckanext/inventory/templates/inventory/entry/snippets/inventory_entry_form.html:5
+msgid "budget"
 msgstr ""
 
 #: ckanext/inventory/templates/organization/read_base.html:5
@@ -281,6 +288,72 @@ msgstr ""
 
 #: ckanext/inventory/templates/package/snippets/package_basic_fields.html:21
 msgid "Go and add it."
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:31
+msgid "eg. A descriptive title"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:40
+msgid "URL"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:40
+msgid "eg. my-dataset"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:44
+msgid "Description"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:44
+msgid "eg. Some useful notes about the data"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:49
+msgid "Tags"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:49
+msgid "eg. economy, mental health, government"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:55
+msgid "License"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:65
+msgid ""
+" License definitions and additional information can be found at <a "
+"href=\"http://opendefinition.org/licenses/\">opendefinition.org</a> "
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:98
+msgid "No organization"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:113
+msgid "Visibility"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:116
+msgid "Private"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:116
+msgid "Public"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:132
+msgid "State"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:135
+msgid "Active"
+msgstr ""
+
+#: ckanext/inventory/templates/package/snippets/package_basic_fields.html:136
+msgid "Deleted"
 msgstr ""
 
 #: ckanext/inventory/templates/snippets/organization.html:7

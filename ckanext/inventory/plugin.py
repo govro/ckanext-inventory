@@ -7,7 +7,7 @@ from ckan.plugins import (
 from ckan.plugins.toolkit import (
     add_template_directory, add_public_directory, add_resource,
     get_validator, get_converter, DefaultDatasetForm,
-    get_action, c, add_ckan_admin_tab)
+    get_action, c, add_ckan_admin_tab, _)
 from ckanext.inventory.logic.action import (
     pending_user_list, activate_user, organization_by_inventory_id)
 from ckanext.inventory.logic.action.inventory_entry import (
@@ -17,7 +17,7 @@ from ckanext.inventory.logic.action.inventory_entry import (
     inventory_entry_bulk_create, inventory_entry_csv, inventory_entry_csv_single)
 from ckanext.inventory.logic.action.inventory_item import (
     inventory_item_create, inventory_entry_list_items)
-from ckanext.inventory.logic.validators import update_package_inventory_entry
+from ckanext.inventory.logic.validators import inventory_package_id_exists
 from ckanext.inventory.model import model_setup
 
 
@@ -152,16 +152,22 @@ class InventoryPlugin(SingletonPlugin, DefaultOrganizationForm, DefaultTranslati
 
     # IPackageController
     def after_create(self, context, pkg_dict):
-        get_action('inventory_entry_update_timestamp')(
-            context, {'inventory_entry_id': pkg_dict['inventory_entry_id']})
-        get_action('inventory_item_create')(
-            context, {'inventory_entry_id': pkg_dict['inventory_entry_id'],
-                      'package_id': pkg_dict['id']})
+        """Check if we have connected the new dataset to an inventory entry and create an inventory item and update the
+        inventory entry timestamp.
+        """
+        inventory_entry_id = next(x for x in pkg_dict['extras'] if x['key'] == 'inventory_entry_id')['value']
+
+        if inventory_entry_id:
+            get_action('inventory_entry_update_timestamp')(
+                context, {'inventory_entry_id': pkg_dict['inventory_entry_id']})
+            get_action('inventory_item_create')(
+                context, {'inventory_entry_id': pkg_dict['inventory_entry_id'],
+                          'package_id': pkg_dict['id']})
 
 
 class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
     '''Hack because methods from DefaultOrganizationForm overlap with
-    DefaultDatasetForm. You should add inventory and invetoryfix to your config
+    DefaultDatasetForm. You should add inventory and inventoryfix to your config
     to load both classes.
     '''
     implements(IDatasetForm)
@@ -171,7 +177,8 @@ class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
     def _modify_package_schema(self, schema):
         schema.update({
             'inventory_entry_id': [get_converter('convert_to_extras'),
-                                   get_converter('update_package_inventory_entry')]
+                                   get_validator('ignore_missing'),
+            ]
         })
         return schema
 
@@ -198,7 +205,7 @@ class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
         # TODO @palcu: send this to it's own logic method
         inventory_entries = get_action('inventory_entry_list_for_user')(
             context, {'permission': 'create_dataset'})
-        c.inventory_entries = [(x['id'], x['title']) for x in inventory_entries]
+        c.inventory_entries = [('', _('No inventory entry'))] + [(x['id'], x['title']) for x in inventory_entries]
 
         super(InventoryPluginFix, self).setup_template_variables(context,
                                                                  data_dict)
@@ -209,7 +216,7 @@ class InventoryPluginFix(SingletonPlugin, DefaultDatasetForm):
     # IValidators
     def get_validators(self):
         return {
-            'update_package_inventory_entry': update_package_inventory_entry
+            'inventory_package_id_exists': inventory_package_id_exists
         }
 
     def is_fallback(self):

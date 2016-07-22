@@ -19,7 +19,7 @@ specified timeline
 
 ## Requirements
 
-This extension is written for CKAN v2.4.2.
+This extension is written for CKAN v2.5.3.
 
 ## Installation
 
@@ -31,25 +31,13 @@ To install ckanext-inventory:
 . /usr/lib/ckan/default/bin/activate
 ```
 
-2. Install the ckanext-inventory Python package into your virtual environment:
+2. Clone and install the ckanext-inventory Python package into your virtual environment:
 
 ```
-pip install ckanext-inventory
+python setup.py develop
 ```
 
 3. Add `inventory inventoryfix` to the `ckan.plugins` setting in your CKAN
    config file.
 
 4. Restart CKAN.
-
-## Development Installation
-
-To install ckanext-inventory for development, activate your CKAN virtualenv and
-do:
-
-```
-git clone https://github.com/govro/ckanext-inventory.git
-cd ckanext-inventory
-python setup.py develop
-pip install -r dev-requirements.txt
-```

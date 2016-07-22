@@ -3,8 +3,7 @@ from ckanext.inventory.model import InventoryEntry
 from ckan.plugins.toolkit import Invalid, _
 
 
-# TODO @palcu: rename this to inventory_package_id_exists
-def update_package_inventory_entry(value, context):
+def inventory_package_id_exists(value, context):
     session = context['session']
 
     if not value:
